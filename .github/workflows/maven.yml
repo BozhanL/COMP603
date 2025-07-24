@@ -34,9 +34,9 @@ jobs:
         run: mvn -B clean verify --file pom.xml
 
       - name: Create staging directory
-        run: mkdir staging
+        run: New-Item -ItemType Directory -Path staging
       - name: Copy JAR files to staging
-        run: cp target/*.jar staging
+        run: Copy-Item target\*.jar staging\
       - uses: actions/upload-artifact@v4
         with:
           name: Package
