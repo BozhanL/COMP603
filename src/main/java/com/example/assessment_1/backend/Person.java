@@ -9,46 +9,34 @@ import lombok.Setter;
 import lombok.ToString;
 
 @ToString
-public class Person implements IPerson {
-
-    @Getter
-    @Setter
-    protected String legalFirstName;
-
-    @Getter
-    @Setter
-    protected String legalLastName;
-
-    @Getter
-    @Setter
-    protected LocalDate dateOfBirth;
-
-    @Getter
-    @Setter
-    protected Gender gender;
-
-    @Getter
-    @Setter
-    protected Person.Residency residencyStatus;
-
-    @Getter
-    @Setter
-    protected String email = "";
-
-    @Getter
-    @Setter
-    protected String phone = "";
+@Getter
+@Setter
+public abstract class Person implements IPerson {
 
     @NonNull
-    @Getter
-    @Setter
+    protected String id;
+    @NonNull
+    protected String legalFirstName;
+    @NonNull
+    protected String legalLastName;
+    @NonNull
+    protected LocalDate dateOfBirth;
+    @NonNull
+    protected Gender gender = Gender.OTHER;
+    @NonNull
+    protected Residency residencyStatus;
+
+    protected String email;
+    @NonNull
+    protected String phone;
+    @NonNull
     protected Address address = new Address();
 
-    public enum Gender {
+    public static enum Gender {
         MALE, FEMALE, OTHER
     }
 
-    public enum Residency {
+    public static enum Residency {
         DOMESTIC, INTERNATIONAL
     }
 
