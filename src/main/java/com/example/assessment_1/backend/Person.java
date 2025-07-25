@@ -29,7 +29,7 @@ public class Person implements IPerson {
 
     @Getter
     @Setter
-    protected Residency residencyStatus;
+    protected Person.Residency residencyStatus;
 
     @Getter
     @Setter
@@ -55,14 +55,14 @@ public class Person implements IPerson {
     @Data
     public static class Address {
 
-        public String unit;
-        public String streetNumber;
-        public String streetName;
-        public String suburb;
-        public String city;
-        public String state;
-        public String country;
-        public String postCode;
+        private String unit;
+        private String streetNumber;
+        private String streetName;
+        private String suburb;
+        private String city;
+        private String state;
+        private String country;
+        private String postCode;
 
         @Override
         public String toString() {
