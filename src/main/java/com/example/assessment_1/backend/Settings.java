@@ -9,5 +9,5 @@ public class Settings {
     @NonNull
     @Getter
     @Setter
-    private static String databaseLocation = "";
+    private static String databaseLocation = "~/.student/";
 }
