@@ -1,4 +1,4 @@
-package com.example.assessment_1.backend;
+package com.example.assessment.backend;
 
 public enum Gender {
     MALE, FEMALE, OTHER
