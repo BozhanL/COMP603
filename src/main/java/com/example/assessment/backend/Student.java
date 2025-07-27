@@ -1,7 +1,7 @@
 package com.example.assessment.backend;
 
 import java.time.LocalDate;
-import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import java.util.Objects;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -21,7 +21,7 @@ public class Student extends Person {
     @NonNull
     protected Residency residencyStatus;
     @NonNull
-    protected ImmutableList<StudentCourseInfo> courses;
+    protected ImmutableMap<String, StudentCourseInfo> courses;
 
     public Student(
             @NonNull String id,
@@ -33,7 +33,7 @@ public class Student extends Person {
             @NonNull String phone,
             @NonNull Address address,
             @NonNull Residency residencyStatus,
-            @NonNull ImmutableList<StudentCourseInfo> courses
+            @NonNull ImmutableMap<String, StudentCourseInfo> courses
     ) throws IllegalArgumentException {
         super(id, legalFirstName, legalLastName, dateOfBirth, gender, email, phone, address);
         this.residencyStatus = residencyStatus;
@@ -84,7 +84,7 @@ public class Student extends Person {
         return Objects.equals(this.residencyStatus, residencyStatus) ? this : new Student(id, legalFirstName, legalLastName, dateOfBirth, gender, email, phone, address, residencyStatus, courses);
     }
 
-    public Student withCourses(@NonNull ImmutableList<StudentCourseInfo> courses) {
+    public Student withCourses(@NonNull ImmutableMap<String, StudentCourseInfo> courses) {
         return Objects.equals(this.courses, courses) ? this : new Student(id, legalFirstName, legalLastName, dateOfBirth, gender, email, phone, address, residencyStatus, courses);
     }
 
