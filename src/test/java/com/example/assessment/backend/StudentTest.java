@@ -13,7 +13,7 @@ public class StudentTest {
     @BeforeEach
     void setUp() {
         Address a = new Address("", "561", "Blockhouse Bay Road", "Blockhouse Bay", "Auckland", "Auckland", "NZ", "0600");
-        StudentCourseInfo sci = new StudentCourseInfo("COMP500", Grade.AP, LocalDate.of(2024, 02, 12), "City");
+        StudentCourseInfo sci = new StudentCourseInfo("COMP500", Grade.AP, LocalDate.of(2024, 2, 12), "City");
         this.s = new Student("wby5780", "legalFirstName", "legalLastName", LocalDate.now(), Gender.MALE, "email", "phone", a, Residency.INTERNATIONAL, ImmutableList.of(sci));
     }
 

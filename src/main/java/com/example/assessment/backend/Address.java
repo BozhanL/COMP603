@@ -32,45 +32,22 @@ public class Address implements Serializable {
     public String toString() {
         StringBuilder s = new StringBuilder();
 
-        if (!unit.isBlank()) {
-            s.append(unit);
-            s.append(' ');
-        }
-
-        if (!streetNumber.isBlank()) {
-            s.append(streetNumber);
-            s.append(' ');
-        }
-
-        if (!streetName.isBlank()) {
-            s.append(streetName);
-            s.append(' ');
-        }
-
-        if (!suburb.isBlank()) {
-            s.append(suburb);
-            s.append(' ');
-        }
-
-        if (!city.isBlank()) {
-            s.append(city);
-            s.append(' ');
-        }
-
-        if (!state.isBlank()) {
-            s.append(state);
-            s.append(' ');
-        }
-
-        if (!country.isBlank()) {
-            s.append(country);
-            s.append(' ');
-        }
-
-        if (!postCode.isBlank()) {
-            s.append(postCode);
-        }
+        appendIfNotBlank(s, this.unit);
+        appendIfNotBlank(s, this.streetNumber);
+        appendIfNotBlank(s, this.streetName);
+        appendIfNotBlank(s, this.suburb);
+        appendIfNotBlank(s, this.city);
+        appendIfNotBlank(s, this.state);
+        appendIfNotBlank(s, this.country);
+        appendIfNotBlank(s, this.postCode);
 
         return s.toString().trim();
+    }
+
+    private static void appendIfNotBlank(StringBuilder s, String field) {
+        if (!field.isBlank()) {
+            s.append(field);
+            s.append(' ');
+        }
     }
 }

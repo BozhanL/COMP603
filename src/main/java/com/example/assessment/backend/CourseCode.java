@@ -5,6 +5,7 @@ import lombok.NonNull;
 import lombok.Value;
 import lombok.With;
 import java.text.ParseException;
+import java.util.Objects;
 
 @With
 @Value
@@ -43,7 +44,7 @@ public class CourseCode implements Serializable {
             throw new IllegalArgumentException("departmentCode must not be blank!");
         }
 
-        return this.departmentCode == departmentCode ? this : new CourseCode(departmentCode, level, courseNumber);
+        return Objects.equals(this.departmentCode, departmentCode) ? this : new CourseCode(departmentCode, level, courseNumber);
     }
 
     @Override

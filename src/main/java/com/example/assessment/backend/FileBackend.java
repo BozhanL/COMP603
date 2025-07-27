@@ -38,15 +38,8 @@ public abstract class FileBackend {
             throw new IllegalArgumentException("fName must not be empty!");
         }
 
-        @Cleanup
-        DirectoryStream<Path> dirStream = Files.newDirectoryStream(this.db, (f) -> f.getFileName().equals(fName));
-        Iterator<Path> iter = dirStream.iterator();
-        if (!iter.hasNext()) {
-            return null;
-        }
-
-        Path p = iter.next();
-        if (!Files.isRegularFile(p) || !Files.isReadable(p)) {
+        Path p = this.db.resolve(fName);
+        if (Files.notExists(p) || !Files.isRegularFile(p) || !Files.isReadable(p)) {
             return null;
         }
 
