@@ -13,8 +13,8 @@ public class StudentTest {
     @BeforeEach
     void setUp() {
         Address a = new Address("", "561", "Blockhouse Bay Road", "Blockhouse Bay", "Auckland", "Auckland", "NZ", "0600");
-
-        this.s = new Student("wby5780", "legalFirstName", "legalLastName", LocalDate.now(), Gender.MALE, "email", "phone", a, Residency.INTERNATIONAL, ImmutableList.of());
+        StudentCourseInfo sci = new StudentCourseInfo("COMP500", Grade.AP, LocalDate.of(2024, 02, 12), "City");
+        this.s = new Student("wby5780", "legalFirstName", "legalLastName", LocalDate.now(), Gender.MALE, "email", "phone", a, Residency.INTERNATIONAL, ImmutableList.of(sci));
     }
 
     @Test
@@ -33,5 +33,11 @@ public class StudentTest {
     void testGetType() {
         assertEquals(s.getType(), UserType.STUDENT);
         assertEquals(Student.getTypeStatic(), UserType.STUDENT);
+    }
+
+    @Test
+    void testWith() {
+        Student n = this.s.withEmail("new email");
+        assertEquals(n.getEmail(), "new email");
     }
 }
