@@ -6,10 +6,10 @@ import lombok.NonNull;
 
 public class CourseFileBackend extends FileBackend implements ICourseBackend {
 
-    public static final Path DEFAULT_DATABASE = Path.of(System.getProperty("user.home"), ".student/filedb", "course");
+    protected static final Path DEFAULT_DATA_SUBPATH = Path.of("course");
 
     public CourseFileBackend() throws IOException {
-        this(DEFAULT_DATABASE);
+        this(DEFAULT_DATA_LOCATION);
     }
 
     public CourseFileBackend(@NonNull String p) throws IOException, IllegalArgumentException {
@@ -17,11 +17,11 @@ public class CourseFileBackend extends FileBackend implements ICourseBackend {
     }
 
     public CourseFileBackend(@NonNull Path p) throws IOException, IllegalArgumentException {
-        super(p);
+        super(p.resolve(DEFAULT_DATA_SUBPATH));
     }
 
     @Override
-    public Course getCourseByCode(@NonNull Path code) throws IOException, ClassNotFoundException {
+    public Course getCourseByCode(@NonNull String code) throws IOException, ClassNotFoundException {
         Object obj = this.getObjectByPath(code);
         if (obj instanceof Course c) {
             return c;

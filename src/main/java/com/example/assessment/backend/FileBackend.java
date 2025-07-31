@@ -12,9 +12,10 @@ import java.util.Iterator;
 import lombok.Cleanup;
 import lombok.NonNull;
 
-public abstract class FileBackend {
+public abstract class FileBackend implements IBackend {
 
     protected static final Path EMPTY = Path.of("");
+    public static final Path DEFAULT_DATA_LOCATION = Path.of(System.getProperty("user.home"), ".student/filedb");
 
     protected Path db;
 
@@ -33,13 +34,20 @@ public abstract class FileBackend {
         }
     }
 
-    protected Object getObjectByPath(@NonNull Path fName) throws IOException, ClassNotFoundException, IllegalArgumentException {
-        if (EMPTY.equals(fName)) {
-            throw new IllegalArgumentException("fName must not be empty!");
+    protected Object getObjectByPath(@NonNull String fName) throws IOException, ClassNotFoundException, IllegalArgumentException {
+        if (fName.isBlank()) {
+            throw new IllegalArgumentException("fName must not be blank!");
         }
 
-        Path p = this.db.resolve(fName);
-        if (Files.notExists(p) || !Files.isRegularFile(p) || !Files.isReadable(p)) {
+        @Cleanup
+        DirectoryStream<Path> dirStream = Files.newDirectoryStream(this.db, (f) -> f.getFileName().toString().contains(fName));
+        Iterator<Path> iter = dirStream.iterator();
+        if (!iter.hasNext()) {
+            throw new IOException("No file found matching the name: " + fName);
+        }
+
+        Path p = iter.next();
+        if (!Files.isRegularFile(p) || !Files.isReadable(p)) {
             return null;
         }
 
@@ -61,5 +69,10 @@ public abstract class FileBackend {
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(outStream);
 
         objectOutputStream.writeObject(o);
+    }
+
+    @Override
+    public Path getDefaultDataLocation() {
+        return DEFAULT_DATA_LOCATION;
     }
 }

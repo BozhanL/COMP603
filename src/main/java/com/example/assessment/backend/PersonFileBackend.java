@@ -8,10 +8,10 @@ import lombok.ToString;
 @ToString
 public class PersonFileBackend extends FileBackend implements IPersonBackend {
 
-    public static final Path DEFAULT_DATABASE = Path.of(System.getProperty("user.home"), ".student/filedb", "person");
+    protected static final Path DEFAULT_DATA_SUBPATH = Path.of("person");
 
     public PersonFileBackend() throws IOException {
-        this(DEFAULT_DATABASE);
+        this(DEFAULT_DATA_LOCATION);
     }
 
     public PersonFileBackend(@NonNull String p) throws IOException, IllegalArgumentException {
@@ -19,11 +19,11 @@ public class PersonFileBackend extends FileBackend implements IPersonBackend {
     }
 
     public PersonFileBackend(@NonNull Path p) throws IOException, IllegalArgumentException {
-        super(p);
+        super(p.resolve(DEFAULT_DATA_SUBPATH));
     }
 
     @Override
-    public Person getPersonById(@NonNull Path id) throws IOException, ClassNotFoundException {
+    public Person getPersonById(@NonNull String id) throws IOException, ClassNotFoundException {
         Object o = this.getObjectByPath(id);
         if (o instanceof Person person) {
             return person;
