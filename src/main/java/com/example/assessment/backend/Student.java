@@ -25,6 +25,7 @@ public class Student extends Person {
 
     public Student(
             @NonNull String id,
+            @NonNull String password,
             @NonNull String legalFirstName,
             @NonNull String legalLastName,
             @NonNull LocalDate dateOfBirth,
@@ -35,57 +36,62 @@ public class Student extends Person {
             @NonNull Residency residencyStatus,
             @NonNull ImmutableMap<String, StudentCourseInfo> courses
     ) throws IllegalArgumentException {
-        super(id, legalFirstName, legalLastName, dateOfBirth, gender, email, phone, address);
+        super(id, password, legalFirstName, legalLastName, dateOfBirth, gender, email, phone, address);
         this.residencyStatus = residencyStatus;
         this.courses = courses;
     }
 
     @Override
     public Student withId(@NonNull String id) throws IllegalArgumentException {
-        return Objects.equals(this.id, id) ? this : new Student(id, legalFirstName, legalLastName, dateOfBirth, gender, email, phone, address, residencyStatus, courses);
+        return Objects.equals(this.id, id) ? this : new Student(id, password, legalFirstName, legalLastName, dateOfBirth, gender, email, phone, address, residencyStatus, courses);
+    }
+
+    @Override
+    public Student withPassword(@NonNull String password) {
+        return Objects.equals(this.password, password) ? this : new Student(id, password, legalFirstName, legalLastName, dateOfBirth, gender, email, phone, address, residencyStatus, courses);
     }
 
     @Override
     public Student withLegalFirstName(@NonNull String legalFirstName) {
-        return Objects.equals(this.legalFirstName, legalFirstName) ? this : new Student(id, legalFirstName, legalLastName, dateOfBirth, gender, email, phone, address, residencyStatus, courses);
+        return Objects.equals(this.legalFirstName, legalFirstName) ? this : new Student(id, password, legalFirstName, legalLastName, dateOfBirth, gender, email, phone, address, residencyStatus, courses);
     }
 
     @Override
     public Student withLegalLastName(@NonNull String legalLastName) {
-        return Objects.equals(this.legalLastName, legalLastName) ? this : new Student(id, legalFirstName, legalLastName, dateOfBirth, gender, email, phone, address, residencyStatus, courses);
+        return Objects.equals(this.legalLastName, legalLastName) ? this : new Student(id, password, legalFirstName, legalLastName, dateOfBirth, gender, email, phone, address, residencyStatus, courses);
     }
 
     @Override
     public Student withDateOfBirth(@NonNull LocalDate dateOfBirth) {
-        return Objects.equals(this.dateOfBirth, dateOfBirth) ? this : new Student(id, legalFirstName, legalLastName, dateOfBirth, gender, email, phone, address, residencyStatus, courses);
+        return Objects.equals(this.dateOfBirth, dateOfBirth) ? this : new Student(id, password, legalFirstName, legalLastName, dateOfBirth, gender, email, phone, address, residencyStatus, courses);
     }
 
     @Override
     public Student withGender(@NonNull Gender gender) {
-        return Objects.equals(this.gender, gender) ? this : new Student(id, legalFirstName, legalLastName, dateOfBirth, gender, email, phone, address, residencyStatus, courses);
+        return Objects.equals(this.gender, gender) ? this : new Student(id, password, legalFirstName, legalLastName, dateOfBirth, gender, email, phone, address, residencyStatus, courses);
     }
 
     @Override
     public Student withEmail(@NonNull String email) {
-        return Objects.equals(this.email, email) ? this : new Student(id, legalFirstName, legalLastName, dateOfBirth, gender, email, phone, address, residencyStatus, courses);
+        return Objects.equals(this.email, email) ? this : new Student(id, password, legalFirstName, legalLastName, dateOfBirth, gender, email, phone, address, residencyStatus, courses);
     }
 
     @Override
     public Student withPhone(@NonNull String phone) {
-        return Objects.equals(this.phone, phone) ? this : new Student(id, legalFirstName, legalLastName, dateOfBirth, gender, email, phone, address, residencyStatus, courses);
+        return Objects.equals(this.phone, phone) ? this : new Student(id, password, legalFirstName, legalLastName, dateOfBirth, gender, email, phone, address, residencyStatus, courses);
     }
 
     @Override
     public Student withAddress(@NonNull Address address) {
-        return Objects.equals(this.address, address) ? this : new Student(id, legalFirstName, legalLastName, dateOfBirth, gender, email, phone, address, residencyStatus, courses);
+        return Objects.equals(this.address, address) ? this : new Student(id, password, legalFirstName, legalLastName, dateOfBirth, gender, email, phone, address, residencyStatus, courses);
     }
 
     public Student withResidencyStatus(@NonNull Residency residencyStatus) {
-        return Objects.equals(this.residencyStatus, residencyStatus) ? this : new Student(id, legalFirstName, legalLastName, dateOfBirth, gender, email, phone, address, residencyStatus, courses);
+        return Objects.equals(this.residencyStatus, residencyStatus) ? this : new Student(id, password, legalFirstName, legalLastName, dateOfBirth, gender, email, phone, address, residencyStatus, courses);
     }
 
     public Student withCourses(@NonNull ImmutableMap<String, StudentCourseInfo> courses) {
-        return Objects.equals(this.courses, courses) ? this : new Student(id, legalFirstName, legalLastName, dateOfBirth, gender, email, phone, address, residencyStatus, courses);
+        return Objects.equals(this.courses, courses) ? this : new Student(id, password, legalFirstName, legalLastName, dateOfBirth, gender, email, phone, address, residencyStatus, courses);
     }
 
     @Override

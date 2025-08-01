@@ -1,7 +1,10 @@
 package com.example.assessment.backend;
 
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.time.LocalDate;
+import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NonNull;
 import lombok.Value;
 import lombok.With;
@@ -10,12 +13,13 @@ import lombok.experimental.NonFinal;
 @With
 @Value
 @NonFinal
-public abstract class Person implements ISelfSerializable {
+public abstract class Person implements ISelfSerializable, IAuthenticatable {
 
     private static final long serialVersionUID = 1L;
 
     protected Person(
             String id,
+            String password,
             String legalFirstName,
             String legalLastName,
             LocalDate dateOfBirth,
@@ -28,6 +32,7 @@ public abstract class Person implements ISelfSerializable {
             throw new IllegalArgumentException("id must not be blank!");
         }
         this.id = id;
+        this.password = password;
         this.legalFirstName = legalFirstName;
         this.legalLastName = legalLastName;
         this.dateOfBirth = dateOfBirth;
@@ -39,6 +44,11 @@ public abstract class Person implements ISelfSerializable {
 
     @NonNull
     protected String id;
+
+    @NonNull
+    @Getter(AccessLevel.PROTECTED)
+    protected String password;
+
     @NonNull
     protected String legalFirstName;
     @NonNull
@@ -60,5 +70,23 @@ public abstract class Person implements ISelfSerializable {
     @Override
     public Path getPath() {
         return Path.of(this.getId());
+    }
+
+    @Override
+    public boolean safeCheckPassword(@NonNull String other) {
+        byte[] a = this.getPassword().getBytes(StandardCharsets.UTF_8);
+        byte[] b = other.getBytes(StandardCharsets.UTF_8);
+
+        if (a.length != b.length) {
+            return false;
+        }
+
+        int ret = 0;
+
+        for (int i = 0; i < a.length; i++) {
+            ret |= a[i] ^ b[i];
+        }
+
+        return ret == 0;
     }
 }
