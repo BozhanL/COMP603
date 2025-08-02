@@ -69,7 +69,7 @@ public abstract class Person implements ISelfSerializable, IAuthenticatable {
 
     @Override
     public Path getPath() {
-        return Path.of(this.getId());
+        return Path.of(String.format("%s_%s_%s", this.getId(), this.getLegalFirstName(), this.getLegalLastName()));
     }
 
     @Override

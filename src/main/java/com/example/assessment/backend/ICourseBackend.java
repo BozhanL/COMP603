@@ -8,4 +8,8 @@ public interface ICourseBackend {
     Course getCourseByCode(@NonNull String code) throws IOException, ClassNotFoundException;
 
     void setCourse(@NonNull Course c) throws IOException;
+
+    boolean deleteCourseByCode(@NonNull String code) throws IOException, ClassNotFoundException;
+
+    void modifyCourse(@NonNull Course c) throws IOException;
 }
