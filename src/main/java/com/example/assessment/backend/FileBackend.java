@@ -6,6 +6,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.nio.file.DirectoryStream;
+import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Iterator;
@@ -19,11 +20,11 @@ public abstract class FileBackend implements IBackend {
 
     protected Path db;
 
-    protected FileBackend(String p) throws IOException, IllegalArgumentException {
+    protected FileBackend(@NonNull String p) throws IOException, IllegalArgumentException {
         this(Path.of(p));
     }
 
-    protected FileBackend(Path p) throws IOException, IllegalArgumentException {
+    protected FileBackend(@NonNull Path p) throws IOException, IllegalArgumentException {
         if (EMPTY.equals(p)) {
             throw new IllegalArgumentException("Path must not be empty!");
         }
@@ -34,7 +35,7 @@ public abstract class FileBackend implements IBackend {
         }
     }
 
-    protected Object getObjectByPath(@NonNull String fName) throws IOException, ClassNotFoundException, IllegalArgumentException {
+    protected Path getPathByName(@NonNull String fName) throws IOException {
         if (fName.isBlank()) {
             throw new IllegalArgumentException("fName must not be blank!");
         }
@@ -47,9 +48,22 @@ public abstract class FileBackend implements IBackend {
         }
 
         Path p = iter.next();
-        if (!Files.isRegularFile(p) || !Files.isReadable(p)) {
-            return null;
+
+        if (iter.hasNext()) {
+            throw new IOException("Multiple files found matching the name: " + fName);
         }
+
+        return p.getFileName();
+    }
+
+    protected Object getObjectByPartPath(@NonNull String fName) throws IOException, ClassNotFoundException, IllegalArgumentException {
+        Path p = this.getPathByName(fName);
+
+        return this.getObjectByPath(p);
+    }
+
+    protected Object getObjectByPath(@NonNull Path fName) throws IOException, ClassNotFoundException, IllegalArgumentException {
+        Path p = this.db.resolve(fName);
 
         @Cleanup
         InputStream inpStream = Files.newInputStream(p);
@@ -60,8 +74,13 @@ public abstract class FileBackend implements IBackend {
         return o;
     }
 
-    protected void setObjectWithName(@NonNull ISelfSerializable o) throws IOException {
+    protected void setObject(@NonNull ISelfSerializable o) throws IOException, FileAlreadyExistsException {
         Path path = this.db.resolve(o.getPath());
+
+//        Check whether file exist
+        if (Files.exists(path)) {
+            throw new FileAlreadyExistsException(path.toString());
+        }
 
         @Cleanup
         OutputStream outStream = Files.newOutputStream(path);
@@ -69,6 +88,21 @@ public abstract class FileBackend implements IBackend {
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(outStream);
 
         objectOutputStream.writeObject(o);
+    }
+
+    protected boolean deleteObjectWithName(@NonNull String fName) throws IOException {
+        Path path = this.getPathByName(fName);
+        return this.deleteObjectWithPath(path);
+    }
+
+    protected boolean deleteObjectWithPath(@NonNull Path path) throws IOException {
+        return Files.deleteIfExists(this.db.resolve(path));
+    }
+
+    protected void modifyObject(@NonNull ISelfSerializable o) throws IOException {
+        Path path = o.getPath();
+        this.deleteObjectWithPath(path);
+        this.setObject(o);
     }
 
     @Override

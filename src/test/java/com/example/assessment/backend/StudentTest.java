@@ -38,7 +38,6 @@ public class StudentTest {
         assertEquals(this.s.getGender(), Gender.MALE);
 
         assertEquals(this.s.getId(), "wby5780");
-        assertEquals(this.s.getPath().toString(), this.s.getId());
 
         assertEquals(this.s.getLegalFirstName(), "legalFirstName");
 
@@ -50,6 +49,19 @@ public class StudentTest {
 
         assertEquals(this.s.getType(), UserType.STUDENT);
         assertEquals(Student.getTypeStatic(), UserType.STUDENT);
+    }
+
+    @Test
+    void testGetPath() {
+        assertEquals(
+                this.s.getPath().toString(),
+                String.format(
+                        "%s_%s_%s",
+                        this.s.getId(),
+                        this.s.getLegalFirstName(),
+                        this.s.getLegalLastName()
+                )
+        );
     }
 
     @Test
@@ -73,7 +85,6 @@ public class StudentTest {
 
         n = this.s.withId("abc1234");
         assertEquals(n.getId(), "abc1234");
-        assertEquals(n.getPath().toString(), n.getId());
 
         n = this.s.withLegalFirstName("James");
         assertEquals(n.getLegalFirstName(), "James");

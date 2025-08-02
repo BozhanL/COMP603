@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import lombok.NonNull;
 
-public class CourseFileBackend extends FileBackend implements ICourseBackend {
+public final class CourseFileBackend extends FileBackend implements ICourseBackend {
 
     protected static final Path DEFAULT_DATA_SUBPATH = Path.of("course");
 
@@ -22,7 +22,7 @@ public class CourseFileBackend extends FileBackend implements ICourseBackend {
 
     @Override
     public Course getCourseByCode(@NonNull String code) throws IOException, ClassNotFoundException {
-        Object obj = this.getObjectByPath(code);
+        Object obj = this.getObjectByPartPath(code);
         if (obj instanceof Course c) {
             return c;
         }
@@ -31,6 +31,16 @@ public class CourseFileBackend extends FileBackend implements ICourseBackend {
 
     @Override
     public void setCourse(@NonNull Course c) throws IOException {
-        this.setObjectWithName(c);
+        this.setObject(c);
+    }
+
+    @Override
+    public boolean deleteCourseByCode(@NonNull String code) throws IOException, ClassNotFoundException {
+        return this.deleteObjectWithName(code);
+    }
+
+    @Override
+    public void modifyCourse(@NonNull Course c) throws IOException {
+        this.modifyObject(c);
     }
 }

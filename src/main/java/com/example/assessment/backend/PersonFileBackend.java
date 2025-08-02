@@ -1,12 +1,16 @@
 package com.example.assessment.backend;
 
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.LocalDate;
+import java.util.stream.Stream;
+import lombok.Cleanup;
 import lombok.NonNull;
 import lombok.ToString;
 
 @ToString
-public class PersonFileBackend extends FileBackend implements IPersonBackend {
+public final class PersonFileBackend extends FileBackend implements IPersonBackend {
 
     protected static final Path DEFAULT_DATA_SUBPATH = Path.of("person");
 
@@ -20,11 +24,28 @@ public class PersonFileBackend extends FileBackend implements IPersonBackend {
 
     public PersonFileBackend(@NonNull Path p) throws IOException, IllegalArgumentException {
         super(p.resolve(DEFAULT_DATA_SUBPATH));
+
+        @Cleanup
+        Stream<Path> stream = Files.list(this.db);
+        if (stream.findAny().isEmpty()) {
+            Manager DEFAULT_MANAGER = new Manager(
+                    "admin",
+                    "admin",
+                    "admin",
+                    "admin",
+                    LocalDate.MIN,
+                    Gender.OTHER,
+                    "",
+                    "",
+                    new Address("", "", "", "", "", "", "", "")
+            );
+            this.setPerson(DEFAULT_MANAGER);
+        }
     }
 
     @Override
-    public Person getPersonById(@NonNull String id) throws IOException, ClassNotFoundException {
-        Object o = this.getObjectByPath(id);
+    public Person getPersonByPartPath(@NonNull String fName) throws IOException, ClassNotFoundException {
+        Object o = this.getObjectByPartPath(fName);
         if (o instanceof Person person) {
             return person;
         }
@@ -34,6 +55,16 @@ public class PersonFileBackend extends FileBackend implements IPersonBackend {
 
     @Override
     public void setPerson(@NonNull Person p) throws IOException {
-        this.setObjectWithName(p);
+        this.setObject(p);
+    }
+
+    @Override
+    public boolean deletePersonByPartPath(@NonNull String fName) throws IOException {
+        return this.deleteObjectWithName(fName);
+    }
+
+    @Override
+    public void modifyPerson(@NonNull Person p) throws IOException {
+        this.modifyObject(p);
     }
 }
