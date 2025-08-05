@@ -1,5 +1,6 @@
 package com.example.assessment.cli;
 
+import com.example.assessment.backend.DatabaseCorruptedException;
 import com.example.assessment.backend.IPersonBackend;
 import com.example.assessment.backend.Person;
 import com.example.assessment.backend.PersonFileBackend;
@@ -73,7 +74,7 @@ public class Welcome {
                 }
             } catch (IOException e) {
                 System.out.println("Error: " + e.getMessage());
-            } catch (ClassNotFoundException e) {
+            } catch (DatabaseCorruptedException e) {
                 System.out.println("Error: data corrupted, try another user");
             }
         }
