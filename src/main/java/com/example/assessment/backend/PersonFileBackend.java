@@ -44,7 +44,7 @@ public final class PersonFileBackend extends FileBackend implements IPersonBacke
     }
 
     @Override
-    public Person getPersonByPartPath(@NonNull String fName) throws IOException, ClassNotFoundException {
+    public Person getPersonByPartPath(@NonNull String fName) throws IOException, DatabaseCorruptedException {
         Object o = this.getObjectByPartPath(fName);
         if (o instanceof Person person) {
             return person;

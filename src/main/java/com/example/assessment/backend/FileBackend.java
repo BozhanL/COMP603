@@ -2,9 +2,11 @@ package com.example.assessment.backend;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InvalidClassException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.io.StreamCorruptedException;
 import java.nio.file.DirectoryStream;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
@@ -56,22 +58,25 @@ public abstract class FileBackend implements IBackend {
         return p.getFileName();
     }
 
-    protected Object getObjectByPartPath(@NonNull String fName) throws IOException, ClassNotFoundException, IllegalArgumentException {
+    protected Object getObjectByPartPath(@NonNull String fName) throws IOException, DatabaseCorruptedException, IllegalArgumentException {
         Path p = this.getPathByName(fName);
 
         return this.getObjectByPath(p);
     }
 
-    protected Object getObjectByPath(@NonNull Path fName) throws IOException, ClassNotFoundException, IllegalArgumentException {
+    protected Object getObjectByPath(@NonNull Path fName) throws IOException, DatabaseCorruptedException, IllegalArgumentException {
         Path p = this.db.resolve(fName);
 
         @Cleanup
         InputStream inpStream = Files.newInputStream(p);
         @Cleanup
         ObjectInputStream objectInputStream = new ObjectInputStream(inpStream);
-        var o = objectInputStream.readObject();
 
-        return o;
+        try {
+            return objectInputStream.readObject();
+        } catch (ClassNotFoundException | InvalidClassException | StreamCorruptedException e) {
+            throw new DatabaseCorruptedException();
+        }
     }
 
     protected void setObject(@NonNull ISelfSerializable o) throws IOException, FileAlreadyExistsException {
