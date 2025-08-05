@@ -43,6 +43,7 @@ public abstract class Person implements ISelfSerializable, IAuthenticatable {
     }
 
     @NonNull
+    @With(AccessLevel.PROTECTED)
     protected String id;
 
     @NonNull

@@ -42,7 +42,7 @@ public class Student extends Person {
     }
 
     @Override
-    public Student withId(@NonNull String id) throws IllegalArgumentException {
+    protected Student withId(@NonNull String id) throws IllegalArgumentException {
         return Objects.equals(this.id, id) ? this : new Student(id, password, legalFirstName, legalLastName, dateOfBirth, gender, email, phone, address, residencyStatus, courses);
     }
 

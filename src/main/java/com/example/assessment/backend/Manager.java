@@ -32,7 +32,7 @@ public class Manager extends Person {
     }
 
     @Override
-    public Manager withId(@NonNull String id) throws IllegalArgumentException {
+    protected Manager withId(@NonNull String id) throws IllegalArgumentException {
         return Objects.equals(this.id, id) ? this : new Manager(id, password, legalFirstName, legalLastName, dateOfBirth, gender, email, phone, address);
     }
 
