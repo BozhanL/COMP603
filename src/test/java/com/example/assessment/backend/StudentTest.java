@@ -56,7 +56,7 @@ public class StudentTest {
         assertEquals(
                 this.s.getPath().toString(),
                 String.format(
-                        "%s_%s_%s",
+                        "%s_%s_%s.bin",
                         this.s.getId(),
                         this.s.getLegalFirstName(),
                         this.s.getLegalLastName()

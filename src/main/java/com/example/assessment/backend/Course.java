@@ -32,6 +32,6 @@ public class Course implements ISelfSerializable {
 
     @Override
     public Path getPath() {
-        return Path.of(this.getCode().toString());
+        return Path.of(String.format("%s.bin", this.getCode()));
     }
 }
