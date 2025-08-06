@@ -25,7 +25,7 @@ public class PersonFileBackendTest {
     }
 
     @Test
-    void testSetAndGetStudent() throws IOException, ClassNotFoundException {
+    void testSetAndGetStudent() throws IOException, DatabaseCorruptedException {
         Address a = new Address("", "561", "Blockhouse Bay Road", "Blockhouse Bay", "Auckland", "Auckland", "NZ", "0600");
         HashMap<String, StudentCourseInfo> sci = new HashMap<>();
         sci.put("COMP500", new StudentCourseInfo("COMP500", Grade.AP, LocalDate.of(2024, 2, 12), "City"));
@@ -42,7 +42,7 @@ public class PersonFileBackendTest {
     }
 
     @Test
-    void testGetDefaultManager() throws IOException, ClassNotFoundException {
+    void testGetDefaultManager() throws IOException, DatabaseCorruptedException {
         Manager DEFAULT_MANAGER = new Manager(
                 "admin",
                 "admin",
@@ -63,7 +63,7 @@ public class PersonFileBackendTest {
     }
 
     @Test
-    void testDeletePerson() throws IOException, ClassNotFoundException {
+    void testDeletePerson() throws IOException, DatabaseCorruptedException {
         Address a = new Address("", "561", "Blockhouse Bay Road", "Blockhouse Bay", "Auckland", "Auckland", "NZ", "0600");
         HashMap<String, StudentCourseInfo> sci = new HashMap<>();
         sci.put("COMP500", new StudentCourseInfo("COMP500", Grade.AP, LocalDate.of(2024, 2, 12), "City"));
@@ -91,7 +91,7 @@ public class PersonFileBackendTest {
     }
 
     @Test
-    void testSetExistPerson() throws IOException, ClassNotFoundException {
+    void testSetExistPerson() throws IOException, DatabaseCorruptedException {
         Address a = new Address("", "561", "Blockhouse Bay Road", "Blockhouse Bay", "Auckland", "Auckland", "NZ", "0600");
         HashMap<String, StudentCourseInfo> sci = new HashMap<>();
         sci.put("COMP500", new StudentCourseInfo("COMP500", Grade.AP, LocalDate.of(2024, 2, 12), "City"));

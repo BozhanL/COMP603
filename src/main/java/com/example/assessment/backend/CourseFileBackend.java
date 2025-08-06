@@ -21,7 +21,7 @@ public final class CourseFileBackend extends FileBackend implements ICourseBacke
     }
 
     @Override
-    public Course getCourseByCode(@NonNull String code) throws IOException, ClassNotFoundException {
+    public Course getCourseByCode(@NonNull String code) throws IOException, DatabaseCorruptedException {
         Object obj = this.getObjectByPartPath(code);
         if (obj instanceof Course c) {
             return c;
@@ -35,7 +35,7 @@ public final class CourseFileBackend extends FileBackend implements ICourseBacke
     }
 
     @Override
-    public boolean deleteCourseByCode(@NonNull String code) throws IOException, ClassNotFoundException {
+    public boolean deleteCourseByCode(@NonNull String code) throws IOException, DatabaseCorruptedException {
         return this.deleteObjectWithName(code);
     }
 
