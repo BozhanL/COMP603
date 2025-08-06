@@ -3,6 +3,7 @@ package com.example.assessment.backend;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.time.LocalDate;
+import java.time.Period;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NonNull;
@@ -70,7 +71,11 @@ public abstract class Person implements ISelfSerializable, IAuthenticatable {
 
     @Override
     public Path getPath() {
-        return Path.of(String.format("%s_%s_%s", this.getId(), this.getLegalFirstName(), this.getLegalLastName()));
+        return Path.of(String.format("%s_%s_%s.bin", this.getId(), this.getLegalFirstName(), this.getLegalLastName()));
+    }
+
+    public int getAge() {
+        return Period.between(this.dateOfBirth, LocalDate.now()).normalized().getYears();
     }
 
     @Override
