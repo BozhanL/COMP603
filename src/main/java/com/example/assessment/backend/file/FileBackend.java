@@ -82,7 +82,7 @@ public abstract class FileBackend implements IBackend {
         try {
             return objectInputStream.readObject();
         } catch (ClassNotFoundException | InvalidClassException | StreamCorruptedException e) {
-            throw new DatabaseCorruptedException();
+            throw new DatabaseCorruptedException(e);
         }
     }
 

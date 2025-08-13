@@ -1,5 +1,6 @@
 package com.example.assessment.backend.types;
 
+import java.io.Serial;
 import java.nio.file.Path;
 import java.text.ParseException;
 import lombok.AllArgsConstructor;
@@ -12,6 +13,7 @@ import lombok.With;
 @AllArgsConstructor
 public class Course implements ICourse {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     public Course(@NonNull String code, @NonNull String name, int points, @NonNull String description) throws ParseException, NumberFormatException, IndexOutOfBoundsException {

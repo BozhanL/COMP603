@@ -1,5 +1,6 @@
 package com.example.assessment.backend.types;
 
+import java.io.Serial;
 import lombok.NonNull;
 import lombok.Value;
 import lombok.With;
@@ -8,6 +9,7 @@ import lombok.With;
 @Value
 public class Address implements IAddress {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @NonNull

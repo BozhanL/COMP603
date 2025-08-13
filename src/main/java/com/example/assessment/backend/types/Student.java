@@ -1,6 +1,7 @@
 package com.example.assessment.backend.types;
 
 import com.google.common.collect.ImmutableMap;
+import java.io.Serial;
 import java.time.LocalDate;
 import java.util.Objects;
 import lombok.EqualsAndHashCode;
@@ -15,6 +16,7 @@ import lombok.With;
 @EqualsAndHashCode(callSuper = true)
 public class Student extends Person implements IStudent {
 
+    @Serial
     private static final long serialVersionUID = 1L;
     private static final UserType TYPE = UserType.STUDENT;
 

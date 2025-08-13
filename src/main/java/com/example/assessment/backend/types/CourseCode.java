@@ -1,5 +1,6 @@
 package com.example.assessment.backend.types;
 
+import java.io.Serial;
 import java.text.ParseException;
 import java.util.Objects;
 import lombok.NonNull;
@@ -10,6 +11,7 @@ import lombok.With;
 @Value
 public class CourseCode implements ICourseCode {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @NonNull

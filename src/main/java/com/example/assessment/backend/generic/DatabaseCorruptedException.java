@@ -1,24 +1,11 @@
 package com.example.assessment.backend.generic;
 
-public class DatabaseCorruptedException extends Exception {
+import java.io.Serial;
+import lombok.experimental.StandardException;
 
+@StandardException
+public final class DatabaseCorruptedException extends Exception {
+
+    @Serial
     private static final long serialVersionUID = 1L;
-
-    /**
-     * Creates a new instance of <code>DatabaseCorruptedException</code> without
-     * detail message.
-     */
-    public DatabaseCorruptedException() {
-        super();
-    }
-
-    /**
-     * Constructs an instance of <code>DatabaseCorruptedException</code> with
-     * the specified detail message.
-     *
-     * @param msg the detail message.
-     */
-    public DatabaseCorruptedException(String msg) {
-        super(msg);
-    }
 }

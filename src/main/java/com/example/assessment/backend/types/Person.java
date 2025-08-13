@@ -1,5 +1,6 @@
 package com.example.assessment.backend.types;
 
+import java.io.Serial;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.time.LocalDate;
@@ -17,6 +18,7 @@ import lombok.experimental.NonFinal;
 @NonFinal
 public abstract class Person implements IPerson {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     protected Person(
