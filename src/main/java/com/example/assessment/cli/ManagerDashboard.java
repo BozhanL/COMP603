@@ -43,7 +43,7 @@ public class ManagerDashboard {
         }
     }
 
-    private void addCourse() {
+    void addCourse() {
         try {
             // user inputs
             String deptCode = inputHandler.promptDepartmentCode();
@@ -64,16 +64,15 @@ public class ManagerDashboard {
                     )
             );
 
-            // save to backend
+            // save
             if (confirm) {
                 try {
                     Course newCourse = new Course(courseCode, name, points, description);
                     courseBackend.setCourse(newCourse);
                     System.out.println("Course " + courseCode + " created successfully!");
                 } catch (java.text.ParseException e) {
-                    System.out.println("Invalid course format: " + e.getMessage());
+                    System.out.println("Invalid course code format: " + e.getMessage());
                 }
-
             } else {
                 System.out.println("Course creation cancelled.");
             }
