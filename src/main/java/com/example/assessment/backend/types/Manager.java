@@ -8,8 +8,8 @@ import lombok.ToString;
 import lombok.Value;
 import lombok.With;
 
-@Value
 @With
+@Value
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 public class Manager extends Person implements IManager {
