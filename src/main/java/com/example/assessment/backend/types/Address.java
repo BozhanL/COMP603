@@ -1,13 +1,12 @@
-package com.example.assessment.backend;
+package com.example.assessment.backend.types;
 
-import java.io.Serializable;
 import lombok.NonNull;
 import lombok.Value;
 import lombok.With;
 
-@Value
 @With
-public class Address implements Serializable {
+@Value
+public class Address implements IAddress {
 
     private static final long serialVersionUID = 1L;
 

@@ -1,5 +1,8 @@
-package com.example.assessment.backend;
+package com.example.assessment.backend.file;
 
+import com.example.assessment.backend.generic.DatabaseCorruptedException;
+import com.example.assessment.backend.generic.IPersonBackend;
+import com.example.assessment.backend.types.*;
 import com.google.common.collect.ImmutableMap;
 import java.io.IOException;
 import java.nio.file.FileAlreadyExistsException;
@@ -17,7 +20,7 @@ public class PersonFileBackendTest {
     @TempDir
     Path folder;
 
-    PersonFileBackend pfb;
+    IPersonBackend pfb;
 
     @BeforeEach
     void setUp() throws IOException {
@@ -26,15 +29,15 @@ public class PersonFileBackendTest {
 
     @Test
     void testSetAndGetStudent() throws IOException, DatabaseCorruptedException {
-        Address a = new Address("", "561", "Blockhouse Bay Road", "Blockhouse Bay", "Auckland", "Auckland", "NZ", "0600");
-        HashMap<String, StudentCourseInfo> sci = new HashMap<>();
+        IAddress a = new Address("", "561", "Blockhouse Bay Road", "Blockhouse Bay", "Auckland", "Auckland", "NZ", "0600");
+        HashMap<String, IStudentCourseInfo> sci = new HashMap<>();
         sci.put("COMP500", new StudentCourseInfo("COMP500", Grade.AP, LocalDate.of(2024, 2, 12), "City"));
         sci.put("COMP501", new StudentCourseInfo("COMP501", Grade.A, LocalDate.of(2021, 2, 12), "North"));
-        Student s = new Student("wby5780", "password", "legalFirstName", "legalLastName", LocalDate.now(), Gender.MALE, "email", "phone", a, Residency.INTERNATIONAL, ImmutableMap.copyOf(sci));
+        IStudent s = new Student("wby5780", "password", "legalFirstName", "legalLastName", LocalDate.now(), Gender.MALE, "email", "phone", a, Residency.INTERNATIONAL, ImmutableMap.copyOf(sci));
         this.pfb.setPerson(s);
 
-        Student id = this.pfb.getStudentById(s.getId());
-        Student name = this.pfb.getStudentByName(s.getLegalFirstName(), s.getLegalLastName());
+        IStudent id = this.pfb.getStudentById(s.getId());
+        IStudent name = this.pfb.getStudentByName(s.getLegalFirstName(), s.getLegalLastName());
 
         assertEquals(s, id);
         assertEquals(s, name);
@@ -43,7 +46,7 @@ public class PersonFileBackendTest {
 
     @Test
     void testGetDefaultManager() throws IOException, DatabaseCorruptedException {
-        Manager DEFAULT_MANAGER = new Manager(
+        IManager DEFAULT_MANAGER = new Manager(
                 "admin",
                 "admin",
                 "admin",
@@ -54,8 +57,8 @@ public class PersonFileBackendTest {
                 "",
                 new Address("", "", "", "", "", "", "", "")
         );
-        Manager id = this.pfb.getManagerById("admin");
-        Manager name = this.pfb.getManagerByName("admin", "admin");
+        IManager id = this.pfb.getManagerById("admin");
+        IManager name = this.pfb.getManagerByName("admin", "admin");
 
         assertEquals(DEFAULT_MANAGER, id);
         assertEquals(DEFAULT_MANAGER, name);
@@ -64,18 +67,17 @@ public class PersonFileBackendTest {
 
     @Test
     void testDeletePerson() throws IOException, DatabaseCorruptedException {
-        Address a = new Address("", "561", "Blockhouse Bay Road", "Blockhouse Bay", "Auckland", "Auckland", "NZ", "0600");
-        HashMap<String, StudentCourseInfo> sci = new HashMap<>();
+        IAddress a = new Address("", "561", "Blockhouse Bay Road", "Blockhouse Bay", "Auckland", "Auckland", "NZ", "0600");
+        HashMap<String, IStudentCourseInfo> sci = new HashMap<>();
         sci.put("COMP500", new StudentCourseInfo("COMP500", Grade.AP, LocalDate.of(2024, 2, 12), "City"));
         sci.put("COMP501", new StudentCourseInfo("COMP501", Grade.A, LocalDate.of(2021, 2, 12), "North"));
-        Student s = new Student("wby5780", "password", "legalFirstName", "legalLastName", LocalDate.now(), Gender.MALE, "email", "phone", a, Residency.INTERNATIONAL, ImmutableMap.copyOf(sci));
+        IStudent s = new Student("wby5780", "password", "legalFirstName", "legalLastName", LocalDate.now(), Gender.MALE, "email", "phone", a, Residency.INTERNATIONAL, ImmutableMap.copyOf(sci));
         this.pfb.setPerson(s);
 
         assertEquals(s, this.pfb.getStudentById(s.getId()));
         this.pfb.deletePersonById(s.getId());
 
-        Exception exception;
-        exception = assertThrows(IOException.class,
+        IOException exception = assertThrows(IOException.class,
                 () -> {
                     this.pfb.getStudentById(s.getId());
                 }
@@ -92,8 +94,8 @@ public class PersonFileBackendTest {
 
     @Test
     void testSetExistPerson() throws IOException, DatabaseCorruptedException {
-        Address a = new Address("", "561", "Blockhouse Bay Road", "Blockhouse Bay", "Auckland", "Auckland", "NZ", "0600");
-        HashMap<String, StudentCourseInfo> sci = new HashMap<>();
+        IAddress a = new Address("", "561", "Blockhouse Bay Road", "Blockhouse Bay", "Auckland", "Auckland", "NZ", "0600");
+        HashMap<String, IStudentCourseInfo> sci = new HashMap<>();
         sci.put("COMP500", new StudentCourseInfo("COMP500", Grade.AP, LocalDate.of(2024, 2, 12), "City"));
         sci.put("COMP501", new StudentCourseInfo("COMP501", Grade.A, LocalDate.of(2021, 2, 12), "North"));
         Student s = new Student("wby5780", "password", "legalFirstName", "legalLastName", LocalDate.now(), Gender.MALE, "email", "phone", a, Residency.INTERNATIONAL, ImmutableMap.copyOf(sci));
@@ -101,12 +103,11 @@ public class PersonFileBackendTest {
 
         assertEquals(s, this.pfb.getStudentById(s.getId()));
 
-        Exception exception;
-        exception = assertThrows(FileAlreadyExistsException.class,
+        FileAlreadyExistsException exception = assertThrows(FileAlreadyExistsException.class,
                 () -> {
                     this.pfb.setPerson(s);
                 }
         );
-        assertEquals(this.pfb.db.resolve(s.getPath()).toString(), exception.getMessage());
+        assertEquals(this.pfb.getDb().resolve(s.getPath()).toString(), exception.getMessage());
     }
 }

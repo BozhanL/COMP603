@@ -1,4 +1,4 @@
-package com.example.assessment.backend;
+package com.example.assessment.backend.types;
 
 import java.io.Serializable;
 import java.nio.file.Path;

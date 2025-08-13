@@ -1,4 +1,4 @@
-package com.example.assessment.backend;
+package com.example.assessment.backend.generic;
 
 public class DatabaseCorruptedException extends Exception {
 
@@ -9,6 +9,7 @@ public class DatabaseCorruptedException extends Exception {
      * detail message.
      */
     public DatabaseCorruptedException() {
+        super();
     }
 
     /**

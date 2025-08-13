@@ -1,9 +1,9 @@
 package com.example.assessment.cli;
 
-import com.example.assessment.backend.CourseFileBackend;
-import com.example.assessment.backend.ICourseBackend;
-import com.example.assessment.backend.IPersonBackend;
-import com.example.assessment.backend.Person;
+import com.example.assessment.backend.types.CourseFileBackend;
+import com.example.assessment.backend.types.ICourseBackend;
+import com.example.assessment.backend.generic.IPersonBackend;
+import com.example.assessment.backend.types.Person;
 import java.io.IOException;
 import java.util.Scanner;
 import lombok.Cleanup;
