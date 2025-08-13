@@ -32,16 +32,16 @@ public class CourseInputHandler {
                 if (level >= 5 && level <= 10) {
                     return level;
                 }
-                System.out.println("Error: Level must be between 5-9.\n");
+                System.out.println("Error: Level must be between 5-10.\n");
             } catch (NumberFormatException e) {
-                System.out.println("Error: Please enter a single digit (5-9).\n");
+                System.out.println("Error: Please enter a number (5-10).\n");
             }
         }
     }
 
     public int promptCourseNumber() {
         while (true) {
-            System.out.print("Enter course number (01-99): ");
+            System.out.print("Enter course number (05-99): ");
             String input = scanner.nextLine().trim();
 
             try {

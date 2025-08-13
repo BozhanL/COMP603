@@ -21,7 +21,7 @@ public class FrontEndTest {
 
         // 2. Create course we expect to be saved
         Course expectedCourse = new Course(
-                new CourseCode("CS501"), // Note: Using CourseCode directly
+                "CS501", // Use String to match implementation
                 "OOP",
                 100,
                 "Description"
