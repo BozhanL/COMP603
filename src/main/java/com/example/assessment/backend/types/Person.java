@@ -50,7 +50,7 @@ public abstract class Person implements IPerson {
 
     @NonNull
     @ToString.Exclude
-    @Getter(AccessLevel.PRIVATE)
+    @Getter(AccessLevel.PROTECTED)
     protected String password;
 
     @NonNull

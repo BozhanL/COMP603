@@ -41,10 +41,6 @@ public class Student extends Person implements IStudent {
         this.courses = courses;
     }
 
-//    @Override
-//    protected Student withId(@NonNull String id) throws IllegalArgumentException {
-//        return Objects.equals(this.id, id) ? this : new Student(id, password, legalFirstName, legalLastName, dateOfBirth, gender, email, phone, address, residencyStatus, courses);
-//    }
     @Override
     public Student withPassword(@NonNull String password) {
         return Objects.equals(this.password, password) ? this : new Student(id, password, legalFirstName, legalLastName, dateOfBirth, gender, email, phone, address, residencyStatus, courses);
