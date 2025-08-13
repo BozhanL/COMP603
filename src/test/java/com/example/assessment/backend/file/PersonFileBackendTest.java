@@ -98,7 +98,7 @@ public class PersonFileBackendTest {
         HashMap<String, IStudentCourseInfo> sci = new HashMap<>();
         sci.put("COMP500", new StudentCourseInfo("COMP500", Grade.AP, LocalDate.of(2024, 2, 12), "City"));
         sci.put("COMP501", new StudentCourseInfo("COMP501", Grade.A, LocalDate.of(2021, 2, 12), "North"));
-        Student s = new Student("wby5780", "password", "legalFirstName", "legalLastName", LocalDate.now(), Gender.MALE, "email", "phone", a, Residency.INTERNATIONAL, ImmutableMap.copyOf(sci));
+        IStudent s = new Student("wby5780", "password", "legalFirstName", "legalLastName", LocalDate.now(), Gender.MALE, "email", "phone", a, Residency.INTERNATIONAL, ImmutableMap.copyOf(sci));
         this.pfb.setPerson(s);
 
         assertEquals(s, this.pfb.getStudentById(s.getId()));

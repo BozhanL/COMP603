@@ -5,8 +5,8 @@ import lombok.NonNull;
 import lombok.Value;
 import lombok.With;
 
-@Value
 @With
+@Value
 public class StudentCourseInfo implements IStudentCourseInfo {
 
     private static final long serialVersionUID = 1L;
