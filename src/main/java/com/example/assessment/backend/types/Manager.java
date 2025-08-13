@@ -31,10 +31,6 @@ public class Manager extends Person implements IManager {
         super(id, password, legalFirstName, legalLastName, dateOfBirth, gender, email, phone, address);
     }
 
-//    @Override
-//    protected Manager withId(@NonNull String id) throws IllegalArgumentException {
-//        return Objects.equals(this.id, id) ? this : new Manager(id, password, legalFirstName, legalLastName, dateOfBirth, gender, email, phone, address);
-//    }
     @Override
     public Manager withPassword(@NonNull String password) {
         return Objects.equals(this.password, password) ? this : new Manager(id, password, legalFirstName, legalLastName, dateOfBirth, gender, email, phone, address);
