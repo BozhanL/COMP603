@@ -7,7 +7,9 @@ import com.example.assessment.backend.types.IPerson;
 import java.io.IOException;
 import java.nio.file.InvalidPathException;
 import java.util.Scanner;
+import lombok.experimental.UtilityClass;
 
+@UtilityClass
 public class Welcome {
 
     public static void showAsciiArt() {
