@@ -1,6 +1,7 @@
 package com.example.assessment.cli;
 
 import com.example.assessment.backend.Course;
+import com.example.assessment.backend.CourseCode;
 import com.example.assessment.backend.ICourseBackend;
 import java.io.IOException;
 import java.util.Scanner;
@@ -43,7 +44,7 @@ public class ManagerDashboard {
         }
     }
 
-    void addCourse() {
+    public void addCourse() {
         try {
             // user inputs
             String deptCode = inputHandler.promptDepartmentCode();
@@ -54,22 +55,22 @@ public class ManagerDashboard {
             String description = inputHandler.promptDescription();
 
             // construct course code
-            String courseCode = String.format("%s%d%02d", deptCode, level, courseNum);
+            // use backend function instead
+            CourseCode courseCode = new CourseCode(deptCode, level, courseNum);
 
             // confirmation
             boolean confirm = inputHandler.promptConfirmation(
-                    String.format(
-                            "Create new course?\nCode: %s\nName: %s\nPoints: %d\nDescription: %s\nProceed?",
-                            courseCode, name, points, description
-                    )
+                    "Create new course?\nCode: %s\nName: %s\nPoints: %d\nDescription: %s\nProceed?",
+                    courseCode, name, points, description
             );
 
             // save
             if (confirm) {
                 try {
-                    Course newCourse = new Course(courseCode, name, points, description);
+                    Course newCourse = new Course(courseCode.toString(), name, points, description);
                     courseBackend.setCourse(newCourse);
-                    System.out.println("Course " + courseCode + " created successfully!");
+                    // use backend function
+                    System.out.println("Course " + newCourse.getCode() + " created successfully!");
                 } catch (java.text.ParseException e) {
                     System.out.println("Invalid course code format: " + e.getMessage());
                 }

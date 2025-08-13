@@ -3,9 +3,9 @@ package com.example.assessment.cli;
 import com.example.assessment.backend.*;
 import java.nio.file.Path;
 import java.util.Scanner;
+import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
-import static org.mockito.Mockito.*;
 
 public class FrontEndTest {
 
@@ -14,29 +14,23 @@ public class FrontEndTest {
 
     @Test
     void testAddCourseFlow() throws Exception {
-        // 1. Setup mock backend and test inputs
-        ICourseBackend mockBackend = mock(ICourseBackend.class);
-        String simulatedInput = "CS\n5\n01\nOOP\n100\nDescription\nY\n";
+        // 1. Setup real backend with temp directory
+        ICourseBackend backend = new CourseFileBackend(tempDir.toString());
+
+        // 2. Simulate user input
+        String simulatedInput = "COMP\n5\n09\nOOP\n15\nDescription\nY\n";
         Scanner testScanner = new Scanner(simulatedInput);
 
-        // 2. Create course we expect to be saved
-        Course expectedCourse = new Course(
-                "CS501", // Use String to match implementation
-                "OOP",
-                100,
-                "Description"
-        );
-
-        // 3. Create and test dashboard
-        ManagerDashboard dashboard = new ManagerDashboard(testScanner, mockBackend);
+        // 3. Test the workflow
+        ManagerDashboard dashboard = new ManagerDashboard(testScanner, backend);
         dashboard.addCourse();
 
-        // 4. Verify the exact course was saved
-        verify(mockBackend).setCourse(argThat(actualCourse
-                -> actualCourse.getCode().toString().equals("CS501")
-                && actualCourse.getName().equals("OOP")
-                && actualCourse.getPoints() == 100
-                && actualCourse.getDescription().equals("Description")
-        ));
+        // 4. Verify through backend
+        Course savedCourse = backend.getCourseByCode("COMP509");
+        assertNotNull(savedCourse);
+        assertEquals("OOP", savedCourse.getName());
+        assertEquals(15, savedCourse.getPoints());
+        assertEquals("Description", savedCourse.getDescription());
+
     }
 }
