@@ -1,15 +1,13 @@
-package com.example.assessment.backend;
+package com.example.assessment.backend.types;
 
-import java.io.Serializable;
 import java.time.LocalDate;
-
 import lombok.NonNull;
 import lombok.Value;
 import lombok.With;
 
 @Value
 @With
-public class StudentCourseInfo implements Serializable {
+public class StudentCourseInfo implements IStudentCourseInfo {
 
     private static final long serialVersionUID = 1L;
 

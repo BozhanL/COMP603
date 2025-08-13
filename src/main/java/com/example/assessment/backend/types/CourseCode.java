@@ -1,15 +1,14 @@
-package com.example.assessment.backend;
+package com.example.assessment.backend.types;
 
-import java.io.Serializable;
+import java.text.ParseException;
+import java.util.Objects;
 import lombok.NonNull;
 import lombok.Value;
 import lombok.With;
-import java.text.ParseException;
-import java.util.Objects;
 
 @With
 @Value
-public class CourseCode implements Serializable {
+public class CourseCode implements ICourseCode {
 
     private static final long serialVersionUID = 1L;
 
@@ -39,7 +38,8 @@ public class CourseCode implements Serializable {
         this.courseNumber = courseNumber;
     }
 
-    public CourseCode withDepartmentCode(@NonNull String departmentCode) throws IllegalArgumentException {
+    @Override
+    public ICourseCode withDepartmentCode(@NonNull String departmentCode) throws IllegalArgumentException {
         if (departmentCode.isBlank()) {
             throw new IllegalArgumentException("departmentCode must not be blank!");
         }

@@ -1,4 +1,4 @@
-package com.example.assessment.backend;
+package com.example.assessment.backend.types;
 
 import com.google.common.collect.ImmutableMap;
 import java.time.LocalDate;
@@ -11,12 +11,12 @@ import org.junit.jupiter.api.Test;
 
 public class StudentTest {
 
-    Student s;
+    IStudent s;
 
     @BeforeEach
     void setUp() {
-        Address a = new Address("", "561", "Blockhouse Bay Road", "Blockhouse Bay", "Auckland", "Auckland", "NZ", "0600");
-        HashMap<String, StudentCourseInfo> sci = new HashMap<>();
+        IAddress a = new Address("", "561", "Blockhouse Bay Road", "Blockhouse Bay", "Auckland", "Auckland", "NZ", "0600");
+        HashMap<String, IStudentCourseInfo> sci = new HashMap<>();
         sci.put("COMP500", new StudentCourseInfo("COMP500", Grade.AP, LocalDate.of(2024, 2, 12), "City"));
         sci.put("COMP501", new StudentCourseInfo("COMP501", Grade.A, LocalDate.of(2021, 2, 12), "North"));
         this.s = new Student("wby5780", "password", "legalFirstName", "legalLastName", LocalDate.now(), Gender.MALE, "email", "phone", a, Residency.INTERNATIONAL, ImmutableMap.copyOf(sci));
@@ -66,7 +66,7 @@ public class StudentTest {
 
     @Test
     void testWith() {
-        Student n;
+        IStudent n;
 
         n = this.s.withAddress(new Address("", "", "", "", "", "", "NZ", "0600"));
         assertEquals(n.getAddress(), new Address("", "", "", "", "", "", "NZ", "0600"));
@@ -82,9 +82,6 @@ public class StudentTest {
 
         n = this.s.withGender(Gender.OTHER);
         assertEquals(n.getGender(), Gender.OTHER);
-
-        n = this.s.withId("abc1234");
-        assertEquals(n.getId(), "abc1234");
 
         n = this.s.withLegalFirstName("James");
         assertEquals(n.getLegalFirstName(), "James");
@@ -105,9 +102,8 @@ public class StudentTest {
     @Test
     void testToString() {
         String str = String.format(
-                "Student(super=Person(id=%s, password=%s, legalFirstName=%s, legalLastName=%s, dateOfBirth=%s, gender=%s, email=%s, phone=%s, address=%s), residencyStatus=%s, courses=%s)",
+                "Student(super=Person(id=%s, legalFirstName=%s, legalLastName=%s, dateOfBirth=%s, gender=%s, email=%s, phone=%s, address=%s), residencyStatus=%s, courses=%s)",
                 this.s.getId(),
-                this.s.getPassword(),
                 this.s.getLegalFirstName(),
                 this.s.getLegalLastName(),
                 this.s.getDateOfBirth(),

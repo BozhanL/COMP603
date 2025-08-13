@@ -1,10 +1,9 @@
 package com.example.assessment.cli;
 
-import com.example.assessment.backend.DatabaseCorruptedException;
-import com.example.assessment.backend.IPersonBackend;
-import com.example.assessment.backend.Person;
-import com.example.assessment.backend.PersonFileBackend;
-
+import com.example.assessment.backend.file.PersonFileBackend;
+import com.example.assessment.backend.generic.DatabaseCorruptedException;
+import com.example.assessment.backend.generic.IPersonBackend;
+import com.example.assessment.backend.types.IPerson;
 import java.io.IOException;
 import java.nio.file.InvalidPathException;
 import java.util.Scanner;
@@ -51,8 +50,8 @@ public class Welcome {
         return pb;
     }
 
-    public static Person login(Scanner scanner, IPersonBackend pb) {
-        Person p = null;
+    public static IPerson login(Scanner scanner, IPersonBackend pb) {
+        IPerson p = null;
 
         while (p == null) {
             String id = "";

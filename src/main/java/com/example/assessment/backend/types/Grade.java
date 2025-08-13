@@ -1,4 +1,4 @@
-package com.example.assessment.backend;
+package com.example.assessment.backend.types;
 
 public enum Grade {
     AP("A+"), A("A"), AM("A-"),

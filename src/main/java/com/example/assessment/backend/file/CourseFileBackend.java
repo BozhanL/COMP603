@@ -1,9 +1,14 @@
-package com.example.assessment.backend;
+package com.example.assessment.backend.file;
 
+import com.example.assessment.backend.generic.DatabaseCorruptedException;
+import com.example.assessment.backend.generic.ICourseBackend;
+import com.example.assessment.backend.types.ICourse;
 import java.io.IOException;
 import java.nio.file.Path;
 import lombok.NonNull;
+import lombok.ToString;
 
+@ToString(callSuper = true)
 public final class CourseFileBackend extends FileBackend implements ICourseBackend {
 
     protected static final Path DEFAULT_DATA_SUBPATH = Path.of("course");
@@ -21,16 +26,16 @@ public final class CourseFileBackend extends FileBackend implements ICourseBacke
     }
 
     @Override
-    public Course getCourseByCode(@NonNull String code) throws IOException, DatabaseCorruptedException {
+    public ICourse getCourseByCode(@NonNull String code) throws IOException, DatabaseCorruptedException {
         Object obj = this.getObjectByPartPath(code);
-        if (obj instanceof Course c) {
+        if (obj instanceof ICourse c) {
             return c;
         }
         return null;
     }
 
     @Override
-    public void setCourse(@NonNull Course c) throws IOException {
+    public void setCourse(@NonNull ICourse c) throws IOException {
         this.setObject(c);
     }
 
@@ -40,7 +45,7 @@ public final class CourseFileBackend extends FileBackend implements ICourseBacke
     }
 
     @Override
-    public void modifyCourse(@NonNull Course c) throws IOException {
+    public void modifyCourse(@NonNull ICourse c) throws IOException {
         this.modifyObject(c);
     }
 }

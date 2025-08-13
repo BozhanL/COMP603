@@ -1,5 +1,8 @@
-package com.example.assessment.backend;
+package com.example.assessment.backend.file;
 
+import com.example.assessment.backend.generic.DatabaseCorruptedException;
+import com.example.assessment.backend.generic.IBackend;
+import com.example.assessment.backend.types.ISelfSerializable;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InvalidClassException;
@@ -13,13 +16,17 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Iterator;
 import lombok.Cleanup;
+import lombok.Getter;
 import lombok.NonNull;
+import lombok.ToString;
 
+@ToString
 public abstract class FileBackend implements IBackend {
 
     protected static final Path EMPTY = Path.of("");
     public static final Path DEFAULT_DATA_LOCATION = Path.of(System.getProperty("user.home"), ".student/filedb");
 
+    @Getter
     protected Path db;
 
     protected FileBackend(@NonNull String p) throws IOException, IllegalArgumentException {

@@ -1,4 +1,4 @@
-package com.example.assessment.backend;
+package com.example.assessment.backend.types;
 
 import java.nio.file.Path;
 import java.text.ParseException;
@@ -10,7 +10,7 @@ import lombok.With;
 @With
 @Value
 @AllArgsConstructor
-public class Course implements ISelfSerializable {
+public class Course implements ICourse {
 
     private static final long serialVersionUID = 1L;
 
@@ -23,7 +23,7 @@ public class Course implements ISelfSerializable {
     }
 
     @NonNull
-    protected CourseCode code;
+    protected ICourseCode code;
     @NonNull
     protected String name;
     protected int points;

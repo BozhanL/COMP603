@@ -1,8 +1,7 @@
 package com.example.assessment.cli;
 
-import com.example.assessment.backend.IPersonBackend;
-import com.example.assessment.backend.Person;
-
+import com.example.assessment.backend.generic.IPersonBackend;
+import com.example.assessment.backend.types.IPerson;
 import java.util.Scanner;
 import lombok.Cleanup;
 
@@ -17,7 +16,6 @@ public class AssessmentOne {
 
         IPersonBackend pb = Welcome.askForDatabase(scanner);
 
-        Person person = Welcome.login(scanner, pb);
-
+        IPerson person = Welcome.login(scanner, pb);
     }
 }
