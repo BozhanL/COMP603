@@ -1,5 +1,11 @@
 package com.example.assessment.cli;
 
+import com.example.assessment.backend.file.PersonFileBackend;
+import com.example.assessment.backend.generic.IPersonBackend;
+import com.example.assessment.backend.types.classes.Address;
+import com.example.assessment.backend.types.classes.Gender;
+import com.example.assessment.backend.types.classes.Manager;
+import com.example.assessment.backend.types.interfaces.IPerson;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PipedInputStream;
@@ -7,15 +13,16 @@ import java.io.PipedOutputStream;
 import java.io.PrintStream;
 import java.nio.charset.Charset;
 import java.nio.file.Path;
+import java.time.LocalDate;
 import java.util.Scanner;
-
 import org.junit.jupiter.api.AfterEach;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
-public class AssessmentOneTest {
+public class WelcomeTest {
 
     @TempDir
     Path folder;
@@ -39,38 +46,47 @@ public class AssessmentOneTest {
     }
 
     @Test
-    void testMain() throws InterruptedException {
+    void testAskForDatabase() {
         Scanner sc = new Scanner(this.in, Charset.defaultCharset());
         PrintStream ps = new PrintStream(this.out);
 
-        Thread thread = new Thread(() -> {
-            AssessmentOne.main(new String[0]);
-        });
-        thread.start();
-
-        assertEquals("               _                           ", sc.nextLine());
-        assertEquals("              | |                          ", sc.nextLine());
-        assertEquals(" __      _____| | ___ ___  _ __ ___   ___  ", sc.nextLine());
-        assertEquals(" \\ \\ /\\ / / _ \\ |/ __/ _ \\| '_ ` _ \\ / _ \\ ", sc.nextLine());
-        assertEquals("  \\ V  V /  __/ | (_| (_) | | | | | |  __/ ", sc.nextLine());
-        assertEquals("   \\_/\\_/_\\___|_|\\___\\___/|_| |_| |_|\\___| ", sc.nextLine());
-        assertEquals("  / ____|_   _|  \\/  |/ ____|              ", sc.nextLine());
-        assertEquals(" | (___   | | | \\  / | (___                ", sc.nextLine());
-        assertEquals("  \\___ \\  | | | |\\/| |\\___ \\               ", sc.nextLine());
-        assertEquals("  ____) |_| |_| |  | |____) |              ", sc.nextLine());
-        assertEquals(" |_____/|_____|_|  |_|_____/               ", sc.nextLine());
-        assertEquals("                                           ", sc.nextLine());
-
         ps.println(this.folder);
+
+        IPersonBackend pb = Welcome.askForDatabase(new Scanner(System.in, Charset.defaultCharset()));
+        assertNotNull(pb);
+
         assertEquals(String.format(
                 "Enter database path (press Enter for default): Database = %s",
                 this.folder
         ), sc.nextLine());
+    }
+
+    @Test
+    void testLogin() throws IOException {
+        Scanner sc = new Scanner(this.in, Charset.defaultCharset());
+        PrintStream ps = new PrintStream(this.out);
 
         ps.println("admin");
         ps.println("admin");
+
+        IPerson expected = new Manager(
+                "admin",
+                "admin",
+                "admin",
+                "admin",
+                LocalDate.MIN,
+                Gender.OTHER,
+                "",
+                "",
+                new Address("", "", "", "", "", "", "", "")
+        );
+        IPerson p = Welcome.login(
+                new Scanner(System.in, Charset.defaultCharset()),
+                new PersonFileBackend(this.folder)
+        );
+        assertNotNull(p);
+        assertEquals(expected, p);
+
         assertEquals("Enter User ID: Enter Password: Login Successful", sc.nextLine());
-
-        // thread.join();
     }
 }
