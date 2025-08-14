@@ -1,6 +1,5 @@
 package com.example.assessment.cli;
 
-import com.example.assessment.backend.file.PersonFileBackend;
 import com.example.assessment.backend.generic.DatabaseCorruptedException;
 import com.example.assessment.backend.generic.IPersonBackend;
 import com.example.assessment.backend.types.interfaces.IPerson;
@@ -8,6 +7,7 @@ import com.google.errorprone.annotations.CheckReturnValue;
 import com.google.errorprone.annotations.Immutable;
 import java.io.IOException;
 import java.nio.file.InvalidPathException;
+import java.nio.file.Path;
 import java.util.Scanner;
 import lombok.experimental.UtilityClass;
 
@@ -31,29 +31,23 @@ public class Welcome {
         System.out.println("                                           ");
     }
 
-    public static IPersonBackend askForDatabase(Scanner scanner) {
-        IPersonBackend pb = null;
-
-        while (pb == null) {
-            System.out.print("Enter database path (press Enter for default): ");
-            String path = scanner.nextLine().trim();
-
+    public static Path askForDatabaseLocation(Scanner scanner) {
+        while (true) {
             try {
+                System.out.print("Enter database path (press Enter for default): ");
+                String path = scanner.nextLine().trim();
                 if (path.isBlank()) {
-                    pb = new PersonFileBackend();
                     System.out.println("Database = default");
-                } else {
-                    pb = new PersonFileBackend(path);
-                    System.out.println("Database = " + path);
+                    return null;
                 }
-            } catch (IOException e) {
-                System.out.println("Error: " + e.getMessage());
+
+                Path p = Path.of(path);
+                System.out.println("Database = " + p);
+                return p;
             } catch (InvalidPathException e) {
                 System.out.println("Error: invalid path");
             }
         }
-
-        return pb;
     }
 
     public static IPerson login(Scanner scanner, IPersonBackend pb) {
