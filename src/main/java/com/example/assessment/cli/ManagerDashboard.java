@@ -7,6 +7,7 @@ import com.example.assessment.backend.types.interfaces.ICourse;
 import com.example.assessment.backend.types.interfaces.ICourseCode;
 import java.io.IOException;
 import java.util.Scanner;
+import lombok.NonNull;
 
 public class ManagerDashboard {
 
@@ -14,7 +15,7 @@ public class ManagerDashboard {
     private final ICourseBackend courseBackend;
     private final CourseInputHandler inputHandler;
 
-    public ManagerDashboard(Scanner scanner, ICourseBackend courseBackend) {
+    public ManagerDashboard(@NonNull Scanner scanner, @NonNull ICourseBackend courseBackend) {
         this.scanner = scanner;
         this.courseBackend = courseBackend;
         this.inputHandler = new CourseInputHandler(scanner);

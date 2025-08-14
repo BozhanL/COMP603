@@ -69,7 +69,9 @@ public class ManagerDashboardTest {
         ps.println("15");
         ps.println("Description");
         ps.println("Y");
+
         thread.join();
+
         String s = sc.tokens().collect(Collectors.joining(" "));
         assertThat(s, allOf(
                 containsString("Create new course?"),

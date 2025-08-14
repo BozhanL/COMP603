@@ -2,15 +2,17 @@ package com.example.assessment.cli;
 
 import com.google.errorprone.annotations.CheckReturnValue;
 import com.google.errorprone.annotations.FormatMethod;
+import com.google.errorprone.annotations.FormatString;
 import java.util.Locale;
 import java.util.Scanner;
+import lombok.NonNull;
 
 @CheckReturnValue
 public class CourseInputHandler {
 
     private final Scanner scanner;
 
-    public CourseInputHandler(Scanner scanner) {
+    public CourseInputHandler(@NonNull Scanner scanner) {
         this.scanner = scanner;
     }
 
@@ -96,7 +98,7 @@ public class CourseInputHandler {
 
     // generalized confirmation
     @FormatMethod
-    public boolean promptConfirmation(String message, Object... args) {
+    public boolean promptConfirmation(@FormatString String message, Object... args) {
         String formattedMessage = String.format(message, args);
 
         while (true) {

@@ -21,11 +21,12 @@ public class AssessmentOne {
         Scanner scanner = new Scanner(System.in, Charset.defaultCharset());
 
         Welcome.showAsciiArt();
+        Welcome w = new Welcome(scanner);
 
         IPersonBackend pb;
         ICourseBackend cb;
         while (true) {
-            Path p = Welcome.askForDatabaseLocation(scanner);
+            Path p = w.askForDatabaseLocation();
             try {
                 if (p == null) {
                     pb = new PersonFileBackend();
@@ -41,7 +42,7 @@ public class AssessmentOne {
             }
         }
 
-        IPerson unused = Welcome.login(scanner, pb);
+        IPerson unused = w.login(pb);
 
         new ManagerDashboard(scanner, cb).displayMenu();
     }

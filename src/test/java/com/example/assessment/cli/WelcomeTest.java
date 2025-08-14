@@ -48,10 +48,11 @@ public class WelcomeTest {
     void testAskForDatabaseLocation() {
         Scanner sc = new Scanner(this.in, Charset.defaultCharset());
         PrintStream ps = new PrintStream(this.out);
+        Welcome w = new Welcome(new Scanner(System.in, Charset.defaultCharset()));
 
         ps.println(this.folder);
 
-        Path p = Welcome.askForDatabaseLocation(new Scanner(System.in, Charset.defaultCharset()));
+        Path p = w.askForDatabaseLocation();
         assertNotNull(p);
         assertEquals(this.folder, p);
 
@@ -65,6 +66,8 @@ public class WelcomeTest {
     void testLogin() throws IOException {
         Scanner sc = new Scanner(this.in, Charset.defaultCharset());
         PrintStream ps = new PrintStream(this.out);
+
+        Welcome w = new Welcome(new Scanner(System.in, Charset.defaultCharset()));
 
         ps.println("admin");
         ps.println("admin");
@@ -80,10 +83,7 @@ public class WelcomeTest {
                 "",
                 new Address("", "", "", "", "", "", "", "")
         );
-        IPerson p = Welcome.login(
-                new Scanner(System.in, Charset.defaultCharset()),
-                new PersonFileBackend(this.folder)
-        );
+        IPerson p = w.login(new PersonFileBackend(this.folder));
         assertNotNull(p);
         assertEquals(expected, p);
 
