@@ -1,5 +1,6 @@
 package com.example.assessment.backend;
 
+import static com.example.assessment.backend.types.classes.Student.getTypeStatic;
 import com.example.assessment.backend.types.enums.Gender;
 import com.example.assessment.backend.types.enums.Grade;
 import com.example.assessment.backend.types.enums.Residency;
@@ -56,7 +57,7 @@ public class StudentTest {
         assertEquals(this.s.getResidencyStatus(), Residency.INTERNATIONAL);
 
         assertEquals(this.s.getType(), UserType.STUDENT);
-        assertEquals(com.example.assessment.backend.types.classes.Student.getTypeStatic(), UserType.STUDENT);
+        assertEquals(getTypeStatic(), UserType.STUDENT);
     }
 
     @Test
