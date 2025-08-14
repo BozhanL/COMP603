@@ -15,14 +15,36 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.13.0</version>
                 <configuration>
+                    <encoding>UTF-8</encoding>
+                    <fork>true</fork>
                     <compilerArgs>
                         <arg>-Xlint</arg>
+                        <arg>-XDcompilePolicy=simple</arg>
+                        <arg>--should-stop=ifError=FLOW</arg>
+                        <arg>-Xplugin:ErrorProne</arg>
+
+                        <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED</arg>
+                        <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED</arg>
+                        <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.main=ALL-UNNAMED</arg>
+                        <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.model=ALL-UNNAMED</arg>
+                        <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED</arg>
+                        <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED</arg>
+                        <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED</arg>
+                        <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED</arg>
+                        <arg>-J--add-opens=jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED</arg>
+                        <arg>-J--add-opens=jdk.compiler/com.sun.tools.javac.comp=ALL-UNNAMED</arg>
+
                     </compilerArgs>
                     <annotationProcessorPaths>
                         <path>
                             <groupId>org.projectlombok</groupId>
                             <artifactId>lombok</artifactId>
-                            <version>1.18.38</version>
+                            <version>${lombok.version}</version>
+                        </path>
+                        <path>
+                            <groupId>com.google.errorprone</groupId>
+                            <artifactId>error_prone_core</artifactId>
+                            <version>${errorprone.version}</version>
                         </path>
                     </annotationProcessorPaths>
                 </configuration>
@@ -51,24 +73,35 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.38</version>
+            <version>${lombok.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>33.4.8-jre</version>
+            <version>${guava.version}</version>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
-            <version>5.8.2</version>
+            <version>${junit.version}</version>
             <scope>test</scope>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.google.errorprone/error_prone_core -->
+        <dependency>
+            <groupId>com.google.errorprone</groupId>
+            <artifactId>error_prone_core</artifactId>
+            <version>${errorprone.version}</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.release>21</maven.compiler.release>
         <exec.mainClass>com.example.assessment.cli.AssessmentOne</exec.mainClass>
+        <lombok.version>1.18.38</lombok.version>
+        <errorprone.version>2.41.0</errorprone.version>
+        <guava.version>33.4.8-jre</guava.version>
+        <junit.version>5.8.2</junit.version>
     </properties>
 </project>
