@@ -1,5 +1,7 @@
 package com.example.assessment.backend.types;
 
+import com.google.errorprone.annotations.CheckReturnValue;
+import com.google.errorprone.annotations.Immutable;
 import java.io.Serial;
 import java.nio.file.Path;
 import java.text.ParseException;
@@ -10,6 +12,8 @@ import lombok.With;
 
 @With
 @Value
+@Immutable
+@CheckReturnValue
 @AllArgsConstructor
 public class Course implements ICourse {
 

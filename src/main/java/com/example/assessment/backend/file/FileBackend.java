@@ -3,6 +3,8 @@ package com.example.assessment.backend.file;
 import com.example.assessment.backend.generic.DatabaseCorruptedException;
 import com.example.assessment.backend.generic.IBackend;
 import com.example.assessment.backend.types.ISelfSerializable;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
+import com.google.errorprone.annotations.CheckReturnValue;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InvalidClassException;
@@ -21,6 +23,7 @@ import lombok.NonNull;
 import lombok.ToString;
 
 @ToString
+@CheckReturnValue
 public abstract class FileBackend implements IBackend {
 
     protected static final Path EMPTY = Path.of("");
@@ -107,6 +110,7 @@ public abstract class FileBackend implements IBackend {
         return this.deleteObjectWithPath(path);
     }
 
+    @CanIgnoreReturnValue
     protected boolean deleteObjectWithPath(@NonNull Path path) throws IOException {
         return Files.deleteIfExists(this.db.resolve(path));
     }

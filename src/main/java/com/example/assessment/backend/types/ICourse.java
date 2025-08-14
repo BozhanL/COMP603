@@ -1,7 +1,11 @@
 package com.example.assessment.backend.types;
 
+import com.google.errorprone.annotations.CheckReturnValue;
+import com.google.errorprone.annotations.Immutable;
 import lombok.NonNull;
 
+@Immutable
+@CheckReturnValue
 public interface ICourse extends ISelfSerializable {
 
     public abstract ICourse withCode(@NonNull ICourseCode code);

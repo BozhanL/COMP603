@@ -6,6 +6,7 @@ import com.example.assessment.backend.types.Address;
 import com.example.assessment.backend.types.Gender;
 import com.example.assessment.backend.types.IPerson;
 import com.example.assessment.backend.types.Manager;
+import com.google.errorprone.annotations.CheckReturnValue;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -15,6 +16,7 @@ import lombok.Cleanup;
 import lombok.NonNull;
 import lombok.ToString;
 
+@CheckReturnValue
 @ToString(callSuper = true)
 public final class PersonFileBackend extends FileBackend implements IPersonBackend {
 

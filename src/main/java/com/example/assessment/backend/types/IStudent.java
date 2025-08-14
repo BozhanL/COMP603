@@ -1,9 +1,13 @@
 package com.example.assessment.backend.types;
 
 import com.google.common.collect.ImmutableMap;
+import com.google.errorprone.annotations.CheckReturnValue;
+import com.google.errorprone.annotations.Immutable;
 import java.time.LocalDate;
 import lombok.NonNull;
 
+@Immutable
+@CheckReturnValue
 public interface IStudent extends IPerson {
 
     @Override

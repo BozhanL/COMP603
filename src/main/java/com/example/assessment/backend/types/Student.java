@@ -1,6 +1,8 @@
 package com.example.assessment.backend.types;
 
 import com.google.common.collect.ImmutableMap;
+import com.google.errorprone.annotations.CheckReturnValue;
+import com.google.errorprone.annotations.Immutable;
 import java.io.Serial;
 import java.time.LocalDate;
 import java.util.Objects;
@@ -12,6 +14,8 @@ import lombok.With;
 
 @With
 @Value
+@Immutable
+@CheckReturnValue
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 public class Student extends Person implements IStudent {

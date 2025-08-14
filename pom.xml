@@ -22,7 +22,7 @@
                         <arg>-Werror</arg>
                         <arg>-XDcompilePolicy=simple</arg>
                         <arg>--should-stop=ifError=FLOW</arg>
-                        <arg>-Xplugin:ErrorProne -Xep:StringConcatToTextBlock:OFF</arg>
+                        <arg>-Xplugin:ErrorProne -XepAllSuggestionsAsWarnings -Xep:StringConcatToTextBlock:OFF</arg>
 
                         <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED</arg>
                         <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED</arg>

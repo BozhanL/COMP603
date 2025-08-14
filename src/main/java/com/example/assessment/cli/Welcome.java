@@ -4,12 +4,16 @@ import com.example.assessment.backend.file.PersonFileBackend;
 import com.example.assessment.backend.generic.DatabaseCorruptedException;
 import com.example.assessment.backend.generic.IPersonBackend;
 import com.example.assessment.backend.types.IPerson;
+import com.google.errorprone.annotations.CheckReturnValue;
+import com.google.errorprone.annotations.Immutable;
 import java.io.IOException;
 import java.nio.file.InvalidPathException;
 import java.util.Scanner;
 import lombok.experimental.UtilityClass;
 
+@Immutable
 @UtilityClass
+@CheckReturnValue
 public class Welcome {
 
     public static void showAsciiArt() {

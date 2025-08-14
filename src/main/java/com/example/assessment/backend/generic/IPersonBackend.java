@@ -3,9 +3,11 @@ package com.example.assessment.backend.generic;
 import com.example.assessment.backend.types.IManager;
 import com.example.assessment.backend.types.IPerson;
 import com.example.assessment.backend.types.IStudent;
+import com.google.errorprone.annotations.CheckReturnValue;
 import java.io.IOException;
 import lombok.NonNull;
 
+@CheckReturnValue
 public interface IPersonBackend extends IBackend {
 
     public abstract IPerson getPersonByPartPath(@NonNull String fName) throws IOException, DatabaseCorruptedException;

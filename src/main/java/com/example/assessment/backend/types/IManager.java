@@ -1,8 +1,12 @@
 package com.example.assessment.backend.types;
 
+import com.google.errorprone.annotations.CheckReturnValue;
+import com.google.errorprone.annotations.Immutable;
 import java.time.LocalDate;
 import lombok.NonNull;
 
+@Immutable
+@CheckReturnValue
 public interface IManager extends IPerson {
 
     @Override

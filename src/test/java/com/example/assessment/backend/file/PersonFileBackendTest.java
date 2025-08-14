@@ -12,6 +12,7 @@ import java.time.ZoneId;
 import java.util.HashMap;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
@@ -76,7 +77,7 @@ public class PersonFileBackendTest {
         this.pfb.setPerson(s);
 
         assertEquals(s, this.pfb.getStudentById(s.getId()));
-        this.pfb.deletePersonById(s.getId());
+        assertTrue(this.pfb.deletePersonById(s.getId()));
 
         IOException exception = assertThrows(IOException.class,
                 () -> {

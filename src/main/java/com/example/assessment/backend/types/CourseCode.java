@@ -1,5 +1,7 @@
 package com.example.assessment.backend.types;
 
+import com.google.errorprone.annotations.CheckReturnValue;
+import com.google.errorprone.annotations.Immutable;
 import java.io.Serial;
 import java.text.ParseException;
 import java.util.Objects;
@@ -9,6 +11,8 @@ import lombok.With;
 
 @With
 @Value
+@Immutable
+@CheckReturnValue
 public class CourseCode implements ICourseCode {
 
     @Serial

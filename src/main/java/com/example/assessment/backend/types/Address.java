@@ -1,5 +1,7 @@
 package com.example.assessment.backend.types;
 
+import com.google.errorprone.annotations.CheckReturnValue;
+import com.google.errorprone.annotations.Immutable;
 import java.io.Serial;
 import lombok.NonNull;
 import lombok.Value;
@@ -7,6 +9,8 @@ import lombok.With;
 
 @With
 @Value
+@Immutable
+@CheckReturnValue
 public class Address implements IAddress {
 
     @Serial

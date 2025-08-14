@@ -1,8 +1,12 @@
 package com.example.assessment.backend.types;
 
+import com.google.errorprone.annotations.CheckReturnValue;
+import com.google.errorprone.annotations.Immutable;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+@Immutable
+@CheckReturnValue
 public interface IStudentCourseInfo extends Serializable {
 
     public abstract IStudentCourseInfo withCourseCode(String courseCode);

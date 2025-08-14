@@ -3,11 +3,13 @@ package com.example.assessment.backend.file;
 import com.example.assessment.backend.generic.DatabaseCorruptedException;
 import com.example.assessment.backend.generic.ICourseBackend;
 import com.example.assessment.backend.types.ICourse;
+import com.google.errorprone.annotations.CheckReturnValue;
 import java.io.IOException;
 import java.nio.file.Path;
 import lombok.NonNull;
 import lombok.ToString;
 
+@CheckReturnValue
 @ToString(callSuper = true)
 public final class CourseFileBackend extends FileBackend implements ICourseBackend {
 
