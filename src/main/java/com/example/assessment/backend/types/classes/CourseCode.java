@@ -1,22 +1,28 @@
-package com.example.assessment.backend;
+package com.example.assessment.backend.types.classes;
 
-import java.io.Serializable;
+import com.example.assessment.backend.types.interfaces.ICourseCode;
+import com.google.errorprone.annotations.CheckReturnValue;
+import com.google.errorprone.annotations.Immutable;
+import java.io.Serial;
+import java.text.ParseException;
+import java.util.Objects;
 import lombok.NonNull;
 import lombok.Value;
 import lombok.With;
-import java.text.ParseException;
-import java.util.Objects;
 
 @With
 @Value
-public class CourseCode implements Serializable {
+@Immutable
+@CheckReturnValue
+public class CourseCode implements ICourseCode {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @NonNull
-    protected String departmentCode;
-    protected int level;
-    protected int courseNumber;
+    String departmentCode;
+    int level;
+    int courseNumber;
 
     public CourseCode(@NonNull String code) throws ParseException, NumberFormatException, IndexOutOfBoundsException {
         this.departmentCode = code.replaceAll("\\d", "");
@@ -39,7 +45,8 @@ public class CourseCode implements Serializable {
         this.courseNumber = courseNumber;
     }
 
-    public CourseCode withDepartmentCode(@NonNull String departmentCode) throws IllegalArgumentException {
+    @Override
+    public ICourseCode withDepartmentCode(@NonNull String departmentCode) throws IllegalArgumentException {
         if (departmentCode.isBlank()) {
             throw new IllegalArgumentException("departmentCode must not be blank!");
         }

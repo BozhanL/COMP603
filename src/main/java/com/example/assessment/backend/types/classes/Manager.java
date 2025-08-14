@@ -1,5 +1,10 @@
-package com.example.assessment.backend;
+package com.example.assessment.backend.types.classes;
 
+import com.example.assessment.backend.types.interfaces.IAddress;
+import com.example.assessment.backend.types.interfaces.IManager;
+import com.google.errorprone.annotations.CheckReturnValue;
+import com.google.errorprone.annotations.Immutable;
+import java.io.Serial;
 import java.time.LocalDate;
 import java.util.Objects;
 import lombok.EqualsAndHashCode;
@@ -8,12 +13,15 @@ import lombok.ToString;
 import lombok.Value;
 import lombok.With;
 
-@Value
 @With
+@Value
+@Immutable
+@CheckReturnValue
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-public class Manager extends Person {
+public class Manager extends Person implements IManager {
 
+    @Serial
     private static final long serialVersionUID = 1L;
     private static final UserType TYPE = UserType.MANAGER;
 
@@ -26,14 +34,9 @@ public class Manager extends Person {
             @NonNull Gender gender,
             @NonNull String email,
             @NonNull String phone,
-            @NonNull Address address
+            @NonNull IAddress address
     ) throws IllegalArgumentException {
         super(id, password, legalFirstName, legalLastName, dateOfBirth, gender, email, phone, address);
-    }
-
-    @Override
-    protected Manager withId(@NonNull String id) throws IllegalArgumentException {
-        return Objects.equals(this.id, id) ? this : new Manager(id, password, legalFirstName, legalLastName, dateOfBirth, gender, email, phone, address);
     }
 
     @Override
@@ -72,7 +75,7 @@ public class Manager extends Person {
     }
 
     @Override
-    public Manager withAddress(@NonNull Address address) {
+    public Manager withAddress(@NonNull IAddress address) {
         return Objects.equals(this.address, address) ? this : new Manager(id, password, legalFirstName, legalLastName, dateOfBirth, gender, email, phone, address);
     }
 

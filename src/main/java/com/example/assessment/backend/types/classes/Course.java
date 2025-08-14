@@ -1,5 +1,10 @@
-package com.example.assessment.backend;
+package com.example.assessment.backend.types.classes;
 
+import com.example.assessment.backend.types.interfaces.ICourse;
+import com.example.assessment.backend.types.interfaces.ICourseCode;
+import com.google.errorprone.annotations.CheckReturnValue;
+import com.google.errorprone.annotations.Immutable;
+import java.io.Serial;
 import java.nio.file.Path;
 import java.text.ParseException;
 import lombok.AllArgsConstructor;
@@ -9,9 +14,12 @@ import lombok.With;
 
 @With
 @Value
+@Immutable
+@CheckReturnValue
 @AllArgsConstructor
-public class Course implements ISelfSerializable {
+public class Course implements ICourse {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     public Course(@NonNull String code, @NonNull String name, int points, @NonNull String description) throws ParseException, NumberFormatException, IndexOutOfBoundsException {
@@ -23,12 +31,12 @@ public class Course implements ISelfSerializable {
     }
 
     @NonNull
-    protected CourseCode code;
+    ICourseCode code;
     @NonNull
-    protected String name;
-    protected int points;
+    String name;
+    int points;
     @NonNull
-    protected String description;
+    String description;
 
     @Override
     public Path getPath() {

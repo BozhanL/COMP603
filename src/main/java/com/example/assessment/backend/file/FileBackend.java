@@ -1,5 +1,10 @@
-package com.example.assessment.backend;
+package com.example.assessment.backend.file;
 
+import com.example.assessment.backend.generic.DatabaseCorruptedException;
+import com.example.assessment.backend.generic.IBackend;
+import com.example.assessment.backend.types.interfaces.ISelfSerializable;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
+import com.google.errorprone.annotations.CheckReturnValue;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InvalidClassException;
@@ -13,13 +18,18 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Iterator;
 import lombok.Cleanup;
+import lombok.Getter;
 import lombok.NonNull;
+import lombok.ToString;
 
+@ToString
+@CheckReturnValue
 public abstract class FileBackend implements IBackend {
 
     protected static final Path EMPTY = Path.of("");
     public static final Path DEFAULT_DATA_LOCATION = Path.of(System.getProperty("user.home"), ".student/filedb");
 
+    @Getter
     protected Path db;
 
     protected FileBackend(@NonNull String p) throws IOException, IllegalArgumentException {
@@ -75,7 +85,7 @@ public abstract class FileBackend implements IBackend {
         try {
             return objectInputStream.readObject();
         } catch (ClassNotFoundException | InvalidClassException | StreamCorruptedException e) {
-            throw new DatabaseCorruptedException();
+            throw new DatabaseCorruptedException(e);
         }
     }
 
@@ -100,6 +110,7 @@ public abstract class FileBackend implements IBackend {
         return this.deleteObjectWithPath(path);
     }
 
+    @CanIgnoreReturnValue
     protected boolean deleteObjectWithPath(@NonNull Path path) throws IOException {
         return Files.deleteIfExists(this.db.resolve(path));
     }

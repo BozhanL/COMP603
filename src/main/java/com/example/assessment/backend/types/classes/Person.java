@@ -1,12 +1,19 @@
-package com.example.assessment.backend;
+package com.example.assessment.backend.types.classes;
 
+import com.example.assessment.backend.types.interfaces.IAddress;
+import com.example.assessment.backend.types.interfaces.IPerson;
+import com.google.errorprone.annotations.CheckReturnValue;
+import com.google.errorprone.annotations.Immutable;
+import java.io.Serial;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.time.LocalDate;
 import java.time.Period;
+import java.time.ZoneId;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NonNull;
+import lombok.ToString;
 import lombok.Value;
 import lombok.With;
 import lombok.experimental.NonFinal;
@@ -14,20 +21,23 @@ import lombok.experimental.NonFinal;
 @With
 @Value
 @NonFinal
-public abstract class Person implements ISelfSerializable, IAuthenticatable {
+@Immutable
+@CheckReturnValue
+public abstract class Person implements IPerson {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     protected Person(
-            String id,
-            String password,
-            String legalFirstName,
-            String legalLastName,
-            LocalDate dateOfBirth,
-            Gender gender,
-            String email,
-            String phone,
-            Address address
+            @NonNull String id,
+            @NonNull String password,
+            @NonNull String legalFirstName,
+            @NonNull String legalLastName,
+            @NonNull LocalDate dateOfBirth,
+            @NonNull Gender gender,
+            @NonNull String email,
+            @NonNull String phone,
+            @NonNull IAddress address
     ) throws IllegalArgumentException {
         if (id.isBlank()) {
             throw new IllegalArgumentException("id must not be blank!");
@@ -44,10 +54,11 @@ public abstract class Person implements ISelfSerializable, IAuthenticatable {
     }
 
     @NonNull
-    @With(AccessLevel.PROTECTED)
+    @With(AccessLevel.NONE)
     protected String id;
 
     @NonNull
+    @ToString.Exclude
     @Getter(AccessLevel.PROTECTED)
     protected String password;
 
@@ -65,17 +76,16 @@ public abstract class Person implements ISelfSerializable, IAuthenticatable {
     @NonNull
     protected String phone;
     @NonNull
-    protected Address address;
-
-    public abstract UserType getType();
+    protected IAddress address;
 
     @Override
     public Path getPath() {
         return Path.of(String.format("%s_%s_%s.bin", this.getId(), this.getLegalFirstName(), this.getLegalLastName()));
     }
 
+    @Override
     public int getAge() {
-        return Period.between(this.dateOfBirth, LocalDate.now()).normalized().getYears();
+        return Period.between(this.dateOfBirth, LocalDate.now(ZoneId.systemDefault())).normalized().getYears();
     }
 
     @Override

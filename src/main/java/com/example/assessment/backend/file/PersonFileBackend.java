@@ -1,5 +1,12 @@
-package com.example.assessment.backend;
+package com.example.assessment.backend.file;
 
+import com.example.assessment.backend.generic.DatabaseCorruptedException;
+import com.example.assessment.backend.generic.IPersonBackend;
+import com.example.assessment.backend.types.classes.Address;
+import com.example.assessment.backend.types.classes.Gender;
+import com.example.assessment.backend.types.interfaces.IPerson;
+import com.example.assessment.backend.types.classes.Manager;
+import com.google.errorprone.annotations.CheckReturnValue;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -9,10 +16,11 @@ import lombok.Cleanup;
 import lombok.NonNull;
 import lombok.ToString;
 
-@ToString
+@CheckReturnValue
+@ToString(callSuper = true)
 public final class PersonFileBackend extends FileBackend implements IPersonBackend {
 
-    protected static final Path DEFAULT_DATA_SUBPATH = Path.of("person");
+    private static final Path DEFAULT_DATA_SUBPATH = Path.of("person");
 
     public PersonFileBackend() throws IOException {
         this(DEFAULT_DATA_LOCATION);
@@ -44,9 +52,9 @@ public final class PersonFileBackend extends FileBackend implements IPersonBacke
     }
 
     @Override
-    public Person getPersonByPartPath(@NonNull String fName) throws IOException, DatabaseCorruptedException {
+    public IPerson getPersonByPartPath(@NonNull String fName) throws IOException, DatabaseCorruptedException {
         Object o = this.getObjectByPartPath(fName);
-        if (o instanceof Person person) {
+        if (o instanceof IPerson person) {
             return person;
         }
 
@@ -54,7 +62,7 @@ public final class PersonFileBackend extends FileBackend implements IPersonBacke
     }
 
     @Override
-    public void setPerson(@NonNull Person p) throws IOException {
+    public void setPerson(@NonNull IPerson p) throws IOException {
         this.setObject(p);
     }
 
@@ -64,7 +72,7 @@ public final class PersonFileBackend extends FileBackend implements IPersonBacke
     }
 
     @Override
-    public void modifyPerson(@NonNull Person p) throws IOException {
+    public void modifyPerson(@NonNull IPerson p) throws IOException {
         this.modifyObject(p);
     }
 }

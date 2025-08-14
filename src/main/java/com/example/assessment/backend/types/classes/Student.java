@@ -1,27 +1,36 @@
-package com.example.assessment.backend;
+package com.example.assessment.backend.types.classes;
 
-import java.time.LocalDate;
+import com.example.assessment.backend.types.interfaces.IAddress;
+import com.example.assessment.backend.types.interfaces.IStudent;
+import com.example.assessment.backend.types.interfaces.IStudentCourseInfo;
 import com.google.common.collect.ImmutableMap;
+import com.google.errorprone.annotations.CheckReturnValue;
+import com.google.errorprone.annotations.Immutable;
+import java.io.Serial;
+import java.time.LocalDate;
 import java.util.Objects;
 import lombok.EqualsAndHashCode;
-import lombok.ToString;
 import lombok.NonNull;
+import lombok.ToString;
 import lombok.Value;
 import lombok.With;
 
-@Value
 @With
+@Value
+@Immutable
+@CheckReturnValue
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-public class Student extends Person {
+public class Student extends Person implements IStudent {
 
+    @Serial
     private static final long serialVersionUID = 1L;
     private static final UserType TYPE = UserType.STUDENT;
 
     @NonNull
-    protected Residency residencyStatus;
+    Residency residencyStatus;
     @NonNull
-    protected ImmutableMap<String, StudentCourseInfo> courses;
+    ImmutableMap<String, IStudentCourseInfo> courses;
 
     public Student(
             @NonNull String id,
@@ -32,18 +41,13 @@ public class Student extends Person {
             @NonNull Gender gender,
             @NonNull String email,
             @NonNull String phone,
-            @NonNull Address address,
+            @NonNull IAddress address,
             @NonNull Residency residencyStatus,
-            @NonNull ImmutableMap<String, StudentCourseInfo> courses
+            @NonNull ImmutableMap<String, IStudentCourseInfo> courses
     ) throws IllegalArgumentException {
         super(id, password, legalFirstName, legalLastName, dateOfBirth, gender, email, phone, address);
         this.residencyStatus = residencyStatus;
         this.courses = courses;
-    }
-
-    @Override
-    protected Student withId(@NonNull String id) throws IllegalArgumentException {
-        return Objects.equals(this.id, id) ? this : new Student(id, password, legalFirstName, legalLastName, dateOfBirth, gender, email, phone, address, residencyStatus, courses);
     }
 
     @Override
@@ -82,15 +86,17 @@ public class Student extends Person {
     }
 
     @Override
-    public Student withAddress(@NonNull Address address) {
+    public Student withAddress(@NonNull IAddress address) {
         return Objects.equals(this.address, address) ? this : new Student(id, password, legalFirstName, legalLastName, dateOfBirth, gender, email, phone, address, residencyStatus, courses);
     }
 
+    @Override
     public Student withResidencyStatus(@NonNull Residency residencyStatus) {
         return Objects.equals(this.residencyStatus, residencyStatus) ? this : new Student(id, password, legalFirstName, legalLastName, dateOfBirth, gender, email, phone, address, residencyStatus, courses);
     }
 
-    public Student withCourses(@NonNull ImmutableMap<String, StudentCourseInfo> courses) {
+    @Override
+    public Student withCourses(@NonNull ImmutableMap<String, IStudentCourseInfo> courses) {
         return Objects.equals(this.courses, courses) ? this : new Student(id, password, legalFirstName, legalLastName, dateOfBirth, gender, email, phone, address, residencyStatus, courses);
     }
 

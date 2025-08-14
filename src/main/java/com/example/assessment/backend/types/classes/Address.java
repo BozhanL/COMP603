@@ -1,14 +1,20 @@
-package com.example.assessment.backend;
+package com.example.assessment.backend.types.classes;
 
-import java.io.Serializable;
+import com.example.assessment.backend.types.interfaces.IAddress;
+import com.google.errorprone.annotations.CheckReturnValue;
+import com.google.errorprone.annotations.Immutable;
+import java.io.Serial;
 import lombok.NonNull;
 import lombok.Value;
 import lombok.With;
 
-@Value
 @With
-public class Address implements Serializable {
+@Value
+@Immutable
+@CheckReturnValue
+public class Address implements IAddress {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @NonNull
