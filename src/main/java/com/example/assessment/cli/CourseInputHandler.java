@@ -70,7 +70,7 @@ public class CourseInputHandler {
 
     public int promptCreditPoints() {
         while (true) {
-            System.out.print("Enter credit points (e.g., 15: ");
+            System.out.print("Enter credit points (e.g., 15): ");
             String input = scanner.nextLine().trim();
 
             try {
