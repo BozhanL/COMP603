@@ -5,6 +5,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.time.LocalDate;
 import java.time.Period;
+import java.time.ZoneId;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NonNull;
@@ -78,7 +79,7 @@ public abstract class Person implements IPerson {
 
     @Override
     public int getAge() {
-        return Period.between(this.dateOfBirth, LocalDate.now()).normalized().getYears();
+        return Period.between(this.dateOfBirth, LocalDate.now(ZoneId.systemDefault())).normalized().getYears();
     }
 
     @Override

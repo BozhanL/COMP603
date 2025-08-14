@@ -15,9 +15,9 @@ public class CourseCode implements ICourseCode {
     private static final long serialVersionUID = 1L;
 
     @NonNull
-    protected String departmentCode;
-    protected int level;
-    protected int courseNumber;
+    String departmentCode;
+    int level;
+    int courseNumber;
 
     public CourseCode(@NonNull String code) throws ParseException, NumberFormatException, IndexOutOfBoundsException {
         this.departmentCode = code.replaceAll("\\d", "");

@@ -11,7 +11,7 @@ import lombok.ToString;
 @ToString(callSuper = true)
 public final class CourseFileBackend extends FileBackend implements ICourseBackend {
 
-    protected static final Path DEFAULT_DATA_SUBPATH = Path.of("course");
+    private static final Path DEFAULT_DATA_SUBPATH = Path.of("course");
 
     public CourseFileBackend() throws IOException {
         this(DEFAULT_DATA_LOCATION);

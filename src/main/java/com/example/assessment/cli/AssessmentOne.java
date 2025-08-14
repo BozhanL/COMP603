@@ -5,6 +5,7 @@ import com.example.assessment.backend.types.ICourseBackend;
 import com.example.assessment.backend.generic.IPersonBackend;
 import com.example.assessment.backend.types.Person;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.Scanner;
 import lombok.Cleanup;
 import lombok.experimental.UtilityClass;
@@ -15,7 +16,7 @@ public class AssessmentOne {
     public static void main(String[] args) {
 
         @Cleanup
-        Scanner scanner = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in, Charset.defaultCharset());
 
         Welcome.showAsciiArt();
 

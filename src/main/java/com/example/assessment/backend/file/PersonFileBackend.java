@@ -18,7 +18,7 @@ import lombok.ToString;
 @ToString(callSuper = true)
 public final class PersonFileBackend extends FileBackend implements IPersonBackend {
 
-    protected static final Path DEFAULT_DATA_SUBPATH = Path.of("person");
+    private static final Path DEFAULT_DATA_SUBPATH = Path.of("person");
 
     public PersonFileBackend() throws IOException {
         this(DEFAULT_DATA_LOCATION);

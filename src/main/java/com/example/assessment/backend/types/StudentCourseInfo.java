@@ -14,11 +14,11 @@ public class StudentCourseInfo implements IStudentCourseInfo {
     private static final long serialVersionUID = 1L;
 
     @NonNull
-    protected String courseCode;
+    String courseCode;
     @NonNull
-    protected Grade grade;
+    Grade grade;
     @NonNull
-    protected LocalDate starts;
+    LocalDate starts;
     @NonNull
-    protected String location;
+    String location;
 }

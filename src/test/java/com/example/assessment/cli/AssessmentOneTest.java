@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import java.io.PrintStream;
+import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.util.Scanner;
 
@@ -39,7 +40,7 @@ public class AssessmentOneTest {
 
     @Test
     void testMain() throws InterruptedException {
-        Scanner sc = new Scanner(this.in);
+        Scanner sc = new Scanner(this.in, Charset.defaultCharset());
         PrintStream ps = new PrintStream(this.out);
 
         Thread thread = new Thread(() -> {

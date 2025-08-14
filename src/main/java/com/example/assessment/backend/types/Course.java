@@ -25,12 +25,12 @@ public class Course implements ICourse {
     }
 
     @NonNull
-    protected ICourseCode code;
+    ICourseCode code;
     @NonNull
-    protected String name;
-    protected int points;
+    String name;
+    int points;
     @NonNull
-    protected String description;
+    String description;
 
     @Override
     public Path getPath() {

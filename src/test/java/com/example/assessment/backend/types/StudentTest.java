@@ -2,6 +2,7 @@ package com.example.assessment.backend.types;
 
 import com.google.common.collect.ImmutableMap;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.HashMap;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -19,7 +20,7 @@ public class StudentTest {
         HashMap<String, IStudentCourseInfo> sci = new HashMap<>();
         sci.put("COMP500", new StudentCourseInfo("COMP500", Grade.AP, LocalDate.of(2024, 2, 12), "City"));
         sci.put("COMP501", new StudentCourseInfo("COMP501", Grade.A, LocalDate.of(2021, 2, 12), "North"));
-        this.s = new Student("wby5780", "password", "legalFirstName", "legalLastName", LocalDate.now(), Gender.MALE, "email", "phone", a, Residency.INTERNATIONAL, ImmutableMap.copyOf(sci));
+        this.s = new Student("wby5780", "password", "legalFirstName", "legalLastName", LocalDate.now(ZoneId.systemDefault()), Gender.MALE, "email", "phone", a, Residency.INTERNATIONAL, ImmutableMap.copyOf(sci));
     }
 
     @Test
@@ -31,7 +32,7 @@ public class StudentTest {
                 "COMP501", new StudentCourseInfo("COMP501", Grade.A, LocalDate.of(2021, 2, 12), "North")
         ));
 
-        assertEquals(this.s.getDateOfBirth(), LocalDate.now());
+        assertEquals(this.s.getDateOfBirth(), LocalDate.now(ZoneId.systemDefault()));
 
         assertEquals(this.s.getEmail(), "email");
 

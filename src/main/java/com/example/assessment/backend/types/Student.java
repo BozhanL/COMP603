@@ -21,9 +21,9 @@ public class Student extends Person implements IStudent {
     private static final UserType TYPE = UserType.STUDENT;
 
     @NonNull
-    protected Residency residencyStatus;
+    Residency residencyStatus;
     @NonNull
-    protected ImmutableMap<String, IStudentCourseInfo> courses;
+    ImmutableMap<String, IStudentCourseInfo> courses;
 
     public Student(
             @NonNull String id,

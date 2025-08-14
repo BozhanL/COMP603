@@ -18,10 +18,11 @@
                     <encoding>UTF-8</encoding>
                     <fork>true</fork>
                     <compilerArgs>
-                        <arg>-Xlint</arg>
+                        <arg>-Xlint:all,-processing</arg>
+                        <arg>-Werror</arg>
                         <arg>-XDcompilePolicy=simple</arg>
                         <arg>--should-stop=ifError=FLOW</arg>
-                        <arg>-Xplugin:ErrorProne</arg>
+                        <arg>-Xplugin:ErrorProne -Xep:StringConcatToTextBlock:OFF</arg>
 
                         <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED</arg>
                         <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED</arg>
@@ -92,7 +93,6 @@
             <groupId>com.google.errorprone</groupId>
             <artifactId>error_prone_core</artifactId>
             <version>${errorprone.version}</version>
-            <scope>provided</scope>
         </dependency>
     </dependencies>
     <properties>
