@@ -62,7 +62,13 @@ public class ManagerDashboardTest {
         });
         thread.start();
 
-        ps.println("COMP\n5\n09\nOOP\n15\nDescription\nY");
+        ps.println("COMP");
+        ps.println("5");
+        ps.println("09");
+        ps.println("OOP");
+        ps.println("15");
+        ps.println("Description");
+        ps.println("Y");
         thread.join();
         String s = sc.tokens().collect(Collectors.joining(" "));
         assertThat(s, allOf(
