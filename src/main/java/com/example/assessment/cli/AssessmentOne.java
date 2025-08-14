@@ -1,9 +1,9 @@
 package com.example.assessment.cli;
 
-import com.example.assessment.backend.types.CourseFileBackend;
-import com.example.assessment.backend.types.ICourseBackend;
+import com.example.assessment.backend.file.CourseFileBackend;
+import com.example.assessment.backend.generic.ICourseBackend;
 import com.example.assessment.backend.generic.IPersonBackend;
-import com.example.assessment.backend.types.Person;
+import com.example.assessment.backend.types.interfaces.IPerson;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.Scanner;
@@ -23,7 +23,7 @@ public class AssessmentOne {
         IPersonBackend pb = Welcome.askForDatabase(scanner);
 
         try {
-            Person p = Welcome.login(scanner, pb);
+            IPerson unused = Welcome.login(scanner, pb);
 
             ICourseBackend cb = new CourseFileBackend();
             new ManagerDashboard(scanner, cb).displayMenu();

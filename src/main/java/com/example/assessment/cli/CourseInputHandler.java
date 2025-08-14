@@ -1,7 +1,11 @@
 package com.example.assessment.cli;
 
+import com.google.errorprone.annotations.CheckReturnValue;
+import com.google.errorprone.annotations.FormatMethod;
+import java.util.Locale;
 import java.util.Scanner;
 
+@CheckReturnValue
 public class CourseInputHandler {
 
     private final Scanner scanner;
@@ -13,7 +17,7 @@ public class CourseInputHandler {
     public String promptDepartmentCode() {
         while (true) {
             System.out.print("Enter department code (2-4 letters, e.g., 'COMP'): ");
-            String input = scanner.nextLine().trim().toUpperCase();
+            String input = scanner.nextLine().trim().toUpperCase(Locale.getDefault());
 
             if (input.matches("[A-Z]{2,4}")) {
                 return input;
@@ -91,12 +95,13 @@ public class CourseInputHandler {
     }
 
     // generalized confirmation
+    @FormatMethod
     public boolean promptConfirmation(String message, Object... args) {
         String formattedMessage = String.format(message, args);
 
         while (true) {
             System.out.print(formattedMessage + " (Y/N): ");
-            String input = scanner.nextLine().trim().toUpperCase();
+            String input = scanner.nextLine().trim().toUpperCase(Locale.getDefault());
 
             if (input.equals("Y")) {
                 return true;

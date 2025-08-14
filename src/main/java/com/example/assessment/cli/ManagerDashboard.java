@@ -1,8 +1,10 @@
 package com.example.assessment.cli;
 
-import com.example.assessment.backend.Course;
-import com.example.assessment.backend.CourseCode;
-import com.example.assessment.backend.ICourseBackend;
+import com.example.assessment.backend.generic.ICourseBackend;
+import com.example.assessment.backend.types.classes.Course;
+import com.example.assessment.backend.types.classes.CourseCode;
+import com.example.assessment.backend.types.interfaces.ICourse;
+import com.example.assessment.backend.types.interfaces.ICourseCode;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -24,21 +26,18 @@ public class ManagerDashboard {
             String choice = scanner.nextLine().trim();
 
             switch (choice) {
-                case "1":
+                case "1" ->
                     addCourse();
-                    break;
-                case "2":
+                case "2" ->
                     deleteCourse();
-                    break;
-                case "3":
+                case "3" ->
                     modifyCourse();
-                    break;
-                case "4":
+                case "4" ->
                     viewCourse();
-                    break;
-                case "5":
+                case "5" -> {
                     return; // exit to previous menu
-                default:
+                }
+                default ->
                     System.out.println("Invalid option. Try again.\n");
             }
         }
@@ -56,7 +55,7 @@ public class ManagerDashboard {
 
             // construct course code
             // use backend function instead
-            CourseCode courseCode = new CourseCode(deptCode, level, courseNum);
+            ICourseCode courseCode = new CourseCode(deptCode, level, courseNum);
 
             // confirmation
             boolean confirm = inputHandler.promptConfirmation(
@@ -66,7 +65,7 @@ public class ManagerDashboard {
 
             // save
             if (confirm) {
-                Course newCourse = new Course(courseCode, name, points, description);
+                ICourse newCourse = new Course(courseCode, name, points, description);
                 courseBackend.setCourse(newCourse);
                 // use backend function
                 System.out.println("Course " + newCourse.getCode() + " created successfully!");

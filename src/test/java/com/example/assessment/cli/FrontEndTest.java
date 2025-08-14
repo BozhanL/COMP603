@@ -1,10 +1,11 @@
 package com.example.assessment.cli;
 
-import com.example.assessment.backend.Course;
-import com.example.assessment.backend.CourseFileBackend;
-import com.example.assessment.backend.ICourseBackend;
+import com.example.assessment.backend.file.CourseFileBackend;
+import com.example.assessment.backend.generic.ICourseBackend;
+import com.example.assessment.backend.types.interfaces.ICourse;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.util.Scanner;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -38,7 +39,7 @@ public class FrontEndTest {
             dashboard.addCourse();
 
             // 5. Verify console output
-            String consoleOutput = outputBuffer.toString();
+            String consoleOutput = outputBuffer.toString(Charset.defaultCharset());
             assertTrue(consoleOutput.contains("COMP509")); // Verify course code appears
             assertTrue(consoleOutput.contains("successfully")); // Verify success message
         } finally {
@@ -47,7 +48,7 @@ public class FrontEndTest {
         }
 
         // 7. Verify backend state
-        Course savedCourse = backend.getCourseByCode("COMP509");
+        ICourse savedCourse = backend.getCourseByCode("COMP509");
         assertNotNull(savedCourse);
         assertEquals("OOP", savedCourse.getName());
     }
