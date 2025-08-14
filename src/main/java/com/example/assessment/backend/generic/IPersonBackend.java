@@ -1,8 +1,8 @@
 package com.example.assessment.backend.generic;
 
-import com.example.assessment.backend.types.IManager;
-import com.example.assessment.backend.types.IPerson;
-import com.example.assessment.backend.types.IStudent;
+import com.example.assessment.backend.types.interfaces.IManager;
+import com.example.assessment.backend.types.interfaces.IPerson;
+import com.example.assessment.backend.types.interfaces.IStudent;
 import com.google.errorprone.annotations.CheckReturnValue;
 import java.io.IOException;
 import lombok.NonNull;

@@ -3,7 +3,7 @@ package com.example.assessment.cli;
 import com.example.assessment.backend.file.PersonFileBackend;
 import com.example.assessment.backend.generic.DatabaseCorruptedException;
 import com.example.assessment.backend.generic.IPersonBackend;
-import com.example.assessment.backend.types.IPerson;
+import com.example.assessment.backend.types.interfaces.IPerson;
 import com.google.errorprone.annotations.CheckReturnValue;
 import com.google.errorprone.annotations.Immutable;
 import java.io.IOException;

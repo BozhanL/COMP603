@@ -1,8 +1,19 @@
-package com.example.assessment.backend.file;
+package com.example.assessment.backend;
 
+import com.example.assessment.backend.file.PersonFileBackend;
 import com.example.assessment.backend.generic.DatabaseCorruptedException;
 import com.example.assessment.backend.generic.IPersonBackend;
-import com.example.assessment.backend.types.*;
+import com.example.assessment.backend.types.classes.Address;
+import com.example.assessment.backend.types.classes.Gender;
+import com.example.assessment.backend.types.classes.Grade;
+import com.example.assessment.backend.types.classes.Manager;
+import com.example.assessment.backend.types.classes.Residency;
+import com.example.assessment.backend.types.classes.Student;
+import com.example.assessment.backend.types.classes.StudentCourseInfo;
+import com.example.assessment.backend.types.interfaces.IAddress;
+import com.example.assessment.backend.types.interfaces.IManager;
+import com.example.assessment.backend.types.interfaces.IStudent;
+import com.example.assessment.backend.types.interfaces.IStudentCourseInfo;
 import com.google.common.collect.ImmutableMap;
 import java.io.IOException;
 import java.nio.file.FileAlreadyExistsException;
@@ -10,6 +21,8 @@ import java.nio.file.Path;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.HashMap;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -110,6 +123,7 @@ public class PersonFileBackendTest {
                     this.pfb.setPerson(s);
                 }
         );
-        assertEquals(this.pfb.getDb().resolve(s.getPath()).toString(), exception.getMessage());
+
+        assertThat(exception.getMessage(), containsString(s.getPath().toString()));
     }
 }

@@ -17,7 +17,7 @@
                 <configuration>
                     <encoding>UTF-8</encoding>
                     <fork>true</fork>
-                    <compilerArgs>
+                    <compilerArgs> 
                         <arg>-Xlint:all,-processing</arg>
                         <arg>-Werror</arg>
                         <arg>-XDcompilePolicy=simple</arg>
@@ -88,6 +88,13 @@
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.hamcrest/hamcrest -->
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest</artifactId>
+            <version>${hamcrest.version}</version>
+            <scope>test</scope>
+        </dependency>
         <!-- https://mvnrepository.com/artifact/com.google.errorprone/error_prone_core -->
         <dependency>
             <groupId>com.google.errorprone</groupId>
@@ -103,5 +110,6 @@
         <errorprone.version>2.41.0</errorprone.version>
         <guava.version>33.4.8-jre</guava.version>
         <junit.version>5.8.2</junit.version>
+        <hamcrest.version>3.0</hamcrest.version>
     </properties>
 </project>

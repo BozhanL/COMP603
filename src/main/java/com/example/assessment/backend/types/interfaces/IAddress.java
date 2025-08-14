@@ -1,4 +1,4 @@
-package com.example.assessment.backend.types;
+package com.example.assessment.backend.types.interfaces;
 
 import com.google.errorprone.annotations.CheckReturnValue;
 import com.google.errorprone.annotations.Immutable;

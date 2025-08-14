@@ -2,10 +2,10 @@ package com.example.assessment.backend.file;
 
 import com.example.assessment.backend.generic.DatabaseCorruptedException;
 import com.example.assessment.backend.generic.IPersonBackend;
-import com.example.assessment.backend.types.Address;
-import com.example.assessment.backend.types.Gender;
-import com.example.assessment.backend.types.IPerson;
-import com.example.assessment.backend.types.Manager;
+import com.example.assessment.backend.types.classes.Address;
+import com.example.assessment.backend.types.classes.Gender;
+import com.example.assessment.backend.types.interfaces.IPerson;
+import com.example.assessment.backend.types.classes.Manager;
 import com.google.errorprone.annotations.CheckReturnValue;
 import java.io.IOException;
 import java.nio.file.Files;

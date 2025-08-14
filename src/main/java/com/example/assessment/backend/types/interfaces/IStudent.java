@@ -1,5 +1,7 @@
-package com.example.assessment.backend.types;
+package com.example.assessment.backend.types.interfaces;
 
+import com.example.assessment.backend.types.classes.Gender;
+import com.example.assessment.backend.types.classes.Residency;
 import com.google.common.collect.ImmutableMap;
 import com.google.errorprone.annotations.CheckReturnValue;
 import com.google.errorprone.annotations.Immutable;

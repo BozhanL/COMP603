@@ -1,6 +1,6 @@
 package com.example.assessment.backend.generic;
 
-import com.example.assessment.backend.types.ICourse;
+import com.example.assessment.backend.types.interfaces.ICourse;
 import com.google.errorprone.annotations.CheckReturnValue;
 import java.io.IOException;
 import lombok.NonNull;

@@ -2,7 +2,7 @@ package com.example.assessment.backend.file;
 
 import com.example.assessment.backend.generic.DatabaseCorruptedException;
 import com.example.assessment.backend.generic.IBackend;
-import com.example.assessment.backend.types.ISelfSerializable;
+import com.example.assessment.backend.types.interfaces.ISelfSerializable;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.errorprone.annotations.CheckReturnValue;
 import java.io.IOException;

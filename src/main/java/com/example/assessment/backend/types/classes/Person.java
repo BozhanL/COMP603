@@ -1,5 +1,7 @@
-package com.example.assessment.backend.types;
+package com.example.assessment.backend.types.classes;
 
+import com.example.assessment.backend.types.interfaces.IAddress;
+import com.example.assessment.backend.types.interfaces.IPerson;
 import com.google.errorprone.annotations.CheckReturnValue;
 import com.google.errorprone.annotations.Immutable;
 import java.io.Serial;

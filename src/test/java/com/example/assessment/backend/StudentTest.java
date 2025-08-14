@@ -1,5 +1,15 @@
-package com.example.assessment.backend.types;
+package com.example.assessment.backend;
 
+import com.example.assessment.backend.types.classes.Address;
+import com.example.assessment.backend.types.classes.Gender;
+import com.example.assessment.backend.types.classes.Grade;
+import com.example.assessment.backend.types.classes.Residency;
+import com.example.assessment.backend.types.classes.Student;
+import com.example.assessment.backend.types.classes.StudentCourseInfo;
+import com.example.assessment.backend.types.classes.UserType;
+import com.example.assessment.backend.types.interfaces.IAddress;
+import com.example.assessment.backend.types.interfaces.IStudent;
+import com.example.assessment.backend.types.interfaces.IStudentCourseInfo;
 import com.google.common.collect.ImmutableMap;
 import java.time.LocalDate;
 import java.time.ZoneId;
