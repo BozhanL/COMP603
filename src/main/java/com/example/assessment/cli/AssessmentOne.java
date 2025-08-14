@@ -1,8 +1,10 @@
 package com.example.assessment.cli;
 
+import com.example.assessment.backend.CourseFileBackend;
+import com.example.assessment.backend.ICourseBackend;
 import com.example.assessment.backend.IPersonBackend;
 import com.example.assessment.backend.Person;
-
+import java.io.IOException;
 import java.util.Scanner;
 import lombok.Cleanup;
 
@@ -17,7 +19,15 @@ public class AssessmentOne {
 
         IPersonBackend pb = Welcome.askForDatabase(scanner);
 
-        Person person = Welcome.login(scanner, pb);
+        try {
+            Person p = Welcome.login(scanner, pb);
+
+            ICourseBackend cb = new CourseFileBackend();
+            new ManagerDashboard(scanner, cb).displayMenu();
+
+        } catch (IOException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
 
     }
 }

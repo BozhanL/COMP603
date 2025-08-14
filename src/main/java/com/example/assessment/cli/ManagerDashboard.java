@@ -66,14 +66,10 @@ public class ManagerDashboard {
 
             // save
             if (confirm) {
-                try {
-                    Course newCourse = new Course(courseCode.toString(), name, points, description);
-                    courseBackend.setCourse(newCourse);
-                    // use backend function
-                    System.out.println("Course " + newCourse.getCode() + " created successfully!");
-                } catch (java.text.ParseException e) {
-                    System.out.println("Invalid course code format: " + e.getMessage());
-                }
+                Course newCourse = new Course(courseCode, name, points, description);
+                courseBackend.setCourse(newCourse);
+                // use backend function
+                System.out.println("Course " + newCourse.getCode() + " created successfully!");
             } else {
                 System.out.println("Course creation cancelled.");
             }
