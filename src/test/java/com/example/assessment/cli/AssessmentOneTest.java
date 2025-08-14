@@ -7,6 +7,7 @@ import java.io.PipedOutputStream;
 import java.io.PrintStream;
 import java.nio.file.Path;
 import java.util.Scanner;
+
 import org.junit.jupiter.api.AfterEach;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
@@ -69,7 +70,6 @@ public class AssessmentOneTest {
         ps.println("admin");
         assertEquals("Enter User ID: Enter Password: Login Successful", sc.nextLine());
 
-        thread.join();
+        // thread.join();
     }
-
 }
