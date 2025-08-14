@@ -1,5 +1,6 @@
 package com.example.assessment.backend.types.interfaces;
 
+import com.example.assessment.backend.types.classes.Address;
 import com.google.errorprone.annotations.CheckReturnValue;
 import com.google.errorprone.annotations.Immutable;
 import java.io.Serializable;
@@ -8,6 +9,19 @@ import lombok.NonNull;
 @Immutable
 @CheckReturnValue
 public interface IAddress extends Serializable {
+
+    public static IAddress of(
+            @NonNull String unit,
+            @NonNull String streetNumber,
+            @NonNull String streetName,
+            @NonNull String suburb,
+            @NonNull String city,
+            @NonNull String state,
+            @NonNull String country,
+            @NonNull String postCode
+    ) {
+        return Address.of(unit, streetNumber, streetName, suburb, city, state, country, postCode);
+    }
 
     public abstract IAddress withUnit(@NonNull String unit);
 

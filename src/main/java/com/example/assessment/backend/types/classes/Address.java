@@ -9,9 +9,9 @@ import lombok.Value;
 import lombok.With;
 
 @With
-@Value
 @Immutable
 @CheckReturnValue
+@Value(staticConstructor = "of")
 public class Address implements IAddress {
 
     @Serial

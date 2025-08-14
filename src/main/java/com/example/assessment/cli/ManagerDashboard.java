@@ -1,8 +1,6 @@
 package com.example.assessment.cli;
 
 import com.example.assessment.backend.generic.ICourseBackend;
-import com.example.assessment.backend.types.classes.Course;
-import com.example.assessment.backend.types.classes.CourseCode;
 import com.example.assessment.backend.types.interfaces.ICourse;
 import com.example.assessment.backend.types.interfaces.ICourseCode;
 import java.io.IOException;
@@ -56,7 +54,7 @@ public class ManagerDashboard {
 
             // construct course code
             // use backend function instead
-            ICourseCode courseCode = new CourseCode(deptCode, level, courseNum);
+            ICourseCode courseCode = ICourseCode.of(deptCode, level, courseNum);
 
             // confirmation
             boolean confirm = inputHandler.promptConfirmation(
@@ -66,7 +64,7 @@ public class ManagerDashboard {
 
             // save
             if (confirm) {
-                ICourse newCourse = new Course(courseCode, name, points, description);
+                ICourse newCourse = ICourse.of(courseCode, name, points, description);
                 courseBackend.setCourse(newCourse);
                 // use backend function
                 System.out.println("Course " + newCourse.getCode() + " created successfully!");

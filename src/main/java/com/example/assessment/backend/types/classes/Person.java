@@ -1,5 +1,6 @@
 package com.example.assessment.backend.types.classes;
 
+import com.example.assessment.backend.types.enums.Gender;
 import com.example.assessment.backend.types.interfaces.IAddress;
 import com.example.assessment.backend.types.interfaces.IPerson;
 import com.google.errorprone.annotations.CheckReturnValue;

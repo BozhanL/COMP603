@@ -1,12 +1,9 @@
 package com.example.assessment.backend;
 
-import com.example.assessment.backend.types.classes.Address;
-import com.example.assessment.backend.types.classes.Gender;
-import com.example.assessment.backend.types.classes.Grade;
-import com.example.assessment.backend.types.classes.Residency;
-import com.example.assessment.backend.types.classes.Student;
-import com.example.assessment.backend.types.classes.StudentCourseInfo;
-import com.example.assessment.backend.types.classes.UserType;
+import com.example.assessment.backend.types.enums.Gender;
+import com.example.assessment.backend.types.enums.Grade;
+import com.example.assessment.backend.types.enums.Residency;
+import com.example.assessment.backend.types.enums.UserType;
 import com.example.assessment.backend.types.interfaces.IAddress;
 import com.example.assessment.backend.types.interfaces.IStudent;
 import com.example.assessment.backend.types.interfaces.IStudentCourseInfo;
@@ -26,20 +23,20 @@ public class StudentTest {
 
     @BeforeEach
     void setUp() {
-        IAddress a = new Address("", "561", "Blockhouse Bay Road", "Blockhouse Bay", "Auckland", "Auckland", "NZ", "0600");
+        IAddress a = IAddress.of("", "561", "Blockhouse Bay Road", "Blockhouse Bay", "Auckland", "Auckland", "NZ", "0600");
         HashMap<String, IStudentCourseInfo> sci = new HashMap<>();
-        sci.put("COMP500", new StudentCourseInfo("COMP500", Grade.AP, LocalDate.of(2024, 2, 12), "City"));
-        sci.put("COMP501", new StudentCourseInfo("COMP501", Grade.A, LocalDate.of(2021, 2, 12), "North"));
-        this.s = new Student("wby5780", "password", "legalFirstName", "legalLastName", LocalDate.now(ZoneId.systemDefault()), Gender.MALE, "email", "phone", a, Residency.INTERNATIONAL, ImmutableMap.copyOf(sci));
+        sci.put("COMP500", IStudentCourseInfo.of("COMP500", Grade.AP, LocalDate.of(2024, 2, 12), "City"));
+        sci.put("COMP501", IStudentCourseInfo.of("COMP501", Grade.A, LocalDate.of(2021, 2, 12), "North"));
+        this.s = IStudent.of("wby5780", "password", "legalFirstName", "legalLastName", LocalDate.now(ZoneId.systemDefault()), Gender.MALE, "email", "phone", a, Residency.INTERNATIONAL, ImmutableMap.copyOf(sci));
     }
 
     @Test
     void testGetter() {
-        assertEquals(this.s.getAddress(), new Address("", "561", "Blockhouse Bay Road", "Blockhouse Bay", "Auckland", "Auckland", "NZ", "0600"));
+        assertEquals(this.s.getAddress(), IAddress.of("", "561", "Blockhouse Bay Road", "Blockhouse Bay", "Auckland", "Auckland", "NZ", "0600"));
 
         assertEquals(this.s.getCourses(), ImmutableMap.of(
-                "COMP500", new StudentCourseInfo("COMP500", Grade.AP, LocalDate.of(2024, 2, 12), "City"),
-                "COMP501", new StudentCourseInfo("COMP501", Grade.A, LocalDate.of(2021, 2, 12), "North")
+                "COMP500", IStudentCourseInfo.of("COMP500", Grade.AP, LocalDate.of(2024, 2, 12), "City"),
+                "COMP501", IStudentCourseInfo.of("COMP501", Grade.A, LocalDate.of(2021, 2, 12), "North")
         ));
 
         assertEquals(this.s.getDateOfBirth(), LocalDate.now(ZoneId.systemDefault()));
@@ -59,7 +56,7 @@ public class StudentTest {
         assertEquals(this.s.getResidencyStatus(), Residency.INTERNATIONAL);
 
         assertEquals(this.s.getType(), UserType.STUDENT);
-        assertEquals(Student.getTypeStatic(), UserType.STUDENT);
+        assertEquals(com.example.assessment.backend.types.classes.Student.getTypeStatic(), UserType.STUDENT);
     }
 
     @Test
@@ -79,8 +76,8 @@ public class StudentTest {
     void testWith() {
         IStudent n;
 
-        n = this.s.withAddress(new Address("", "", "", "", "", "", "NZ", "0600"));
-        assertEquals(n.getAddress(), new Address("", "", "", "", "", "", "NZ", "0600"));
+        n = this.s.withAddress(IAddress.of("", "", "", "", "", "", "NZ", "0600"));
+        assertEquals(n.getAddress(), IAddress.of("", "", "", "", "", "", "NZ", "0600"));
 
         n = this.s.withCourses(ImmutableMap.of());
         assertEquals(n.getCourses(), ImmutableMap.of());

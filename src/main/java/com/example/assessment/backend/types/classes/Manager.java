@@ -1,5 +1,7 @@
 package com.example.assessment.backend.types.classes;
 
+import com.example.assessment.backend.types.enums.UserType;
+import com.example.assessment.backend.types.enums.Gender;
 import com.example.assessment.backend.types.interfaces.IAddress;
 import com.example.assessment.backend.types.interfaces.IManager;
 import com.google.errorprone.annotations.CheckReturnValue;
@@ -25,7 +27,7 @@ public class Manager extends Person implements IManager {
     private static final long serialVersionUID = 1L;
     private static final UserType TYPE = UserType.MANAGER;
 
-    public Manager(
+    private Manager(
             @NonNull String id,
             @NonNull String password,
             @NonNull String legalFirstName,
@@ -37,6 +39,20 @@ public class Manager extends Person implements IManager {
             @NonNull IAddress address
     ) throws IllegalArgumentException {
         super(id, password, legalFirstName, legalLastName, dateOfBirth, gender, email, phone, address);
+    }
+
+    public static IManager of(
+            @NonNull String id,
+            @NonNull String password,
+            @NonNull String legalFirstName,
+            @NonNull String legalLastName,
+            @NonNull LocalDate dateOfBirth,
+            @NonNull Gender gender,
+            @NonNull String email,
+            @NonNull String phone,
+            @NonNull IAddress address
+    ) {
+        return new Manager(id, password, legalFirstName, legalLastName, dateOfBirth, gender, email, phone, address);
     }
 
     @Override

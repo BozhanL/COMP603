@@ -16,18 +16,26 @@ import lombok.With;
 @Value
 @Immutable
 @CheckReturnValue
-@AllArgsConstructor
+@AllArgsConstructor(staticName = "of")
 public class Course implements ICourse {
 
     @Serial
     private static final long serialVersionUID = 1L;
 
     public Course(@NonNull String code, @NonNull String name, int points, @NonNull String description) throws ParseException, NumberFormatException, IndexOutOfBoundsException {
-        this(new CourseCode(code), name, points, description);
+        this(ICourseCode.of(code), name, points, description);
     }
 
     public Course(@NonNull String departmentCode, int level, int courseNumber, @NonNull String name, int points, @NonNull String description) throws IllegalArgumentException {
-        this(new CourseCode(departmentCode, level, courseNumber), name, points, description);
+        this(ICourseCode.of(departmentCode, level, courseNumber), name, points, description);
+    }
+
+    public static ICourse of(@NonNull String code, @NonNull String name, int points, @NonNull String description) throws ParseException, NumberFormatException, IndexOutOfBoundsException {
+        return new Course(code, name, points, description);
+    }
+
+    public static ICourse of(@NonNull String departmentCode, int level, int courseNumber, @NonNull String name, int points, @NonNull String description) throws IllegalArgumentException {
+        return new Course(departmentCode, level, courseNumber, name, points, description);
     }
 
     @NonNull

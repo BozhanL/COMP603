@@ -1,14 +1,28 @@
 package com.example.assessment.backend.generic;
 
+import com.example.assessment.backend.file.PersonFileBackend;
 import com.example.assessment.backend.types.interfaces.IManager;
 import com.example.assessment.backend.types.interfaces.IPerson;
 import com.example.assessment.backend.types.interfaces.IStudent;
 import com.google.errorprone.annotations.CheckReturnValue;
 import java.io.IOException;
+import java.nio.file.Path;
 import lombok.NonNull;
 
 @CheckReturnValue
 public interface IPersonBackend extends IBackend {
+
+    public static IPersonBackend of() throws IOException {
+        return PersonFileBackend.of();
+    }
+
+    public static IPersonBackend of(@NonNull String p) throws IOException, IllegalArgumentException {
+        return PersonFileBackend.of(p);
+    }
+
+    public static IPersonBackend of(@NonNull Path p) throws IOException, IllegalArgumentException {
+        return PersonFileBackend.of(p);
+    }
 
     public abstract IPerson getPersonByPartPath(@NonNull String fName) throws IOException, DatabaseCorruptedException;
 

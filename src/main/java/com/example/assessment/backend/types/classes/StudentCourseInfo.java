@@ -1,5 +1,6 @@
 package com.example.assessment.backend.types.classes;
 
+import com.example.assessment.backend.types.enums.Grade;
 import com.example.assessment.backend.types.interfaces.IStudentCourseInfo;
 import com.google.errorprone.annotations.CheckReturnValue;
 import com.google.errorprone.annotations.Immutable;
@@ -10,9 +11,9 @@ import lombok.Value;
 import lombok.With;
 
 @With
-@Value
 @Immutable
 @CheckReturnValue
+@Value(staticConstructor = "of")
 public class StudentCourseInfo implements IStudentCourseInfo {
 
     @Serial

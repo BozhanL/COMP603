@@ -1,15 +1,10 @@
 package com.example.assessment.backend;
 
-import com.example.assessment.backend.file.PersonFileBackend;
 import com.example.assessment.backend.generic.DatabaseCorruptedException;
 import com.example.assessment.backend.generic.IPersonBackend;
-import com.example.assessment.backend.types.classes.Address;
-import com.example.assessment.backend.types.classes.Gender;
-import com.example.assessment.backend.types.classes.Grade;
-import com.example.assessment.backend.types.classes.Manager;
-import com.example.assessment.backend.types.classes.Residency;
-import com.example.assessment.backend.types.classes.Student;
-import com.example.assessment.backend.types.classes.StudentCourseInfo;
+import com.example.assessment.backend.types.enums.Gender;
+import com.example.assessment.backend.types.enums.Grade;
+import com.example.assessment.backend.types.enums.Residency;
 import com.example.assessment.backend.types.interfaces.IAddress;
 import com.example.assessment.backend.types.interfaces.IManager;
 import com.example.assessment.backend.types.interfaces.IStudent;
@@ -39,16 +34,16 @@ public class PersonFileBackendTest {
 
     @BeforeEach
     void setUp() throws IOException {
-        this.pfb = new PersonFileBackend(folder);
+        this.pfb = IPersonBackend.of(folder);
     }
 
     @Test
     void testSetAndGetStudent() throws IOException, DatabaseCorruptedException {
-        IAddress a = new Address("", "561", "Blockhouse Bay Road", "Blockhouse Bay", "Auckland", "Auckland", "NZ", "0600");
+        IAddress a = IAddress.of("", "561", "Blockhouse Bay Road", "Blockhouse Bay", "Auckland", "Auckland", "NZ", "0600");
         HashMap<String, IStudentCourseInfo> sci = new HashMap<>();
-        sci.put("COMP500", new StudentCourseInfo("COMP500", Grade.AP, LocalDate.of(2024, 2, 12), "City"));
-        sci.put("COMP501", new StudentCourseInfo("COMP501", Grade.A, LocalDate.of(2021, 2, 12), "North"));
-        IStudent s = new Student("wby5780", "password", "legalFirstName", "legalLastName", LocalDate.now(ZoneId.systemDefault()), Gender.MALE, "email", "phone", a, Residency.INTERNATIONAL, ImmutableMap.copyOf(sci));
+        sci.put("COMP500", IStudentCourseInfo.of("COMP500", Grade.AP, LocalDate.of(2024, 2, 12), "City"));
+        sci.put("COMP501", IStudentCourseInfo.of("COMP501", Grade.A, LocalDate.of(2021, 2, 12), "North"));
+        IStudent s = IStudent.of("wby5780", "password", "legalFirstName", "legalLastName", LocalDate.now(ZoneId.systemDefault()), Gender.MALE, "email", "phone", a, Residency.INTERNATIONAL, ImmutableMap.copyOf(sci));
         this.pfb.setPerson(s);
 
         IStudent id = this.pfb.getStudentById(s.getId());
@@ -61,17 +56,7 @@ public class PersonFileBackendTest {
 
     @Test
     void testGetDefaultManager() throws IOException, DatabaseCorruptedException {
-        IManager DEFAULT_MANAGER = new Manager(
-                "admin",
-                "admin",
-                "admin",
-                "admin",
-                LocalDate.MIN,
-                Gender.OTHER,
-                "",
-                "",
-                new Address("", "", "", "", "", "", "", "")
-        );
+        IManager DEFAULT_MANAGER = IManager.defaultManager();
         IManager id = this.pfb.getManagerById("admin");
         IManager name = this.pfb.getManagerByName("admin", "admin");
 
@@ -82,11 +67,11 @@ public class PersonFileBackendTest {
 
     @Test
     void testDeletePerson() throws IOException, DatabaseCorruptedException {
-        IAddress a = new Address("", "561", "Blockhouse Bay Road", "Blockhouse Bay", "Auckland", "Auckland", "NZ", "0600");
+        IAddress a = IAddress.of("", "561", "Blockhouse Bay Road", "Blockhouse Bay", "Auckland", "Auckland", "NZ", "0600");
         HashMap<String, IStudentCourseInfo> sci = new HashMap<>();
-        sci.put("COMP500", new StudentCourseInfo("COMP500", Grade.AP, LocalDate.of(2024, 2, 12), "City"));
-        sci.put("COMP501", new StudentCourseInfo("COMP501", Grade.A, LocalDate.of(2021, 2, 12), "North"));
-        IStudent s = new Student("wby5780", "password", "legalFirstName", "legalLastName", LocalDate.now(ZoneId.systemDefault()), Gender.MALE, "email", "phone", a, Residency.INTERNATIONAL, ImmutableMap.copyOf(sci));
+        sci.put("COMP500", IStudentCourseInfo.of("COMP500", Grade.AP, LocalDate.of(2024, 2, 12), "City"));
+        sci.put("COMP501", IStudentCourseInfo.of("COMP501", Grade.A, LocalDate.of(2021, 2, 12), "North"));
+        IStudent s = IStudent.of("wby5780", "password", "legalFirstName", "legalLastName", LocalDate.now(ZoneId.systemDefault()), Gender.MALE, "email", "phone", a, Residency.INTERNATIONAL, ImmutableMap.copyOf(sci));
         this.pfb.setPerson(s);
 
         assertEquals(s, this.pfb.getStudentById(s.getId()));
@@ -109,11 +94,11 @@ public class PersonFileBackendTest {
 
     @Test
     void testSetExistPerson() throws IOException, DatabaseCorruptedException {
-        IAddress a = new Address("", "561", "Blockhouse Bay Road", "Blockhouse Bay", "Auckland", "Auckland", "NZ", "0600");
+        IAddress a = IAddress.of("", "561", "Blockhouse Bay Road", "Blockhouse Bay", "Auckland", "Auckland", "NZ", "0600");
         HashMap<String, IStudentCourseInfo> sci = new HashMap<>();
-        sci.put("COMP500", new StudentCourseInfo("COMP500", Grade.AP, LocalDate.of(2024, 2, 12), "City"));
-        sci.put("COMP501", new StudentCourseInfo("COMP501", Grade.A, LocalDate.of(2021, 2, 12), "North"));
-        IStudent s = new Student("wby5780", "password", "legalFirstName", "legalLastName", LocalDate.now(ZoneId.systemDefault()), Gender.MALE, "email", "phone", a, Residency.INTERNATIONAL, ImmutableMap.copyOf(sci));
+        sci.put("COMP500", IStudentCourseInfo.of("COMP500", Grade.AP, LocalDate.of(2024, 2, 12), "City"));
+        sci.put("COMP501", IStudentCourseInfo.of("COMP501", Grade.A, LocalDate.of(2021, 2, 12), "North"));
+        IStudent s = IStudent.of("wby5780", "password", "legalFirstName", "legalLastName", LocalDate.now(ZoneId.systemDefault()), Gender.MALE, "email", "phone", a, Residency.INTERNATIONAL, ImmutableMap.copyOf(sci));
         this.pfb.setPerson(s);
 
         assertEquals(s, this.pfb.getStudentById(s.getId()));

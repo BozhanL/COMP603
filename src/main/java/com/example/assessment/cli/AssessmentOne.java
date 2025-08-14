@@ -1,7 +1,5 @@
 package com.example.assessment.cli;
 
-import com.example.assessment.backend.file.CourseFileBackend;
-import com.example.assessment.backend.file.PersonFileBackend;
 import com.example.assessment.backend.generic.ICourseBackend;
 import com.example.assessment.backend.generic.IPersonBackend;
 import com.example.assessment.backend.types.interfaces.IPerson;
@@ -29,12 +27,12 @@ public class AssessmentOne {
             Path p = w.askForDatabaseLocation();
             try {
                 if (p == null) {
-                    pb = new PersonFileBackend();
-                    cb = new CourseFileBackend();
+                    pb = IPersonBackend.of();
+                    cb = ICourseBackend.of();
                     break;
                 } else {
-                    pb = new PersonFileBackend(p);
-                    cb = new CourseFileBackend(p);
+                    pb = IPersonBackend.of(p);
+                    cb = ICourseBackend.of(p);
                     break;
                 }
             } catch (IOException | IllegalArgumentException ex) {

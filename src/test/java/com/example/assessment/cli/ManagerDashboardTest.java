@@ -1,8 +1,6 @@
 package com.example.assessment.cli;
 
-import com.example.assessment.backend.file.CourseFileBackend;
 import com.example.assessment.backend.generic.ICourseBackend;
-import com.example.assessment.backend.types.classes.Course;
 import com.example.assessment.backend.types.interfaces.ICourse;
 import java.io.IOException;
 import java.io.InputStream;
@@ -52,7 +50,7 @@ public class ManagerDashboardTest {
         PrintStream ps = new PrintStream(this.out);
 
         // Setup real backend with temp directory
-        ICourseBackend backend = new CourseFileBackend(tempDir);
+        ICourseBackend backend = ICourseBackend.of(tempDir);
 
         // Test the workflow
         Thread thread = new Thread(() -> {
@@ -82,7 +80,7 @@ public class ManagerDashboardTest {
         ));
 
         // Verify backend state
-        ICourse expected = new Course("COMP509", "OOP", 15, "Description");
+        ICourse expected = ICourse.of("COMP509", "OOP", 15, "Description");
         ICourse savedCourse = backend.getCourseByCode("COMP509");
         assertNotNull(savedCourse);
         assertEquals(expected, savedCourse);
