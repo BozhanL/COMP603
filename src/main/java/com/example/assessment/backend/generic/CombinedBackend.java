@@ -29,8 +29,7 @@ public class CombinedBackend implements ICombinedBackend {
     }
 
     private CombinedBackend(@NonNull Path p) throws IOException, IllegalArgumentException {
-        this.pb = IPersonBackend.of(p);
-        this.cb = ICourseBackend.of(p);
+        this(IPersonBackend.of(p), ICourseBackend.of(p));
     }
 
     public static ICombinedBackend of() throws IOException {
