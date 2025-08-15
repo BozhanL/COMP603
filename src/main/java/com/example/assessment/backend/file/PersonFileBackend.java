@@ -4,6 +4,7 @@ import com.example.assessment.backend.generic.DatabaseCorruptedException;
 import com.example.assessment.backend.generic.IPersonBackend;
 import com.example.assessment.backend.types.interfaces.IManager;
 import com.example.assessment.backend.types.interfaces.IPerson;
+import com.example.assessment.backend.types.interfaces.IStudent;
 import com.google.common.collect.ImmutableList;
 import com.google.errorprone.annotations.CheckReturnValue;
 import java.io.IOException;
@@ -52,12 +53,7 @@ public final class PersonFileBackend extends FileBackend implements IPersonBacke
 
     @Override
     public IPerson getPersonByPartPath(@NonNull String fName) throws IOException, DatabaseCorruptedException {
-        Object o = this.getObjectByPartPath(fName);
-        if (o instanceof IPerson person) {
-            return person;
-        }
-
-        return null;
+        return this.getObjectByPartPath(IPerson.class, fName);
     }
 
     @Override
@@ -77,8 +73,16 @@ public final class PersonFileBackend extends FileBackend implements IPersonBacke
 
     @Override
     public ImmutableList<IPerson> listPerson() throws IOException, DatabaseCorruptedException {
-        ImmutableList<Object> obj = this.listObject();
-        ImmutableList<IPerson> out = obj.stream().filter(IPerson.class::isInstance).map(IPerson.class::cast).collect(ImmutableList.toImmutableList());
-        return out;
+        return this.listObject(IPerson.class);
+    }
+
+    @Override
+    public ImmutableList<IStudent> listStudent() throws IOException, DatabaseCorruptedException {
+        return this.listObject(IStudent.class);
+    }
+
+    @Override
+    public ImmutableList<IManager> listManager() throws IOException, DatabaseCorruptedException {
+        return this.listObject(IManager.class);
     }
 }

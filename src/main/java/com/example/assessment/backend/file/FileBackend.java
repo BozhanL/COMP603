@@ -73,25 +73,33 @@ public abstract class FileBackend implements IBackend {
         return p.getFileName();
     }
 
-    protected Object getObjectByPartPath(@NonNull String fName) throws IOException, DatabaseCorruptedException, IllegalArgumentException {
+    protected <T> T getObjectByPartPath(@NonNull Class<T> cl, @NonNull String fName) throws IOException, DatabaseCorruptedException, IllegalArgumentException {
         Path p = this.db.resolve(this.getPathByName(fName));
 
         File f = p.toFile();
 
         try (ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(new FileInputStream(f)))) {
-            return ois.readObject();
+            Object o = ois.readObject();
+            if (cl.isInstance(o)) {
+                return cl.cast(o);
+            }
+            return null;
         } catch (ClassNotFoundException | InvalidClassException | StreamCorruptedException e) {
             throw new DatabaseCorruptedException(e);
         }
     }
 
-    protected Object getObjectByPath(@NonNull Path fName) throws IOException, DatabaseCorruptedException, IllegalArgumentException {
+    protected <T> T getObjectByPath(@NonNull Class<T> cl, @NonNull Path fName) throws IOException, DatabaseCorruptedException, IllegalArgumentException {
         Path p = this.db.resolve(fName);
 
         File f = p.toFile();
 
         try (ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(new FileInputStream(f)))) {
-            return ois.readObject();
+            Object o = ois.readObject();
+            if (cl.isInstance(o)) {
+                return cl.cast(o);
+            }
+            return null;
         } catch (ClassNotFoundException | InvalidClassException | StreamCorruptedException e) {
             throw new DatabaseCorruptedException(e);
         }
@@ -133,17 +141,20 @@ public abstract class FileBackend implements IBackend {
         }
     }
 
-    protected ImmutableList<Object> listObject() throws IOException, DatabaseCorruptedException {
+    protected <T> ImmutableList<T> listObject(@NonNull Class<T> cl) throws IOException, DatabaseCorruptedException {
         File folder = this.getDb().toFile();
         File[] files = folder.listFiles();
         if (Objects.isNull(files)) {
             files = new File[0];
         }
-        ArrayList<Object> out = new ArrayList<>(files.length);
+        ArrayList<T> out = new ArrayList<>(files.length);
 
         for (File f : files) {
             try (ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(new FileInputStream(f)))) {
-                out.add(ois.readObject());
+                Object o = ois.readObject();
+                if (cl.isInstance(o)) {
+                    out.add(cl.cast(o));
+                }
             } catch (ClassNotFoundException | InvalidClassException | StreamCorruptedException e) {
                 throw new DatabaseCorruptedException(e);
             }

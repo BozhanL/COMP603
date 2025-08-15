@@ -42,11 +42,7 @@ public final class CourseFileBackend extends FileBackend implements ICourseBacke
 
     @Override
     public ICourse getCourseByCode(@NonNull String code) throws IOException, DatabaseCorruptedException {
-        Object obj = this.getObjectByPartPath(code);
-        if (obj instanceof ICourse c) {
-            return c;
-        }
-        return null;
+        return this.getObjectByPartPath(ICourse.class, code);
     }
 
     @Override
@@ -66,8 +62,6 @@ public final class CourseFileBackend extends FileBackend implements ICourseBacke
 
     @Override
     public ImmutableList<ICourse> listCourse() throws IOException, DatabaseCorruptedException {
-        ImmutableList<Object> obj = this.listObject();
-        ImmutableList<ICourse> out = obj.stream().filter(ICourse.class::isInstance).map(ICourse.class::cast).collect(ImmutableList.toImmutableList());
-        return out;
+        return this.listObject(ICourse.class);
     }
 }
