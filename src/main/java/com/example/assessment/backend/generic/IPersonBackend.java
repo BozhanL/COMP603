@@ -4,6 +4,7 @@ import com.example.assessment.backend.file.PersonFileBackend;
 import com.example.assessment.backend.types.interfaces.IManager;
 import com.example.assessment.backend.types.interfaces.IPerson;
 import com.example.assessment.backend.types.interfaces.IStudent;
+import com.google.common.collect.ImmutableList;
 import com.google.errorprone.annotations.CheckReturnValue;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -82,5 +83,19 @@ public interface IPersonBackend extends IBackend {
 
     public default boolean deletePersonByName(@NonNull String legalFirstName, @NonNull String legalLastName) throws IOException {
         return this.deletePersonByPartPath(String.format("%s_%s", legalFirstName, legalLastName));
+    }
+
+    public abstract ImmutableList<IPerson> listPerson() throws IOException, DatabaseCorruptedException;
+
+    public default ImmutableList<IStudent> listStudent() throws IOException, DatabaseCorruptedException {
+        ImmutableList<IPerson> p = this.listPerson();
+        ImmutableList<IStudent> out = p.stream().filter(IStudent.class::isInstance).map(IStudent.class::cast).collect(ImmutableList.toImmutableList());
+        return out;
+    }
+
+    public default ImmutableList<IManager> listManager() throws IOException, DatabaseCorruptedException {
+        ImmutableList<IPerson> p = this.listPerson();
+        ImmutableList<IManager> out = p.stream().filter(IManager.class::isInstance).map(IManager.class::cast).collect(ImmutableList.toImmutableList());
+        return out;
     }
 }

@@ -1,5 +1,6 @@
 package com.example.assessment.cli;
 
+import com.example.assessment.backend.generic.ICombinedBackend;
 import com.example.assessment.backend.generic.IPersonBackend;
 import com.example.assessment.backend.types.interfaces.IManager;
 import com.example.assessment.backend.types.interfaces.IPerson;
@@ -42,16 +43,15 @@ public class WelcomeTest {
     }
 
     @Test
-    void testAskForDatabaseLocation() {
+    void testAskForDatabase() {
         Scanner sc = new Scanner(this.in, Charset.defaultCharset());
         PrintStream ps = new PrintStream(this.out);
         Welcome w = new Welcome(new Scanner(System.in, Charset.defaultCharset()));
 
         ps.println(this.folder);
 
-        Path p = w.askForDatabaseLocation();
+        ICombinedBackend p = w.askForDatabase();
         assertNotNull(p);
-        assertEquals(this.folder, p);
 
         assertEquals(String.format(
                 "Enter database path (press Enter for default): Database = %s",

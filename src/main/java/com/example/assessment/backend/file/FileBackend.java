@@ -3,8 +3,12 @@ package com.example.assessment.backend.file;
 import com.example.assessment.backend.generic.DatabaseCorruptedException;
 import com.example.assessment.backend.generic.IBackend;
 import com.example.assessment.backend.types.interfaces.ISelfSerializable;
+import com.google.common.collect.ImmutableList;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.errorprone.annotations.CheckReturnValue;
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InvalidClassException;
@@ -16,6 +20,7 @@ import java.nio.file.DirectoryStream;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Iterator;
 import lombok.Cleanup;
 import lombok.Getter;
@@ -27,7 +32,6 @@ import lombok.ToString;
 public abstract class FileBackend implements IBackend {
 
     protected static final Path EMPTY = Path.of("");
-    public static final Path DEFAULT_DATA_LOCATION = Path.of(System.getProperty("user.home"), ".student/filedb");
 
     @Getter
     protected Path db;
@@ -121,8 +125,19 @@ public abstract class FileBackend implements IBackend {
         this.setObject(o);
     }
 
-    @Override
-    public Path getDefaultDataLocation() {
-        return DEFAULT_DATA_LOCATION;
+    protected ImmutableList<Object> listObject() throws IOException, DatabaseCorruptedException {
+        File folder = this.getDb().toFile();
+        File[] files = folder.listFiles();
+        ArrayList<Object> out = new ArrayList<>(files.length);
+
+        for (File f : files) {
+            try (ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(new FileInputStream(f)))) {
+                out.add(ois.readObject());
+            } catch (ClassNotFoundException | InvalidClassException | StreamCorruptedException e) {
+                throw new DatabaseCorruptedException(e);
+            }
+        }
+
+        return ImmutableList.copyOf(out);
     }
 }

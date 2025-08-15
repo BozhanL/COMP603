@@ -6,5 +6,13 @@ import java.nio.file.Path;
 @CheckReturnValue
 public interface IBackend {
 
-    public abstract Path getDefaultDataLocation();
+    public static final Path DEFAULT_DATA_LOCATION = Path.of(System.getProperty("user.home"), ".student/filedb");
+
+    public default Path getDefaultDataLocation() {
+        return DEFAULT_DATA_LOCATION;
+    }
+
+    public static Path getDefaultDataLocationStatic() {
+        return DEFAULT_DATA_LOCATION;
+    }
 }

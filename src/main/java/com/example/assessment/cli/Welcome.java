@@ -1,12 +1,12 @@
 package com.example.assessment.cli;
 
 import com.example.assessment.backend.generic.DatabaseCorruptedException;
+import com.example.assessment.backend.generic.ICombinedBackend;
 import com.example.assessment.backend.generic.IPersonBackend;
 import com.example.assessment.backend.types.interfaces.IPerson;
 import com.google.errorprone.annotations.CheckReturnValue;
 import java.io.IOException;
 import java.nio.file.InvalidPathException;
-import java.nio.file.Path;
 import java.util.Scanner;
 import lombok.NonNull;
 
@@ -34,23 +34,29 @@ public class Welcome {
         System.out.println("                                           ");
     }
 
-    public Path askForDatabaseLocation() {
-        while (true) {
-            try {
-                System.out.print("Enter database path (press Enter for default): ");
-                String path = scanner.nextLine().trim();
-                if (path.isBlank()) {
-                    System.out.println("Database = default");
-                    return null;
-                }
+    public ICombinedBackend askForDatabase() {
+        ICombinedBackend pb = null;
 
-                Path p = Path.of(path);
-                System.out.println("Database = " + p);
-                return p;
+        while (pb == null) {
+            System.out.print("Enter database path (press Enter for default): ");
+            String path = scanner.nextLine().trim();
+
+            try {
+                if (path.isBlank()) {
+                    pb = ICombinedBackend.of();
+                    System.out.println("Database = default");
+                } else {
+                    pb = ICombinedBackend.of(path);
+                    System.out.println("Database = " + path);
+                }
+            } catch (IOException e) {
+                System.out.println("Error: " + e.getMessage());
             } catch (InvalidPathException e) {
                 System.out.println("Error: invalid path");
             }
         }
+
+        return pb;
     }
 
     public IPerson login(IPersonBackend pb) {

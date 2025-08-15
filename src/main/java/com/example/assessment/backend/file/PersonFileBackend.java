@@ -4,6 +4,7 @@ import com.example.assessment.backend.generic.DatabaseCorruptedException;
 import com.example.assessment.backend.generic.IPersonBackend;
 import com.example.assessment.backend.types.interfaces.IManager;
 import com.example.assessment.backend.types.interfaces.IPerson;
+import com.google.common.collect.ImmutableList;
 import com.google.errorprone.annotations.CheckReturnValue;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -72,5 +73,12 @@ public final class PersonFileBackend extends FileBackend implements IPersonBacke
     @Override
     public void modifyPerson(@NonNull IPerson p) throws IOException {
         this.modifyObject(p);
+    }
+
+    @Override
+    public ImmutableList<IPerson> listPerson() throws IOException, DatabaseCorruptedException {
+        ImmutableList<Object> obj = this.listObject();
+        ImmutableList<IPerson> out = obj.stream().filter(IPerson.class::isInstance).map(IPerson.class::cast).collect(ImmutableList.toImmutableList());
+        return out;
     }
 }
