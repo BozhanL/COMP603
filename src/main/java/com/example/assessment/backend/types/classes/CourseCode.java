@@ -24,7 +24,7 @@ public class CourseCode implements ICourseCode {
     int level;
     int courseNumber;
 
-    public CourseCode(@NonNull String code) throws ParseException, NumberFormatException, IndexOutOfBoundsException {
+    private CourseCode(@NonNull String code) throws ParseException, NumberFormatException, IndexOutOfBoundsException {
         this.departmentCode = code.replaceAll("\\d", "");
         String nums = code.replaceAll("[^\\d]", "");
         this.level = Integer.parseInt(nums.substring(0, 1));
@@ -35,7 +35,7 @@ public class CourseCode implements ICourseCode {
         }
     }
 
-    public CourseCode(@NonNull String departmentCode, int level, int courseNumber) throws IllegalArgumentException {
+    private CourseCode(@NonNull String departmentCode, int level, int courseNumber) throws IllegalArgumentException {
         if (departmentCode.isBlank()) {
             throw new IllegalArgumentException("departmentCode must not be blank!");
         }
@@ -43,6 +43,14 @@ public class CourseCode implements ICourseCode {
         this.departmentCode = departmentCode;
         this.level = level;
         this.courseNumber = courseNumber;
+    }
+
+    public static ICourseCode of(String departmentCode, int level, int courseNumber) {
+        return new CourseCode(departmentCode, level, courseNumber);
+    }
+
+    public static ICourseCode of(@NonNull String code) throws ParseException, NumberFormatException, IndexOutOfBoundsException {
+        return new CourseCode(code);
     }
 
     @Override

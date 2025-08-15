@@ -15,16 +15,28 @@ public final class CourseFileBackend extends FileBackend implements ICourseBacke
 
     private static final Path DEFAULT_DATA_SUBPATH = Path.of("course");
 
-    public CourseFileBackend() throws IOException {
+    private CourseFileBackend() throws IOException {
         this(DEFAULT_DATA_LOCATION);
     }
 
-    public CourseFileBackend(@NonNull String p) throws IOException, IllegalArgumentException {
+    private CourseFileBackend(@NonNull String p) throws IOException, IllegalArgumentException {
         this(Path.of(p));
     }
 
-    public CourseFileBackend(@NonNull Path p) throws IOException, IllegalArgumentException {
+    private CourseFileBackend(@NonNull Path p) throws IOException, IllegalArgumentException {
         super(p.resolve(DEFAULT_DATA_SUBPATH));
+    }
+
+    public static ICourseBackend of() throws IOException {
+        return new CourseFileBackend();
+    }
+
+    public static ICourseBackend of(@NonNull String p) throws IOException, IllegalArgumentException {
+        return new CourseFileBackend(p);
+    }
+
+    public static ICourseBackend of(@NonNull Path p) throws IOException, IllegalArgumentException {
+        return new CourseFileBackend(p);
     }
 
     @Override

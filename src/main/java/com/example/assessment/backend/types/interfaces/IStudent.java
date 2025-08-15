@@ -1,7 +1,8 @@
 package com.example.assessment.backend.types.interfaces;
 
-import com.example.assessment.backend.types.classes.Gender;
-import com.example.assessment.backend.types.classes.Residency;
+import com.example.assessment.backend.types.enums.Gender;
+import com.example.assessment.backend.types.enums.Residency;
+import com.example.assessment.backend.types.classes.Student;
 import com.google.common.collect.ImmutableMap;
 import com.google.errorprone.annotations.CheckReturnValue;
 import com.google.errorprone.annotations.Immutable;
@@ -11,6 +12,22 @@ import lombok.NonNull;
 @Immutable
 @CheckReturnValue
 public interface IStudent extends IPerson {
+
+    public static IStudent of(
+            @NonNull String id,
+            @NonNull String password,
+            @NonNull String legalFirstName,
+            @NonNull String legalLastName,
+            @NonNull LocalDate dateOfBirth,
+            @NonNull Gender gender,
+            @NonNull String email,
+            @NonNull String phone,
+            @NonNull IAddress address,
+            @NonNull Residency residencyStatus,
+            @NonNull ImmutableMap<String, IStudentCourseInfo> courses
+    ) {
+        return Student.of(id, password, legalFirstName, legalLastName, dateOfBirth, gender, email, phone, address, residencyStatus, courses);
+    }
 
     @Override
     public abstract IStudent withPassword(@NonNull String password);

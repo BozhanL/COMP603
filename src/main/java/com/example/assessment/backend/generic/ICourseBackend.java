@@ -1,12 +1,26 @@
 package com.example.assessment.backend.generic;
 
+import com.example.assessment.backend.file.CourseFileBackend;
 import com.example.assessment.backend.types.interfaces.ICourse;
 import com.google.errorprone.annotations.CheckReturnValue;
 import java.io.IOException;
+import java.nio.file.Path;
 import lombok.NonNull;
 
 @CheckReturnValue
 public interface ICourseBackend extends IBackend {
+
+    public static ICourseBackend of() throws IOException {
+        return CourseFileBackend.of();
+    }
+
+    public static ICourseBackend of(@NonNull String p) throws IOException, IllegalArgumentException {
+        return CourseFileBackend.of(p);
+    }
+
+    public static ICourseBackend of(@NonNull Path p) throws IOException, IllegalArgumentException {
+        return CourseFileBackend.of(p);
+    }
 
     public abstract ICourse getCourseByCode(@NonNull String code) throws IOException, DatabaseCorruptedException;
 

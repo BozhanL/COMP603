@@ -4,17 +4,20 @@ import com.example.assessment.backend.generic.DatabaseCorruptedException;
 import com.example.assessment.backend.generic.IPersonBackend;
 import com.example.assessment.backend.types.interfaces.IPerson;
 import com.google.errorprone.annotations.CheckReturnValue;
-import com.google.errorprone.annotations.Immutable;
 import java.io.IOException;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import java.util.Scanner;
-import lombok.experimental.UtilityClass;
+import lombok.NonNull;
 
-@Immutable
-@UtilityClass
 @CheckReturnValue
 public class Welcome {
+
+    private final Scanner scanner;
+
+    public Welcome(@NonNull Scanner scanner) {
+        this.scanner = scanner;
+    }
 
     public static void showAsciiArt() {
         System.out.println("               _                           ");
@@ -31,7 +34,7 @@ public class Welcome {
         System.out.println("                                           ");
     }
 
-    public static Path askForDatabaseLocation(Scanner scanner) {
+    public Path askForDatabaseLocation() {
         while (true) {
             try {
                 System.out.print("Enter database path (press Enter for default): ");
@@ -50,7 +53,7 @@ public class Welcome {
         }
     }
 
-    public static IPerson login(Scanner scanner, IPersonBackend pb) {
+    public IPerson login(IPersonBackend pb) {
         IPerson p = null;
 
         while (p == null) {

@@ -2,15 +2,12 @@ package com.example.assessment.backend.file;
 
 import com.example.assessment.backend.generic.DatabaseCorruptedException;
 import com.example.assessment.backend.generic.IPersonBackend;
-import com.example.assessment.backend.types.classes.Address;
-import com.example.assessment.backend.types.classes.Gender;
+import com.example.assessment.backend.types.interfaces.IManager;
 import com.example.assessment.backend.types.interfaces.IPerson;
-import com.example.assessment.backend.types.classes.Manager;
 import com.google.errorprone.annotations.CheckReturnValue;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.time.LocalDate;
 import java.util.stream.Stream;
 import lombok.Cleanup;
 import lombok.NonNull;
@@ -22,33 +19,34 @@ public final class PersonFileBackend extends FileBackend implements IPersonBacke
 
     private static final Path DEFAULT_DATA_SUBPATH = Path.of("person");
 
-    public PersonFileBackend() throws IOException {
+    private PersonFileBackend() throws IOException {
         this(DEFAULT_DATA_LOCATION);
     }
 
-    public PersonFileBackend(@NonNull String p) throws IOException, IllegalArgumentException {
+    private PersonFileBackend(@NonNull String p) throws IOException, IllegalArgumentException {
         this(Path.of(p));
     }
 
-    public PersonFileBackend(@NonNull Path p) throws IOException, IllegalArgumentException {
+    private PersonFileBackend(@NonNull Path p) throws IOException, IllegalArgumentException {
         super(p.resolve(DEFAULT_DATA_SUBPATH));
 
         @Cleanup
         Stream<Path> stream = Files.list(this.db);
         if (stream.findAny().isEmpty()) {
-            Manager DEFAULT_MANAGER = new Manager(
-                    "admin",
-                    "admin",
-                    "admin",
-                    "admin",
-                    LocalDate.MIN,
-                    Gender.OTHER,
-                    "",
-                    "",
-                    new Address("", "", "", "", "", "", "", "")
-            );
-            this.setPerson(DEFAULT_MANAGER);
+            this.setPerson(IManager.defaultManager());
         }
+    }
+
+    public static IPersonBackend of() throws IOException {
+        return new PersonFileBackend();
+    }
+
+    public static IPersonBackend of(@NonNull String p) throws IOException, IllegalArgumentException {
+        return new PersonFileBackend(p);
+    }
+
+    public static IPersonBackend of(@NonNull Path p) throws IOException, IllegalArgumentException {
+        return new PersonFileBackend(p);
     }
 
     @Override

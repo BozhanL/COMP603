@@ -1,14 +1,25 @@
 package com.example.assessment.backend.types.interfaces;
 
-import com.example.assessment.backend.types.classes.Grade;
+import com.example.assessment.backend.types.enums.Grade;
+import com.example.assessment.backend.types.classes.StudentCourseInfo;
 import com.google.errorprone.annotations.CheckReturnValue;
 import com.google.errorprone.annotations.Immutable;
 import java.io.Serializable;
 import java.time.LocalDate;
+import lombok.NonNull;
 
 @Immutable
 @CheckReturnValue
 public interface IStudentCourseInfo extends Serializable {
+
+    public static IStudentCourseInfo of(
+            @NonNull String courseCode,
+            @NonNull Grade grade,
+            @NonNull LocalDate starts,
+            @NonNull String location
+    ) {
+        return StudentCourseInfo.of(courseCode, grade, starts, location);
+    }
 
     public abstract IStudentCourseInfo withCourseCode(String courseCode);
 

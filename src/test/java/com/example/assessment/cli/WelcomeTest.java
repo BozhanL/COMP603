@@ -1,9 +1,7 @@
 package com.example.assessment.cli;
 
-import com.example.assessment.backend.file.PersonFileBackend;
-import com.example.assessment.backend.types.classes.Address;
-import com.example.assessment.backend.types.classes.Gender;
-import com.example.assessment.backend.types.classes.Manager;
+import com.example.assessment.backend.generic.IPersonBackend;
+import com.example.assessment.backend.types.interfaces.IManager;
 import com.example.assessment.backend.types.interfaces.IPerson;
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,7 +10,6 @@ import java.io.PipedOutputStream;
 import java.io.PrintStream;
 import java.nio.charset.Charset;
 import java.nio.file.Path;
-import java.time.LocalDate;
 import java.util.Scanner;
 import org.junit.jupiter.api.AfterEach;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -48,10 +45,11 @@ public class WelcomeTest {
     void testAskForDatabaseLocation() {
         Scanner sc = new Scanner(this.in, Charset.defaultCharset());
         PrintStream ps = new PrintStream(this.out);
+        Welcome w = new Welcome(new Scanner(System.in, Charset.defaultCharset()));
 
         ps.println(this.folder);
 
-        Path p = Welcome.askForDatabaseLocation(new Scanner(System.in, Charset.defaultCharset()));
+        Path p = w.askForDatabaseLocation();
         assertNotNull(p);
         assertEquals(this.folder, p);
 
@@ -66,24 +64,13 @@ public class WelcomeTest {
         Scanner sc = new Scanner(this.in, Charset.defaultCharset());
         PrintStream ps = new PrintStream(this.out);
 
+        Welcome w = new Welcome(new Scanner(System.in, Charset.defaultCharset()));
+
         ps.println("admin");
         ps.println("admin");
 
-        IPerson expected = new Manager(
-                "admin",
-                "admin",
-                "admin",
-                "admin",
-                LocalDate.MIN,
-                Gender.OTHER,
-                "",
-                "",
-                new Address("", "", "", "", "", "", "", "")
-        );
-        IPerson p = Welcome.login(
-                new Scanner(System.in, Charset.defaultCharset()),
-                new PersonFileBackend(this.folder)
-        );
+        IPerson expected = IManager.defaultManager();
+        IPerson p = w.login(IPersonBackend.of(this.folder));
         assertNotNull(p);
         assertEquals(expected, p);
 

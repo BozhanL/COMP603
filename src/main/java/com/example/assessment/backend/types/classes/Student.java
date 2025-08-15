@@ -1,5 +1,8 @@
 package com.example.assessment.backend.types.classes;
 
+import com.example.assessment.backend.types.enums.UserType;
+import com.example.assessment.backend.types.enums.Gender;
+import com.example.assessment.backend.types.enums.Residency;
 import com.example.assessment.backend.types.interfaces.IAddress;
 import com.example.assessment.backend.types.interfaces.IStudent;
 import com.example.assessment.backend.types.interfaces.IStudentCourseInfo;
@@ -32,7 +35,7 @@ public class Student extends Person implements IStudent {
     @NonNull
     ImmutableMap<String, IStudentCourseInfo> courses;
 
-    public Student(
+    private Student(
             @NonNull String id,
             @NonNull String password,
             @NonNull String legalFirstName,
@@ -48,6 +51,22 @@ public class Student extends Person implements IStudent {
         super(id, password, legalFirstName, legalLastName, dateOfBirth, gender, email, phone, address);
         this.residencyStatus = residencyStatus;
         this.courses = courses;
+    }
+
+    public static IStudent of(
+            @NonNull String id,
+            @NonNull String password,
+            @NonNull String legalFirstName,
+            @NonNull String legalLastName,
+            @NonNull LocalDate dateOfBirth,
+            @NonNull Gender gender,
+            @NonNull String email,
+            @NonNull String phone,
+            @NonNull IAddress address,
+            @NonNull Residency residencyStatus,
+            @NonNull ImmutableMap<String, IStudentCourseInfo> courses
+    ) {
+        return new Student(id, password, legalFirstName, legalLastName, dateOfBirth, gender, email, phone, address, residencyStatus, courses);
     }
 
     @Override
