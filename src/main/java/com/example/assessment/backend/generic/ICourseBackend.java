@@ -2,6 +2,7 @@ package com.example.assessment.backend.generic;
 
 import com.example.assessment.backend.file.CourseFileBackend;
 import com.example.assessment.backend.types.interfaces.ICourse;
+import com.google.common.collect.ImmutableList;
 import com.google.errorprone.annotations.CheckReturnValue;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -29,4 +30,6 @@ public interface ICourseBackend extends IBackend {
     public abstract boolean deleteCourseByCode(@NonNull String code) throws IOException, DatabaseCorruptedException;
 
     public abstract void modifyCourse(@NonNull ICourse c) throws IOException;
+
+    public abstract ImmutableList<ICourse> listCourse() throws IOException, DatabaseCorruptedException;
 }

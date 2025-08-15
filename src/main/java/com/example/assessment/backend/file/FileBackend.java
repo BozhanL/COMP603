@@ -3,20 +3,26 @@ package com.example.assessment.backend.file;
 import com.example.assessment.backend.generic.DatabaseCorruptedException;
 import com.example.assessment.backend.generic.IBackend;
 import com.example.assessment.backend.types.interfaces.ISelfSerializable;
+import com.google.common.collect.ImmutableList;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.errorprone.annotations.CheckReturnValue;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InvalidClassException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.OutputStream;
 import java.io.StreamCorruptedException;
 import java.nio.file.DirectoryStream;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Objects;
 import lombok.Cleanup;
 import lombok.Getter;
 import lombok.NonNull;
@@ -27,7 +33,6 @@ import lombok.ToString;
 public abstract class FileBackend implements IBackend {
 
     protected static final Path EMPTY = Path.of("");
-    public static final Path DEFAULT_DATA_LOCATION = Path.of(System.getProperty("user.home"), ".student/filedb");
 
     @Getter
     protected Path db;
@@ -68,22 +73,33 @@ public abstract class FileBackend implements IBackend {
         return p.getFileName();
     }
 
-    protected Object getObjectByPartPath(@NonNull String fName) throws IOException, DatabaseCorruptedException, IllegalArgumentException {
-        Path p = this.getPathByName(fName);
+    protected <T> T getObjectByPartPath(@NonNull Class<T> cl, @NonNull String fName) throws IOException, DatabaseCorruptedException, IllegalArgumentException {
+        Path p = this.db.resolve(this.getPathByName(fName));
 
-        return this.getObjectByPath(p);
+        File f = p.toFile();
+
+        try (ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(new FileInputStream(f)))) {
+            Object o = ois.readObject();
+            if (cl.isInstance(o)) {
+                return cl.cast(o);
+            }
+            return null;
+        } catch (ClassNotFoundException | InvalidClassException | StreamCorruptedException e) {
+            throw new DatabaseCorruptedException(e);
+        }
     }
 
-    protected Object getObjectByPath(@NonNull Path fName) throws IOException, DatabaseCorruptedException, IllegalArgumentException {
+    protected <T> T getObjectByPath(@NonNull Class<T> cl, @NonNull Path fName) throws IOException, DatabaseCorruptedException, IllegalArgumentException {
         Path p = this.db.resolve(fName);
 
-        @Cleanup
-        InputStream inpStream = Files.newInputStream(p);
-        @Cleanup
-        ObjectInputStream objectInputStream = new ObjectInputStream(inpStream);
+        File f = p.toFile();
 
-        try {
-            return objectInputStream.readObject();
+        try (ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(new FileInputStream(f)))) {
+            Object o = ois.readObject();
+            if (cl.isInstance(o)) {
+                return cl.cast(o);
+            }
+            return null;
         } catch (ClassNotFoundException | InvalidClassException | StreamCorruptedException e) {
             throw new DatabaseCorruptedException(e);
         }
@@ -97,12 +113,11 @@ public abstract class FileBackend implements IBackend {
             throw new FileAlreadyExistsException(path.toString());
         }
 
-        @Cleanup
-        OutputStream outStream = Files.newOutputStream(path);
-        @Cleanup
-        ObjectOutputStream objectOutputStream = new ObjectOutputStream(outStream);
+        File f = path.toFile();
 
-        objectOutputStream.writeObject(o);
+        try (ObjectOutputStream oos = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(f)))) {
+            oos.writeObject(o);
+        }
     }
 
     protected boolean deleteObjectWithName(@NonNull String fName) throws IOException {
@@ -116,13 +131,35 @@ public abstract class FileBackend implements IBackend {
     }
 
     protected void modifyObject(@NonNull ISelfSerializable o) throws IOException {
-        Path path = o.getPath();
-        this.deleteObjectWithPath(path);
-        this.setObject(o);
+        Path path = this.db.resolve(o.getPath());
+
+        Files.deleteIfExists(path);
+
+        File f = path.toFile();
+        try (ObjectOutputStream oos = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(f)))) {
+            oos.writeObject(o);
+        }
     }
 
-    @Override
-    public Path getDefaultDataLocation() {
-        return DEFAULT_DATA_LOCATION;
+    protected <T> ImmutableList<T> listObject(@NonNull Class<T> cl) throws IOException, DatabaseCorruptedException {
+        File folder = this.getDb().toFile();
+        File[] files = folder.listFiles();
+        if (Objects.isNull(files)) {
+            files = new File[0];
+        }
+        ArrayList<T> out = new ArrayList<>(files.length);
+
+        for (File f : files) {
+            try (ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(new FileInputStream(f)))) {
+                Object o = ois.readObject();
+                if (cl.isInstance(o)) {
+                    out.add(cl.cast(o));
+                }
+            } catch (ClassNotFoundException | InvalidClassException | StreamCorruptedException e) {
+                throw new DatabaseCorruptedException(e);
+            }
+        }
+
+        return ImmutableList.copyOf(out);
     }
 }

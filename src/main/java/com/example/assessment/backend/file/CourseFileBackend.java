@@ -3,6 +3,7 @@ package com.example.assessment.backend.file;
 import com.example.assessment.backend.generic.DatabaseCorruptedException;
 import com.example.assessment.backend.generic.ICourseBackend;
 import com.example.assessment.backend.types.interfaces.ICourse;
+import com.google.common.collect.ImmutableList;
 import com.google.errorprone.annotations.CheckReturnValue;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -41,11 +42,7 @@ public final class CourseFileBackend extends FileBackend implements ICourseBacke
 
     @Override
     public ICourse getCourseByCode(@NonNull String code) throws IOException, DatabaseCorruptedException {
-        Object obj = this.getObjectByPartPath(code);
-        if (obj instanceof ICourse c) {
-            return c;
-        }
-        return null;
+        return this.getObjectByPartPath(ICourse.class, code);
     }
 
     @Override
@@ -61,5 +58,10 @@ public final class CourseFileBackend extends FileBackend implements ICourseBacke
     @Override
     public void modifyCourse(@NonNull ICourse c) throws IOException {
         this.modifyObject(c);
+    }
+
+    @Override
+    public ImmutableList<ICourse> listCourse() throws IOException, DatabaseCorruptedException {
+        return this.listObject(ICourse.class);
     }
 }
