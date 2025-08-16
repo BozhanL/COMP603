@@ -5,6 +5,7 @@ import com.example.assessment.backend.types.interfaces.IPerson;
 import com.google.common.collect.ImmutableList;
 import com.google.errorprone.annotations.CheckReturnValue;
 import java.io.IOException;
+import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
@@ -24,7 +25,7 @@ public class CombinedBackend implements ICombinedBackend {
         this(DEFAULT_DATA_LOCATION);
     }
 
-    private CombinedBackend(@NonNull String p) throws IOException, IllegalArgumentException {
+    private CombinedBackend(@NonNull String p) throws IOException, IllegalArgumentException, InvalidPathException {
         this(Path.of(p));
     }
 
@@ -45,23 +46,23 @@ public class CombinedBackend implements ICombinedBackend {
     }
 
     @Override
-    public IPerson getPersonByPartPath(String fName) throws IOException, DatabaseCorruptedException {
-        return this.pb.getPersonByPartPath(fName);
-    }
-
-    @Override
     public void setPerson(IPerson p) throws IOException {
         this.pb.setPerson(p);
     }
 
     @Override
-    public boolean deletePersonByPartPath(String fName) throws IOException {
-        return this.pb.deletePersonByPartPath(fName);
+    public void modifyPerson(IPerson p) throws IOException {
+        this.pb.modifyPerson(p);
     }
 
     @Override
-    public void modifyPerson(IPerson p) throws IOException {
-        this.pb.modifyPerson(p);
+    public boolean deletePersonById(String id) throws IOException {
+        return this.pb.deletePersonById(id);
+    }
+
+    @Override
+    public IPerson getPersonById(String id) throws IOException, DatabaseCorruptedException {
+        return this.pb.getPersonById(id);
     }
 
     @Override

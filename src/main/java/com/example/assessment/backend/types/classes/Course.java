@@ -5,7 +5,6 @@ import com.example.assessment.backend.types.interfaces.ICourseCode;
 import com.google.errorprone.annotations.CheckReturnValue;
 import com.google.errorprone.annotations.Immutable;
 import java.io.Serial;
-import java.nio.file.Path;
 import java.text.ParseException;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
@@ -45,9 +44,4 @@ public class Course implements ICourse {
     int points;
     @NonNull
     String description;
-
-    @Override
-    public Path getPath() {
-        return Path.of(String.format("%s.bin", this.getCode()));
-    }
 }

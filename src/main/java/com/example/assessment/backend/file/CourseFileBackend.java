@@ -6,6 +6,7 @@ import com.example.assessment.backend.types.interfaces.ICourse;
 import com.google.common.collect.ImmutableList;
 import com.google.errorprone.annotations.CheckReturnValue;
 import java.io.IOException;
+import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import lombok.NonNull;
 import lombok.ToString;
@@ -20,7 +21,7 @@ public final class CourseFileBackend extends FileBackend implements ICourseBacke
         this(DEFAULT_DATA_LOCATION);
     }
 
-    private CourseFileBackend(@NonNull String p) throws IOException, IllegalArgumentException {
+    private CourseFileBackend(@NonNull String p) throws IOException, IllegalArgumentException, InvalidPathException {
         this(Path.of(p));
     }
 
@@ -28,40 +29,48 @@ public final class CourseFileBackend extends FileBackend implements ICourseBacke
         super(p.resolve(DEFAULT_DATA_SUBPATH));
     }
 
-    public static ICourseBackend of() throws IOException {
+    public static CourseFileBackend of() throws IOException {
         return new CourseFileBackend();
     }
 
-    public static ICourseBackend of(@NonNull String p) throws IOException, IllegalArgumentException {
+    public static CourseFileBackend of(@NonNull String p) throws IOException, IllegalArgumentException {
         return new CourseFileBackend(p);
     }
 
-    public static ICourseBackend of(@NonNull Path p) throws IOException, IllegalArgumentException {
+    public static CourseFileBackend of(@NonNull Path p) throws IOException, IllegalArgumentException {
         return new CourseFileBackend(p);
     }
 
     @Override
     public ICourse getCourseByCode(@NonNull String code) throws IOException, DatabaseCorruptedException {
-        return this.getObjectByPartPath(ICourse.class, code);
+        return this.getObjectByPath(ICourse.class, pathFromCode(code));
     }
 
     @Override
     public void setCourse(@NonNull ICourse c) throws IOException {
-        this.setObject(c);
+        this.setObject(c, pathFromCourse(c));
     }
 
     @Override
     public boolean deleteCourseByCode(@NonNull String code) throws IOException, DatabaseCorruptedException {
-        return this.deleteObjectWithName(code);
+        return this.deleteObjectWithPath(pathFromCode(code));
     }
 
     @Override
     public void modifyCourse(@NonNull ICourse c) throws IOException {
-        this.modifyObject(c);
+        this.modifyObject(c, pathFromCourse(c));
     }
 
     @Override
     public ImmutableList<ICourse> listCourse() throws IOException, DatabaseCorruptedException {
         return this.listObject(ICourse.class);
+    }
+
+    public static Path pathFromCourse(@NonNull ICourse c) {
+        return pathFromCode(c.getCode().toString());
+    }
+
+    public static Path pathFromCode(@NonNull String id) {
+        return Path.of(String.format("%s.bin", id));
     }
 }

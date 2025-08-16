@@ -20,18 +20,18 @@ public class Welcome {
     }
 
     public static void showAsciiArt() {
-        System.out.println("               _                           ");
-        System.out.println("              | |                          ");
-        System.out.println(" __      _____| | ___ ___  _ __ ___   ___  ");
+        System.out.println("               _                                  ");
+        System.out.println("              | |                                 ");
+        System.out.println(" __      _____| | ___ ___  _ __ ___   ___         ");
         System.out.println(" \\ \\ /\\ / / _ \\ |/ __/ _ \\| '_ ` _ \\ / _ \\ ");
-        System.out.println("  \\ V  V /  __/ | (_| (_) | | | | | |  __/ ");
-        System.out.println("   \\_/\\_/_\\___|_|\\___\\___/|_| |_| |_|\\___| ");
-        System.out.println("  / ____|_   _|  \\/  |/ ____|              ");
-        System.out.println(" | (___   | | | \\  / | (___                ");
-        System.out.println("  \\___ \\  | | | |\\/| |\\___ \\               ");
-        System.out.println("  ____) |_| |_| |  | |____) |              ");
-        System.out.println(" |_____/|_____|_|  |_|_____/               ");
-        System.out.println("                                           ");
+        System.out.println("  \\ V  V /  __/ | (_| (_) | | | | | |  __/       ");
+        System.out.println("   \\_/\\_/_\\___|_|\\___\\___/|_| |_| |_|\\___|  ");
+        System.out.println("  / ____|_   _|  \\/  |/ ____|                    ");
+        System.out.println(" | (___   | | | \\  / | (___                      ");
+        System.out.println("  \\___ \\  | | | |\\/| |\\___ \\                 ");
+        System.out.println("  ____) |_| |_| |  | |____) |                     ");
+        System.out.println(" |_____/|_____|_|  |_|_____/                      ");
+        System.out.println("                                                  ");
     }
 
     public ICombinedBackend askForDatabase() {

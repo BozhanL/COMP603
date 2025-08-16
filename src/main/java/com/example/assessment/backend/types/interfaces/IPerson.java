@@ -4,12 +4,13 @@ import com.example.assessment.backend.types.enums.Gender;
 import com.example.assessment.backend.types.enums.UserType;
 import com.google.errorprone.annotations.CheckReturnValue;
 import com.google.errorprone.annotations.Immutable;
+import java.io.Serializable;
 import java.time.LocalDate;
 import lombok.NonNull;
 
 @Immutable
 @CheckReturnValue
-public interface IPerson extends IAuthentication, ISelfSerializable {
+public interface IPerson extends IAuthentication, Serializable {
 
     public abstract UserType getType();
 

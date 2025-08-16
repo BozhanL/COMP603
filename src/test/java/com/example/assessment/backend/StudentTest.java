@@ -61,19 +61,6 @@ public class StudentTest {
     }
 
     @Test
-    void testGetPath() {
-        assertEquals(
-                this.s.getPath().toString(),
-                String.format(
-                        "%s_%s_%s.bin",
-                        this.s.getId(),
-                        this.s.getLegalFirstName(),
-                        this.s.getLegalLastName()
-                )
-        );
-    }
-
-    @Test
     void testWith() {
         IStudent n;
 

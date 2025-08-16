@@ -1,7 +1,7 @@
 package com.example.assessment.backend;
 
+import com.example.assessment.backend.file.PersonFileBackend;
 import com.example.assessment.backend.generic.DatabaseCorruptedException;
-import com.example.assessment.backend.generic.IPersonBackend;
 import com.example.assessment.backend.types.enums.Gender;
 import com.example.assessment.backend.types.enums.Grade;
 import com.example.assessment.backend.types.enums.Residency;
@@ -10,6 +10,7 @@ import com.example.assessment.backend.types.interfaces.IManager;
 import com.example.assessment.backend.types.interfaces.IStudent;
 import com.example.assessment.backend.types.interfaces.IStudentCourseInfo;
 import com.google.common.collect.ImmutableMap;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Path;
@@ -30,11 +31,11 @@ public class PersonFileBackendTest {
     @TempDir
     Path folder;
 
-    IPersonBackend pfb;
+    PersonFileBackend pfb;
 
     @BeforeEach
     void setUp() throws IOException {
-        this.pfb = IPersonBackend.of(folder);
+        this.pfb = PersonFileBackend.of(folder);
     }
 
     @Test
@@ -47,22 +48,16 @@ public class PersonFileBackendTest {
         this.pfb.setPerson(s);
 
         IStudent id = this.pfb.getStudentById(s.getId());
-        IStudent name = this.pfb.getStudentByName(s.getLegalFirstName(), s.getLegalLastName());
 
         assertEquals(s, id);
-        assertEquals(s, name);
-        assertEquals(id, name);
     }
 
     @Test
     void testGetDefaultManager() throws IOException, DatabaseCorruptedException {
         IManager DEFAULT_MANAGER = IManager.defaultManager();
         IManager id = this.pfb.getManagerById("admin");
-        IManager name = this.pfb.getManagerByName("admin", "admin");
 
         assertEquals(DEFAULT_MANAGER, id);
-        assertEquals(DEFAULT_MANAGER, name);
-        assertEquals(id, name);
     }
 
     @Test
@@ -77,19 +72,12 @@ public class PersonFileBackendTest {
         assertEquals(s, this.pfb.getStudentById(s.getId()));
         assertTrue(this.pfb.deletePersonById(s.getId()));
 
-        IOException exception = assertThrows(IOException.class,
+        FileNotFoundException exception = assertThrows(FileNotFoundException.class,
                 () -> {
                     this.pfb.getStudentById(s.getId());
                 }
         );
-        assertEquals(String.format("No file found matching the name: %s", s.getId()), exception.getMessage());
-
-        exception = assertThrows(IOException.class,
-                () -> {
-                    this.pfb.getStudentByName(s.getLegalFirstName(), s.getLegalLastName());
-                }
-        );
-        assertEquals(String.format("No file found matching the name: %s_%s", s.getLegalFirstName(), s.getLegalLastName()), exception.getMessage());
+        assertThat(exception.getMessage(), containsString(PersonFileBackend.pathFromPerson(s).toString()));
     }
 
     @Test
@@ -109,6 +97,6 @@ public class PersonFileBackendTest {
                 }
         );
 
-        assertThat(exception.getMessage(), containsString(s.getPath().toString()));
+        assertThat(exception.getMessage(), containsString(PersonFileBackend.pathFromPerson(s).toString()));
     }
 }

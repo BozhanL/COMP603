@@ -5,6 +5,7 @@ import com.example.assessment.backend.types.interfaces.ICourse;
 import com.google.common.collect.ImmutableList;
 import com.google.errorprone.annotations.CheckReturnValue;
 import java.io.IOException;
+import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import lombok.NonNull;
 
@@ -15,7 +16,7 @@ public interface ICourseBackend extends IBackend {
         return CourseFileBackend.of();
     }
 
-    public static ICourseBackend of(@NonNull String p) throws IOException, IllegalArgumentException {
+    public static ICourseBackend of(@NonNull String p) throws IOException, IllegalArgumentException, InvalidPathException {
         return CourseFileBackend.of(p);
     }
 
