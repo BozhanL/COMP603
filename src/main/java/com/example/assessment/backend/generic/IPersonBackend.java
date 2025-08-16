@@ -7,6 +7,7 @@ import com.example.assessment.backend.types.interfaces.IStudent;
 import com.google.common.collect.ImmutableList;
 import com.google.errorprone.annotations.CheckReturnValue;
 import java.io.IOException;
+import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import lombok.NonNull;
@@ -26,7 +27,7 @@ public interface IPersonBackend extends IBackend {
         return PersonFileBackend.of(p);
     }
 
-    public abstract void setPerson(@NonNull IPerson p) throws IOException;
+    public abstract void setPerson(@NonNull IPerson p) throws IOException, FileAlreadyExistsException;
 
     public abstract boolean deletePersonById(@NonNull String id) throws IOException;
 

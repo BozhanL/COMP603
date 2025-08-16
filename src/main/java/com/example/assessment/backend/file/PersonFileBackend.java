@@ -8,6 +8,7 @@ import com.example.assessment.backend.types.interfaces.IStudent;
 import com.google.common.collect.ImmutableList;
 import com.google.errorprone.annotations.CheckReturnValue;
 import java.io.IOException;
+import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
@@ -58,7 +59,7 @@ public final class PersonFileBackend extends FileBackend implements IPersonBacke
     }
 
     @Override
-    public void setPerson(@NonNull IPerson p) throws IOException {
+    public void setPerson(@NonNull IPerson p) throws IOException, FileAlreadyExistsException {
         this.setObject(p, pathFromPerson(p));
     }
 

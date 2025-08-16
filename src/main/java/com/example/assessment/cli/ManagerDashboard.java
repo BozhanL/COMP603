@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.Scanner;
 import lombok.NonNull;
 
-public class ManagerDashboard {
+public final class ManagerDashboard {
 
     private final Scanner scanner;
     private final ICourseBackend courseBackend;
@@ -91,8 +91,8 @@ public class ManagerDashboard {
 
     }
 
-    private void printMainMenu() {
-        System.out.println("\n[MANAGER DASHBOARD]");
+    private static void printMainMenu() {
+        System.out.println("[MANAGER DASHBOARD]");
         System.out.println("1. Add Course");
         System.out.println("2. Delete Course");
         System.out.println("3. Modify Course");
