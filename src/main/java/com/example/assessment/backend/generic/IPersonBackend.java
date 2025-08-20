@@ -5,7 +5,9 @@ import com.example.assessment.backend.types.interfaces.IManager;
 import com.example.assessment.backend.types.interfaces.IPerson;
 import com.example.assessment.backend.types.interfaces.IStudent;
 import com.google.common.collect.ImmutableList;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.errorprone.annotations.CheckReturnValue;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.InvalidPathException;
@@ -29,13 +31,14 @@ public interface IPersonBackend extends IBackend {
 
     public abstract void setPerson(@NonNull IPerson p) throws IOException, FileAlreadyExistsException;
 
+    @CanIgnoreReturnValue
     public abstract boolean deletePersonById(@NonNull String id) throws IOException;
 
     public abstract void modifyPerson(@NonNull IPerson p) throws IOException;
 
-    public abstract IPerson getPersonById(@NonNull String id) throws IOException, DatabaseCorruptedException;
+    public abstract IPerson getPersonById(@NonNull String id) throws IOException, DatabaseCorruptedException, FileNotFoundException;
 
-    public default IStudent getStudentById(@NonNull String id) throws IOException, DatabaseCorruptedException {
+    public default IStudent getStudentById(@NonNull String id) throws IOException, DatabaseCorruptedException, FileNotFoundException {
         IPerson p = this.getPersonById(id);
 
         if (p instanceof IStudent s) {
@@ -44,7 +47,7 @@ public interface IPersonBackend extends IBackend {
         return null;
     }
 
-    public default IManager getManagerById(@NonNull String id) throws IOException, DatabaseCorruptedException {
+    public default IManager getManagerById(@NonNull String id) throws IOException, DatabaseCorruptedException, FileNotFoundException {
         IPerson p = this.getPersonById(id);
 
         if (p instanceof IManager m) {

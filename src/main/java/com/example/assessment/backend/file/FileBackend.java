@@ -9,6 +9,7 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InvalidClassException;
@@ -69,11 +70,11 @@ public abstract class FileBackend implements IBackend {
 //
 //        return p.getFileName();
 //    }
-    protected <T> T getObjectByPath(@NonNull Class<T> cl, @NonNull String fName) throws IOException, DatabaseCorruptedException, IllegalArgumentException, InvalidPathException {
+    protected <T> T getObjectByPath(@NonNull Class<T> cl, @NonNull String fName) throws IOException, DatabaseCorruptedException, IllegalArgumentException, InvalidPathException, FileNotFoundException {
         return this.getObjectByPath(cl, Path.of(fName));
     }
 
-    protected <T> T getObjectByPath(@NonNull Class<T> cl, @NonNull Path fName) throws IOException, DatabaseCorruptedException, IllegalArgumentException {
+    protected <T> T getObjectByPath(@NonNull Class<T> cl, @NonNull Path fName) throws IOException, DatabaseCorruptedException, FileNotFoundException {
         Path p = this.db.resolve(fName);
 
         File f = p.toFile();
@@ -104,6 +105,7 @@ public abstract class FileBackend implements IBackend {
         }
     }
 
+    @CanIgnoreReturnValue
     protected boolean deleteObjectWithPath(@NonNull String fName) throws IOException, InvalidPathException {
         return this.deleteObjectWithPath(Path.of(fName));
     }

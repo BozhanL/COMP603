@@ -1,8 +1,8 @@
 package com.example.assessment.backend.types.classes;
 
-import com.example.assessment.backend.types.enums.UserType;
 import com.example.assessment.backend.types.enums.Gender;
 import com.example.assessment.backend.types.enums.Residency;
+import com.example.assessment.backend.types.enums.UserType;
 import com.example.assessment.backend.types.interfaces.IAddress;
 import com.example.assessment.backend.types.interfaces.IStudent;
 import com.example.assessment.backend.types.interfaces.IStudentCourseInfo;
@@ -126,5 +126,23 @@ public class Student extends Person implements IStudent {
 
     public static UserType getTypeStatic() {
         return TYPE;
+    }
+
+    @Override
+    public String prettyToString() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(super.prettyToString());
+
+        sb.append("\nresidencyStatus: ");
+        sb.append(residencyStatus);
+
+        sb.append("\ncourses: ");
+        for (IStudentCourseInfo c : courses.values()) {
+            sb.append(c.prettyToString());
+            sb.append("\n");
+        }
+
+        return sb.toString();
     }
 }

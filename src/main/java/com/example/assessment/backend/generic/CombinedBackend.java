@@ -3,6 +3,7 @@ package com.example.assessment.backend.generic;
 import com.example.assessment.backend.types.interfaces.ICourse;
 import com.example.assessment.backend.types.interfaces.IPerson;
 import com.google.common.collect.ImmutableList;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.errorprone.annotations.CheckReturnValue;
 import java.io.IOException;
 import java.nio.file.InvalidPathException;
@@ -56,6 +57,7 @@ public class CombinedBackend implements ICombinedBackend {
     }
 
     @Override
+    @CanIgnoreReturnValue
     public boolean deletePersonById(String id) throws IOException {
         return this.pb.deletePersonById(id);
     }
@@ -81,6 +83,7 @@ public class CombinedBackend implements ICombinedBackend {
     }
 
     @Override
+    @CanIgnoreReturnValue
     public boolean deleteCourseByCode(String code) throws IOException, DatabaseCorruptedException {
         return this.cb.deleteCourseByCode(code);
     }

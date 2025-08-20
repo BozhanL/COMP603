@@ -1,7 +1,7 @@
 package com.example.assessment.backend.types.interfaces;
 
-import com.example.assessment.backend.types.enums.Grade;
 import com.example.assessment.backend.types.classes.StudentCourseInfo;
+import com.example.assessment.backend.types.enums.Grade;
 import com.google.errorprone.annotations.CheckReturnValue;
 import com.google.errorprone.annotations.Immutable;
 import java.io.Serializable;
@@ -10,7 +10,7 @@ import lombok.NonNull;
 
 @Immutable
 @CheckReturnValue
-public interface IStudentCourseInfo extends Serializable {
+public interface IStudentCourseInfo extends Serializable, IPrettyPrint {
 
     public static IStudentCourseInfo of(
             @NonNull String courseCode,

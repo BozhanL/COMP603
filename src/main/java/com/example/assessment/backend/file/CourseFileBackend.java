@@ -4,7 +4,9 @@ import com.example.assessment.backend.generic.DatabaseCorruptedException;
 import com.example.assessment.backend.generic.ICourseBackend;
 import com.example.assessment.backend.types.interfaces.ICourse;
 import com.google.common.collect.ImmutableList;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.errorprone.annotations.CheckReturnValue;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
@@ -42,7 +44,7 @@ public final class CourseFileBackend extends FileBackend implements ICourseBacke
     }
 
     @Override
-    public ICourse getCourseByCode(@NonNull String code) throws IOException, DatabaseCorruptedException {
+    public ICourse getCourseByCode(@NonNull String code) throws IOException, DatabaseCorruptedException, FileNotFoundException {
         return this.getObjectByPath(ICourse.class, pathFromCode(code));
     }
 
@@ -52,6 +54,7 @@ public final class CourseFileBackend extends FileBackend implements ICourseBacke
     }
 
     @Override
+    @CanIgnoreReturnValue
     public boolean deleteCourseByCode(@NonNull String code) throws IOException, DatabaseCorruptedException {
         return this.deleteObjectWithPath(pathFromCode(code));
     }

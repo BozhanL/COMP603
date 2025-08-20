@@ -4,7 +4,7 @@ import java.io.Serial;
 import lombok.experimental.StandardException;
 
 @StandardException
-public class StopOperationException extends Exception {
+public final class StopOperationException extends Exception {
 
     @Serial
     private static final long serialVersionUID = 1L;

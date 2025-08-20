@@ -8,16 +8,15 @@ import com.google.errorprone.annotations.CheckReturnValue;
 import java.io.IOException;
 import java.nio.file.InvalidPathException;
 import java.util.Scanner;
+import lombok.AllArgsConstructor;
 import lombok.NonNull;
 
 @CheckReturnValue
+@AllArgsConstructor
 public class Welcome {
 
+    @NonNull
     private final Scanner scanner;
-
-    public Welcome(@NonNull Scanner scanner) {
-        this.scanner = scanner;
-    }
 
     public static void showAsciiArt() {
         System.out.println("               _                                  ");

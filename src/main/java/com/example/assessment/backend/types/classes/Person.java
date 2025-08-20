@@ -100,4 +100,35 @@ public abstract class Person implements IPerson {
 
         return ret == 0;
     }
+
+    @Override
+    public String prettyToString() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("id: ");
+        sb.append(id);
+
+        sb.append("\nlegalFirstName: ");
+        sb.append(legalFirstName);
+
+        sb.append("\nlegalLastName: ");
+        sb.append(legalLastName);
+
+        sb.append("\ndateOfBirth: ");
+        sb.append(dateOfBirth);
+
+        sb.append("\ngender: ");
+        sb.append(gender);
+
+        sb.append("\nemail: ");
+        sb.append(email);
+
+        sb.append("\nphone: ");
+        sb.append(phone);
+
+        sb.append("\naddress: ");
+        sb.append(address.prettyToString());
+
+        return sb.toString();
+    }
 }

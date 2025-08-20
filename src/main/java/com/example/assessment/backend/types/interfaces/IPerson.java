@@ -10,7 +10,7 @@ import lombok.NonNull;
 
 @Immutable
 @CheckReturnValue
-public interface IPerson extends IAuthentication, Serializable {
+public interface IPerson extends IAuthentication, Serializable, IPrettyPrint {
 
     public abstract UserType getType();
 

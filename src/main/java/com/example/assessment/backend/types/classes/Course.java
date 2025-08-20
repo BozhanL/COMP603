@@ -21,6 +21,14 @@ public class Course implements ICourse {
     @Serial
     private static final long serialVersionUID = 1L;
 
+    @NonNull
+    ICourseCode code;
+    @NonNull
+    String name;
+    int points;
+    @NonNull
+    String description;
+
     public Course(@NonNull String code, @NonNull String name, int points, @NonNull String description) throws ParseException, NumberFormatException, IndexOutOfBoundsException {
         this(ICourseCode.of(code), name, points, description);
     }
@@ -37,11 +45,22 @@ public class Course implements ICourse {
         return new Course(departmentCode, level, courseNumber, name, points, description);
     }
 
-    @NonNull
-    ICourseCode code;
-    @NonNull
-    String name;
-    int points;
-    @NonNull
-    String description;
+    @Override
+    public String prettyToString() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("code: ");
+        sb.append(code.prettyToString());
+
+        sb.append("\nname: ");
+        sb.append(name);
+
+        sb.append("\npoints: ");
+        sb.append(points);
+
+        sb.append("\ndescription: ");
+        sb.append(description);
+
+        return sb.toString();
+    }
 }

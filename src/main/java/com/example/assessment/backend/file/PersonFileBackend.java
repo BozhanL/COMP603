@@ -6,7 +6,9 @@ import com.example.assessment.backend.types.interfaces.IManager;
 import com.example.assessment.backend.types.interfaces.IPerson;
 import com.example.assessment.backend.types.interfaces.IStudent;
 import com.google.common.collect.ImmutableList;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.errorprone.annotations.CheckReturnValue;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
@@ -54,7 +56,7 @@ public final class PersonFileBackend extends FileBackend implements IPersonBacke
     }
 
     @Override
-    public IPerson getPersonById(String id) throws IOException, DatabaseCorruptedException {
+    public IPerson getPersonById(String id) throws IOException, DatabaseCorruptedException, FileNotFoundException {
         return this.getObjectByPath(IPerson.class, pathFromId(id));
     }
 
@@ -64,6 +66,7 @@ public final class PersonFileBackend extends FileBackend implements IPersonBacke
     }
 
     @Override
+    @CanIgnoreReturnValue
     public boolean deletePersonById(@NonNull String id) throws IOException {
         return this.deleteObjectWithPath(pathFromId(id));
     }
