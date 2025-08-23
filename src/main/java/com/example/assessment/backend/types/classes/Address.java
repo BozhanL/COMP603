@@ -56,4 +56,9 @@ public class Address implements IAddress {
             s.append(' ');
         }
     }
+
+    @Override
+    public String prettyToString() {
+        return this.toString();
+    }
 }

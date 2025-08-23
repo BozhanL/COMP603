@@ -66,4 +66,9 @@ public class CourseCode implements ICourseCode {
     public String toString() {
         return String.format("%s%01d%02d", this.getDepartmentCode(), this.getLevel(), this.getCourseNumber());
     }
+
+    @Override
+    public String prettyToString() {
+        return this.toString();
+    }
 }

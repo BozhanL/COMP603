@@ -1,24 +1,27 @@
 package com.example.assessment.cli;
 
-import com.example.assessment.backend.generic.ICourseBackend;
-import com.example.assessment.backend.types.interfaces.ICourse;
-import com.example.assessment.backend.types.interfaces.ICourseCode;
-import java.io.IOException;
+import com.example.assessment.backend.generic.ICombinedBackend;
+import com.google.errorprone.annotations.CheckReturnValue;
 import java.util.Scanner;
+import lombok.AllArgsConstructor;
 import lombok.NonNull;
 
-public class ManagerDashboard {
+@CheckReturnValue
+@AllArgsConstructor
+public class ManagerDashboard implements IMainDashboard {
 
+    @NonNull
     private final Scanner scanner;
-    private final ICourseBackend courseBackend;
-    private final CourseInputHandler inputHandler;
+    @NonNull
+    private final CourseDashboard course;
+    @NonNull
+    private final PersonDashboard person;
 
-    public ManagerDashboard(@NonNull Scanner scanner, @NonNull ICourseBackend courseBackend) {
-        this.scanner = scanner;
-        this.courseBackend = courseBackend;
-        this.inputHandler = new CourseInputHandler(scanner);
+    public ManagerDashboard(@NonNull Scanner scanner, @NonNull ICombinedBackend cb) {
+        this(scanner, new CourseDashboard(scanner, cb), new PersonDashboard(scanner, cb));
     }
 
+    @Override
     public void displayMenu() {
         while (true) {
             printMainMenu();
@@ -26,14 +29,10 @@ public class ManagerDashboard {
 
             switch (choice) {
                 case "1" ->
-                    addCourse();
+                    this.course.displayMenu();
                 case "2" ->
-                    deleteCourse();
-                case "3" ->
-                    modifyCourse();
-                case "4" ->
-                    viewCourse();
-                case "5" -> {
+                    this.person.displayMenu();
+                case "3" -> {
                     return; // exit to previous menu
                 }
                 default ->
@@ -42,62 +41,11 @@ public class ManagerDashboard {
         }
     }
 
-    public void addCourse() {
-        try {
-            // user inputs
-            String deptCode = inputHandler.promptDepartmentCode();
-            int level = inputHandler.promptCourseLevel();
-            int courseNum = inputHandler.promptCourseNumber();
-            String name = inputHandler.promptCourseName();
-            int points = inputHandler.promptCreditPoints();
-            String description = inputHandler.promptDescription();
-
-            // construct course code
-            // use backend function instead
-            ICourseCode courseCode = ICourseCode.of(deptCode, level, courseNum);
-
-            // confirmation
-            boolean confirm = inputHandler.promptConfirmation(
-                    "Create new course?\nCode: %s\nName: %s\nPoints: %d\nDescription: %s\nProceed?",
-                    courseCode, name, points, description
-            );
-
-            // save
-            if (confirm) {
-                ICourse newCourse = ICourse.of(courseCode, name, points, description);
-                courseBackend.setCourse(newCourse);
-                // use backend function
-                System.out.println("Course " + newCourse.getCode() + " created successfully!");
-            } else {
-                System.out.println("Course creation cancelled.");
-            }
-
-        } catch (IOException e) {
-            System.out.println("Error saving course: " + e.getMessage());
-        } catch (IllegalArgumentException e) {
-            System.out.println("Invalid course data: " + e.getMessage());
-        }
-    }
-
-    private void deleteCourse() {
-
-    }
-
-    private void modifyCourse() {
-
-    }
-
-    private void viewCourse() {
-
-    }
-
-    private void printMainMenu() {
-        System.out.println("\n[MANAGER DASHBOARD]");
-        System.out.println("1. Add Course");
-        System.out.println("2. Delete Course");
-        System.out.println("3. Modify Course");
-        System.out.println("4. View Course Details");
-        System.out.println("5. Exit");
+    private static void printMainMenu() {
+        System.out.println("[MANAGER DASHBOARD]");
+        System.out.println("1. Manage Course");
+        System.out.println("2. Manage Person");
+        System.out.println("3. Exit");
         System.out.print("Select an option: ");
     }
 }

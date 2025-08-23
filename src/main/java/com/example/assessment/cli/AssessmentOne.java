@@ -4,24 +4,22 @@ import com.example.assessment.backend.generic.ICombinedBackend;
 import com.example.assessment.backend.types.interfaces.IPerson;
 import java.nio.charset.Charset;
 import java.util.Scanner;
-import lombok.Cleanup;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class AssessmentOne {
 
     public static void main(String[] args) {
+        try (Scanner scanner = new Scanner(System.in, Charset.defaultCharset())) {
+            Welcome.showAsciiArt();
+            Welcome w = new Welcome(scanner);
 
-        @Cleanup
-        Scanner scanner = new Scanner(System.in, Charset.defaultCharset());
+            ICombinedBackend database = w.askForDatabase();
 
-        Welcome.showAsciiArt();
-        Welcome w = new Welcome(scanner);
+            IPerson p = w.login(database);
 
-        ICombinedBackend database = w.askForDatabase();
-
-        IPerson unused = w.login(database);
-
-        new ManagerDashboard(scanner, database).displayMenu();
+            IMainDashboard d = p.getDashboard(scanner, database);
+            d.displayMenu();
+        }
     }
 }

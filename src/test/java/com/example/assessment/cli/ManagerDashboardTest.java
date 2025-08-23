@@ -54,8 +54,8 @@ public class ManagerDashboardTest {
 
         // Test the workflow
         Thread thread = new Thread(() -> {
-            ManagerDashboard dashboard
-                    = new ManagerDashboard(new Scanner(System.in, Charset.defaultCharset()), backend);
+            CourseDashboard dashboard
+                    = new CourseDashboard(new Scanner(System.in, Charset.defaultCharset()), backend);
             dashboard.addCourse();
         });
         thread.start();

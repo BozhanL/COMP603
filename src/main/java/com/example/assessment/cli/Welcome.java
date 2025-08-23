@@ -8,30 +8,29 @@ import com.google.errorprone.annotations.CheckReturnValue;
 import java.io.IOException;
 import java.nio.file.InvalidPathException;
 import java.util.Scanner;
+import lombok.AllArgsConstructor;
 import lombok.NonNull;
 
 @CheckReturnValue
+@AllArgsConstructor
 public class Welcome {
 
+    @NonNull
     private final Scanner scanner;
 
-    public Welcome(@NonNull Scanner scanner) {
-        this.scanner = scanner;
-    }
-
     public static void showAsciiArt() {
-        System.out.println("               _                           ");
-        System.out.println("              | |                          ");
-        System.out.println(" __      _____| | ___ ___  _ __ ___   ___  ");
+        System.out.println("               _                                  ");
+        System.out.println("              | |                                 ");
+        System.out.println(" __      _____| | ___ ___  _ __ ___   ___         ");
         System.out.println(" \\ \\ /\\ / / _ \\ |/ __/ _ \\| '_ ` _ \\ / _ \\ ");
-        System.out.println("  \\ V  V /  __/ | (_| (_) | | | | | |  __/ ");
-        System.out.println("   \\_/\\_/_\\___|_|\\___\\___/|_| |_| |_|\\___| ");
-        System.out.println("  / ____|_   _|  \\/  |/ ____|              ");
-        System.out.println(" | (___   | | | \\  / | (___                ");
-        System.out.println("  \\___ \\  | | | |\\/| |\\___ \\               ");
-        System.out.println("  ____) |_| |_| |  | |____) |              ");
-        System.out.println(" |_____/|_____|_|  |_|_____/               ");
-        System.out.println("                                           ");
+        System.out.println("  \\ V  V /  __/ | (_| (_) | | | | | |  __/       ");
+        System.out.println("   \\_/\\_/_\\___|_|\\___\\___/|_| |_| |_|\\___|  ");
+        System.out.println("  / ____|_   _|  \\/  |/ ____|                    ");
+        System.out.println(" | (___   | | | \\  / | (___                      ");
+        System.out.println("  \\___ \\  | | | |\\/| |\\___ \\                 ");
+        System.out.println("  ____) |_| |_| |  | |____) |                     ");
+        System.out.println(" |_____/|_____|_|  |_|_____/                      ");
+        System.out.println("                                                  ");
     }
 
     public ICombinedBackend askForDatabase() {
@@ -59,7 +58,7 @@ public class Welcome {
         return pb;
     }
 
-    public IPerson login(IPersonBackend pb) {
+    public IPerson login(@NonNull IPersonBackend pb) {
         IPerson p = null;
 
         while (p == null) {

@@ -1,12 +1,16 @@
 package com.example.assessment.backend.types.interfaces;
 
+import com.example.assessment.backend.generic.ICombinedBackend;
+import com.example.assessment.backend.types.classes.Student;
 import com.example.assessment.backend.types.enums.Gender;
 import com.example.assessment.backend.types.enums.Residency;
-import com.example.assessment.backend.types.classes.Student;
+import com.example.assessment.cli.IMainDashboard;
+import com.example.assessment.cli.StudentDashboard;
 import com.google.common.collect.ImmutableMap;
 import com.google.errorprone.annotations.CheckReturnValue;
 import com.google.errorprone.annotations.Immutable;
 import java.time.LocalDate;
+import java.util.Scanner;
 import lombok.NonNull;
 
 @Immutable
@@ -27,6 +31,26 @@ public interface IStudent extends IPerson {
             @NonNull ImmutableMap<String, IStudentCourseInfo> courses
     ) {
         return Student.of(id, password, legalFirstName, legalLastName, dateOfBirth, gender, email, phone, address, residencyStatus, courses);
+    }
+
+    public static IStudent of(
+            @NonNull String id,
+            @NonNull String password,
+            @NonNull String legalFirstName,
+            @NonNull String legalLastName,
+            @NonNull LocalDate dateOfBirth,
+            @NonNull Gender gender,
+            @NonNull String email,
+            @NonNull String phone,
+            @NonNull IAddress address,
+            @NonNull Residency residencyStatus
+    ) {
+        return IStudent.of(id, password, legalFirstName, legalLastName, dateOfBirth, gender, email, phone, address, residencyStatus, ImmutableMap.of());
+    }
+
+    @Override
+    public default IMainDashboard getDashboard(@NonNull Scanner sc, @NonNull ICombinedBackend cb) {
+        return new StudentDashboard(sc, cb, this);
     }
 
     @Override

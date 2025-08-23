@@ -1,15 +1,19 @@
 package com.example.assessment.backend.types.interfaces;
 
+import com.example.assessment.backend.generic.ICombinedBackend;
 import com.example.assessment.backend.types.enums.Gender;
 import com.example.assessment.backend.types.enums.UserType;
+import com.example.assessment.cli.IMainDashboard;
 import com.google.errorprone.annotations.CheckReturnValue;
 import com.google.errorprone.annotations.Immutable;
+import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Scanner;
 import lombok.NonNull;
 
 @Immutable
 @CheckReturnValue
-public interface IPerson extends IAuthentication, ISelfSerializable {
+public interface IPerson extends IAuthentication, Serializable, IPrettyPrint {
 
     public abstract UserType getType();
 
@@ -46,4 +50,6 @@ public interface IPerson extends IAuthentication, ISelfSerializable {
     public abstract String getPhone();
 
     public abstract IAddress getAddress();
+
+    public abstract IMainDashboard getDashboard(@NonNull Scanner sc, @NonNull ICombinedBackend cb);
 }

@@ -27,4 +27,23 @@ public class StudentCourseInfo implements IStudentCourseInfo {
     LocalDate starts;
     @NonNull
     String location;
+
+    @Override
+    public String prettyToString() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("courseCode: ");
+        sb.append(courseCode);
+
+        sb.append("\ngrade: ");
+        sb.append(grade);
+
+        sb.append("\nstarts: ");
+        sb.append(starts);
+
+        sb.append("\nlocation: ");
+        sb.append(location);
+
+        return sb.toString();
+    }
 }

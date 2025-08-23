@@ -7,7 +7,6 @@ import com.google.errorprone.annotations.CheckReturnValue;
 import com.google.errorprone.annotations.Immutable;
 import java.io.Serial;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Path;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.ZoneId;
@@ -80,11 +79,6 @@ public abstract class Person implements IPerson {
     protected IAddress address;
 
     @Override
-    public Path getPath() {
-        return Path.of(String.format("%s_%s_%s.bin", this.getId(), this.getLegalFirstName(), this.getLegalLastName()));
-    }
-
-    @Override
     public int getAge() {
         return Period.between(this.dateOfBirth, LocalDate.now(ZoneId.systemDefault())).normalized().getYears();
     }
@@ -105,5 +99,36 @@ public abstract class Person implements IPerson {
         }
 
         return ret == 0;
+    }
+
+    @Override
+    public String prettyToString() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("id: ");
+        sb.append(id);
+
+        sb.append("\nlegalFirstName: ");
+        sb.append(legalFirstName);
+
+        sb.append("\nlegalLastName: ");
+        sb.append(legalLastName);
+
+        sb.append("\ndateOfBirth: ");
+        sb.append(dateOfBirth);
+
+        sb.append("\ngender: ");
+        sb.append(gender);
+
+        sb.append("\nemail: ");
+        sb.append(email);
+
+        sb.append("\nphone: ");
+        sb.append(phone);
+
+        sb.append("\naddress: ");
+        sb.append(address.prettyToString());
+
+        return sb.toString();
     }
 }

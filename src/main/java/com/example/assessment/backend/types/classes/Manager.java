@@ -1,7 +1,7 @@
 package com.example.assessment.backend.types.classes;
 
-import com.example.assessment.backend.types.enums.UserType;
 import com.example.assessment.backend.types.enums.Gender;
+import com.example.assessment.backend.types.enums.UserType;
 import com.example.assessment.backend.types.interfaces.IAddress;
 import com.example.assessment.backend.types.interfaces.IManager;
 import com.google.errorprone.annotations.CheckReturnValue;
@@ -102,5 +102,10 @@ public class Manager extends Person implements IManager {
 
     public static UserType getTypeStatic() {
         return TYPE;
+    }
+
+    @Override
+    public String prettyToString() {
+        return super.prettyToString();
     }
 }

@@ -22,6 +22,7 @@ jobs:
     strategy:
       matrix:
         distribution: ['oracle', 'temurin', 'graalvm']
+    timeout-minutes: 5
 
     steps:
       - uses: actions/checkout@v5

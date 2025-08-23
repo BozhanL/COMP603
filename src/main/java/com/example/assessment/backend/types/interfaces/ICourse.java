@@ -3,12 +3,13 @@ package com.example.assessment.backend.types.interfaces;
 import com.example.assessment.backend.types.classes.Course;
 import com.google.errorprone.annotations.CheckReturnValue;
 import com.google.errorprone.annotations.Immutable;
+import java.io.Serializable;
 import java.text.ParseException;
 import lombok.NonNull;
 
 @Immutable
 @CheckReturnValue
-public interface ICourse extends ISelfSerializable {
+public interface ICourse extends Serializable, IPrettyPrint {
 
     public static ICourse of(@NonNull ICourseCode code, @NonNull String name, int points, @NonNull String description) {
         return Course.of(code, name, points, description);

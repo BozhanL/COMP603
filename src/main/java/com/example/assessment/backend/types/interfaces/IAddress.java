@@ -8,7 +8,7 @@ import lombok.NonNull;
 
 @Immutable
 @CheckReturnValue
-public interface IAddress extends Serializable {
+public interface IAddress extends Serializable, IPrettyPrint {
 
     public static IAddress of(
             @NonNull String unit,

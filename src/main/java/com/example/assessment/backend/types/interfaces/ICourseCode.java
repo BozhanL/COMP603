@@ -9,7 +9,7 @@ import lombok.NonNull;
 
 @Immutable
 @CheckReturnValue
-public interface ICourseCode extends Serializable {
+public interface ICourseCode extends Serializable, IPrettyPrint {
 
     public static ICourseCode of(String departmentCode, int level, int courseNumber) {
         return CourseCode.of(departmentCode, level, courseNumber);
