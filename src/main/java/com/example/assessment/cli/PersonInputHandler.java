@@ -1,15 +1,19 @@
 package com.example.assessment.cli;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
+import java.util.Locale;
+import java.util.Scanner;
+
 import com.example.assessment.backend.types.enums.Gender;
 import com.example.assessment.backend.types.enums.Residency;
 import com.example.assessment.backend.types.interfaces.IAddress;
 import com.example.assessment.backend.types.interfaces.IManager;
 import com.example.assessment.backend.types.interfaces.IStudent;
+import com.example.assessment.backend.types.interfaces.IStudentCourseInfo;
+import com.google.common.collect.ImmutableMap;
 import com.google.errorprone.annotations.CheckReturnValue;
-import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
-import java.util.Locale;
-import java.util.Scanner;
+
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 
@@ -19,8 +23,14 @@ public final class PersonInputHandler {
 
     @NonNull
     private final Scanner scanner;
+    @NonNull
+    private final StudentCourseInputHandler scih;
 
-    String getId() throws StopOperationException {
+    public PersonInputHandler(@NonNull Scanner scanner) {
+        this(scanner, new StudentCourseInputHandler(scanner));
+    }
+
+    public String getId() throws StopOperationException {
         while (true) {
             System.out.print("Please enter ID(x for exit): ");
             String input = scanner.nextLine().trim().toLowerCase(Locale.getDefault());
@@ -31,12 +41,12 @@ public final class PersonInputHandler {
                 throw new StopOperationException();
             }
 
-            System.out.printf("ID = '%s'", input);
+            System.out.printf("ID = '%s'\n", input);
             return input;
         }
     }
 
-    String getPassword() throws StopOperationException {
+    public String getPassword() throws StopOperationException {
         while (true) {
             System.out.print("Please enter Password(x for exit): ");
             String input = scanner.nextLine().trim().toLowerCase(Locale.getDefault());
@@ -47,12 +57,12 @@ public final class PersonInputHandler {
                 throw new StopOperationException();
             }
 
-            System.out.printf("Password = '%s'", input);
+            System.out.printf("Password = '%s'\n", input);
             return input;
         }
     }
 
-    String getLegalFirstName() throws StopOperationException {
+    public String getLegalFirstName() throws StopOperationException {
         while (true) {
             System.out.print("Please enter Legal First Name(x for exit): ");
             String input = scanner.nextLine().trim();
@@ -63,12 +73,12 @@ public final class PersonInputHandler {
                 throw new StopOperationException();
             }
 
-            System.out.printf("Name = '%s'", input);
+            System.out.printf("Name = '%s'\n", input);
             return input;
         }
     }
 
-    String getLegalLastName() throws StopOperationException {
+    public String getLegalLastName() throws StopOperationException {
         while (true) {
             System.out.print("Please enter Legal Last Name(x for exit): ");
             String input = scanner.nextLine().trim();
@@ -79,12 +89,12 @@ public final class PersonInputHandler {
                 throw new StopOperationException();
             }
 
-            System.out.printf("Name = '%s'", input);
+            System.out.printf("Name = '%s'\n", input);
             return input;
         }
     }
 
-    LocalDate getDateOfBirth() throws StopOperationException {
+    public LocalDate getDateOfBirth() throws StopOperationException {
         while (true) {
             System.out.print("Please enter Date of Birth(x for exit) (e.g, 2025-08-16): ");
             String input = scanner.nextLine().trim();
@@ -103,12 +113,12 @@ public final class PersonInputHandler {
                 continue;
             }
 
-            System.out.printf("Date of Birth = '%s'", date);
+            System.out.printf("Date of Birth = '%s'\n", date);
             return date;
         }
     }
 
-    Gender getGender() throws StopOperationException {
+    public Gender getGender() throws StopOperationException {
         while (true) {
             System.out.print("Please enter Gender(x for exit) (One of: MALE, FEMALE, OTHER): ");
             String input = scanner.nextLine().trim().toUpperCase(Locale.getDefault());
@@ -127,12 +137,12 @@ public final class PersonInputHandler {
                 continue;
             }
 
-            System.out.printf("Gender = '%s'", g);
+            System.out.printf("Gender = '%s'\n", g);
             return g;
         }
     }
 
-    String getEmail() throws StopOperationException {
+    public String getEmail() throws StopOperationException {
         while (true) {
             System.out.print("Please enter Email(x for exit): ");
             String input = scanner.nextLine().trim().toLowerCase(Locale.getDefault());
@@ -143,12 +153,12 @@ public final class PersonInputHandler {
                 throw new StopOperationException();
             }
 
-            System.out.printf("Email = '%s'", input);
+            System.out.printf("Email = '%s'\n", input);
             return input;
         }
     }
 
-    String getPhone() throws StopOperationException {
+    public String getPhone() throws StopOperationException {
         while (true) {
             System.out.print("Please enter Phone(x for exit): ");
             String input = scanner.nextLine().trim();
@@ -159,12 +169,12 @@ public final class PersonInputHandler {
                 throw new StopOperationException();
             }
 
-            System.out.printf("Phone = '%s'", input);
+            System.out.printf("Phone = '%s'\n", input);
             return input;
         }
     }
 
-    IAddress getAddress() throws StopOperationException {
+    public IAddress getAddress() throws StopOperationException {
         String code = getPostCode();
         String country = getCountry();
         String state = getState();
@@ -177,7 +187,7 @@ public final class PersonInputHandler {
         return IAddress.of(unit, streetNumber, streetName, suburb, city, state, country, code);
     }
 
-    Residency getResidencyStatus() throws StopOperationException {
+    public Residency getResidencyStatus() throws StopOperationException {
         while (true) {
             System.out.print("Please enter Residency Status(x for exit) (One of: DOMESTIC, INTERNATIONAL): ");
             String input = scanner.nextLine().trim().toUpperCase(Locale.getDefault());
@@ -196,12 +206,12 @@ public final class PersonInputHandler {
                 continue;
             }
 
-            System.out.printf("Status = '%s'", r);
+            System.out.printf("Status = '%s'\n", r);
             return r;
         }
     }
 
-    IStudent getModifiedStudent(IStudent ori) throws StopOperationException {
+    public IStudent getModifiedStudent(IStudent ori) throws StopOperationException {
         while (true) {
             System.out.println("1. Change password\t6. Change Email");
             System.out.println("2. Change Legal First Name\t7. Change Phone");
@@ -234,10 +244,7 @@ public final class PersonInputHandler {
                 case "9" ->
                     ori = ori.withResidencyStatus(this.getResidencyStatus());
                 case "10" ->
-                    ori = ori.withCourses(
-                            new StudentCourseInputHandler(scanner)
-                                    .changeCourse(ori.getCourses())
-                    );
+                    ori = ori.withCourses(this.changeCourse(ori.getCourses()));
                 case "11" -> {
                     return ori;
                 }
@@ -249,7 +256,13 @@ public final class PersonInputHandler {
         }
     }
 
-    IManager getModifiedManager(IManager ori) throws StopOperationException {
+    public ImmutableMap<String, IStudentCourseInfo> changeCourse(
+            @NonNull ImmutableMap<String, IStudentCourseInfo> courses
+    ) throws StopOperationException {
+        return this.scih.changeCourse(courses);
+    }
+
+    public IManager getModifiedManager(IManager ori) throws StopOperationException {
         while (true) {
             System.out.println("1. Change password\t6. Change Email");
             System.out.println("2. Change Legal First Name\t7. Change Phone");
@@ -301,7 +314,7 @@ public final class PersonInputHandler {
                 throw new StopOperationException();
             }
 
-            System.out.printf("Post Code = '%s'", input);
+            System.out.printf("Post Code = '%s'\n", input);
             return input;
         }
     }
@@ -317,7 +330,7 @@ public final class PersonInputHandler {
                 throw new StopOperationException();
             }
 
-            System.out.printf("Country = '%s'", input);
+            System.out.printf("Country = '%s'\n", input);
             return input;
         }
     }
@@ -333,7 +346,7 @@ public final class PersonInputHandler {
                 throw new StopOperationException();
             }
 
-            System.out.printf("State = '%s'", input);
+            System.out.printf("State = '%s'\n", input);
             return input;
         }
     }
@@ -349,7 +362,7 @@ public final class PersonInputHandler {
                 throw new StopOperationException();
             }
 
-            System.out.printf("City = '%s'", input);
+            System.out.printf("City = '%s'\n", input);
             return input;
         }
     }
@@ -362,7 +375,7 @@ public final class PersonInputHandler {
                 throw new StopOperationException();
             }
 
-            System.out.printf("Suburb = '%s'", input);
+            System.out.printf("Suburb = '%s'\n", input);
             return input;
         }
     }
@@ -375,7 +388,7 @@ public final class PersonInputHandler {
                 throw new StopOperationException();
             }
 
-            System.out.printf("Street Name = '%s'", input);
+            System.out.printf("Street Name = '%s'\n", input);
             return input;
         }
     }
@@ -388,7 +401,7 @@ public final class PersonInputHandler {
                 throw new StopOperationException();
             }
 
-            System.out.printf("Street Number = '%s'", input);
+            System.out.printf("Street Number = '%s'\n", input);
             return input;
         }
     }
@@ -401,7 +414,7 @@ public final class PersonInputHandler {
                 throw new StopOperationException();
             }
 
-            System.out.printf("Unit = '%s'", input);
+            System.out.printf("Unit = '%s'\n", input);
             return input;
         }
     }

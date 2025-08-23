@@ -1,10 +1,14 @@
 package com.example.assessment.backend.types.interfaces;
 
-import com.example.assessment.backend.types.enums.Gender;
+import com.example.assessment.backend.generic.ICombinedBackend;
 import com.example.assessment.backend.types.classes.Manager;
+import com.example.assessment.backend.types.enums.Gender;
+import com.example.assessment.cli.IMainDashboard;
+import com.example.assessment.cli.ManagerDashboard;
 import com.google.errorprone.annotations.CheckReturnValue;
 import com.google.errorprone.annotations.Immutable;
 import java.time.LocalDate;
+import java.util.Scanner;
 import lombok.NonNull;
 
 @Immutable
@@ -37,6 +41,11 @@ public interface IManager extends IPerson {
                 "",
                 IAddress.of("", "", "", "", "", "", "", "")
         );
+    }
+
+    @Override
+    public default IMainDashboard getDashboard(@NonNull Scanner sc, @NonNull ICombinedBackend cb) {
+        return new ManagerDashboard(sc, cb);
     }
 
     @Override

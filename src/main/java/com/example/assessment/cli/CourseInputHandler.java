@@ -5,16 +5,13 @@ import com.google.errorprone.annotations.FormatMethod;
 import com.google.errorprone.annotations.FormatString;
 import java.util.Locale;
 import java.util.Scanner;
-import lombok.NonNull;
+import lombok.AllArgsConstructor;
 
 @CheckReturnValue
+@AllArgsConstructor
 public class CourseInputHandler {
 
     private final Scanner scanner;
-
-    public CourseInputHandler(@NonNull Scanner scanner) {
-        this.scanner = scanner;
-    }
 
     public String promptDepartmentCode() {
         while (true) {

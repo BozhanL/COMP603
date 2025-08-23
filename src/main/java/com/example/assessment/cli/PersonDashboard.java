@@ -20,7 +20,7 @@ import lombok.NonNull;
 
 @CheckReturnValue
 @AllArgsConstructor
-public final class PersonManagementDashboard {
+public final class PersonDashboard {
 
     @NonNull
     private final Scanner scanner;
@@ -29,7 +29,7 @@ public final class PersonManagementDashboard {
     @NonNull
     private final PersonInputHandler personInputHandler;
 
-    public PersonManagementDashboard(@NonNull Scanner scanner, @NonNull IPersonBackend personBackend) {
+    public PersonDashboard(@NonNull Scanner scanner, @NonNull IPersonBackend personBackend) {
         this(scanner, personBackend, new PersonInputHandler(scanner));
     }
 
@@ -335,7 +335,7 @@ public final class PersonManagementDashboard {
     }
 
     private static void printMenu() {
-        System.out.println("[MANAGER DASHBOARD]");
+        System.out.println("[EDIT PERSON DASHBOARD]");
         System.out.println("1. Add Student\t6. Add Manager");
         System.out.println("2. Get Student\t7. Get Manager");
         System.out.println("3. Modify Student\t8. Modify Manager");

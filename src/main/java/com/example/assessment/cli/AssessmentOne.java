@@ -20,8 +20,9 @@ public class AssessmentOne {
 
         ICombinedBackend database = w.askForDatabase();
 
-        IPerson unused = w.login(database);
+        IPerson p = w.login(database);
 
-        new ManagerDashboard(scanner, database).displayMenu();
+        IMainDashboard d = p.getDashboard(scanner, database);
+        d.displayMenu();
     }
 }

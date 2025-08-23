@@ -1,15 +1,17 @@
 package com.example.assessment.cli;
 
-import com.example.assessment.backend.types.enums.Grade;
-import com.example.assessment.backend.types.interfaces.IStudentCourseInfo;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
-import com.google.errorprone.annotations.CheckReturnValue;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.HashMap;
 import java.util.Objects;
 import java.util.Scanner;
+
+import com.example.assessment.backend.types.enums.Grade;
+import com.example.assessment.backend.types.interfaces.IStudentCourseInfo;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import com.google.errorprone.annotations.CheckReturnValue;
+
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 
@@ -124,7 +126,7 @@ public class StudentCourseInputHandler {
                 throw new StopOperationException();
             }
 
-            System.out.printf("Course Code = '%s'", input);
+            System.out.printf("Course Code = '%s'\n", input);
             return input;
         }
     }
@@ -148,7 +150,7 @@ public class StudentCourseInputHandler {
                 continue;
             }
 
-            System.out.printf("Grade = '%s'", g);
+            System.out.printf("Grade = '%s'\n", g);
             return g;
         }
     }
@@ -172,7 +174,7 @@ public class StudentCourseInputHandler {
                 continue;
             }
 
-            System.out.printf("Starts = '%s'", date);
+            System.out.printf("Starts = '%s'\n", date);
             return date;
         }
     }
@@ -188,7 +190,7 @@ public class StudentCourseInputHandler {
                 throw new StopOperationException();
             }
 
-            System.out.printf("Location = '%s'", input);
+            System.out.printf("Location = '%s'\n", input);
             return input;
         }
     }
