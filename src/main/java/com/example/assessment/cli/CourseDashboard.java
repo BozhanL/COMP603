@@ -13,8 +13,11 @@ import lombok.NonNull;
 @AllArgsConstructor
 public final class CourseDashboard {
 
+    @NonNull
     private final Scanner scanner;
+    @NonNull
     private final ICourseBackend courseBackend;
+    @NonNull
     private final CourseInputHandler inputHandler;
 
     public CourseDashboard(@NonNull Scanner scanner, @NonNull ICourseBackend courseBackend) {

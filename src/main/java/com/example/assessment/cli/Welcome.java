@@ -58,7 +58,7 @@ public class Welcome {
         return pb;
     }
 
-    public IPerson login(IPersonBackend pb) {
+    public IPerson login(@NonNull IPersonBackend pb) {
         IPerson p = null;
 
         while (p == null) {

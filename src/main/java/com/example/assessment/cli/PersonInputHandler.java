@@ -1,10 +1,5 @@
 package com.example.assessment.cli;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
-import java.util.Locale;
-import java.util.Scanner;
-
 import com.example.assessment.backend.types.enums.Gender;
 import com.example.assessment.backend.types.enums.Residency;
 import com.example.assessment.backend.types.interfaces.IAddress;
@@ -13,7 +8,10 @@ import com.example.assessment.backend.types.interfaces.IStudent;
 import com.example.assessment.backend.types.interfaces.IStudentCourseInfo;
 import com.google.common.collect.ImmutableMap;
 import com.google.errorprone.annotations.CheckReturnValue;
-
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
+import java.util.Locale;
+import java.util.Scanner;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 
@@ -211,7 +209,7 @@ public final class PersonInputHandler {
         }
     }
 
-    public IStudent getModifiedStudent(IStudent ori) throws StopOperationException {
+    public IStudent getModifiedStudent(@NonNull IStudent ori) throws StopOperationException {
         while (true) {
             System.out.println("1. Change password\t6. Change Email");
             System.out.println("2. Change Legal First Name\t7. Change Phone");
@@ -262,7 +260,7 @@ public final class PersonInputHandler {
         return this.scih.changeCourse(courses);
     }
 
-    public IManager getModifiedManager(IManager ori) throws StopOperationException {
+    public IManager getModifiedManager(@NonNull IManager ori) throws StopOperationException {
         while (true) {
             System.out.println("1. Change password\t6. Change Email");
             System.out.println("2. Change Legal First Name\t7. Change Phone");
