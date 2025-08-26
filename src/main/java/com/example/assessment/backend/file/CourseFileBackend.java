@@ -8,6 +8,7 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.errorprone.annotations.CheckReturnValue;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import lombok.NonNull;
@@ -49,13 +50,13 @@ public final class CourseFileBackend extends FileBackend implements ICourseBacke
     }
 
     @Override
-    public void setCourse(@NonNull ICourse c) throws IOException {
+    public void setCourse(@NonNull ICourse c) throws IOException, FileAlreadyExistsException {
         this.setObject(c, pathFromCourse(c));
     }
 
     @Override
     @CanIgnoreReturnValue
-    public boolean deleteCourseByCode(@NonNull String code) throws IOException, DatabaseCorruptedException {
+    public boolean deleteCourseByCode(@NonNull String code) throws IOException {
         return this.deleteObjectWithPath(pathFromCode(code));
     }
 

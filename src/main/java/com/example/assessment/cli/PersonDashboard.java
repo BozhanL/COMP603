@@ -20,7 +20,7 @@ import lombok.NonNull;
 
 @CheckReturnValue
 @AllArgsConstructor
-public final class PersonDashboard {
+public final class PersonDashboard implements IDashboard {
 
     @NonNull
     private final Scanner scanner;
@@ -33,6 +33,7 @@ public final class PersonDashboard {
         this(scanner, personBackend, new PersonInputHandler(scanner));
     }
 
+    @Override
     public void displayMenu() {
         while (true) {
             printMenu();
@@ -166,7 +167,7 @@ public final class PersonDashboard {
         }
     }
 
-    private void listStudent() throws StopOperationException {
+    private void listStudent() {
         ImmutableList<IStudent> li = null;
 
         boolean success = true;
@@ -297,7 +298,7 @@ public final class PersonDashboard {
         }
     }
 
-    private void listManager() throws StopOperationException {
+    private void listManager() {
         ImmutableList<IManager> li = null;
 
         boolean success = true;

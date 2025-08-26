@@ -56,7 +56,11 @@ public class ManagerDashboardTest {
         Thread thread = new Thread(() -> {
             CourseDashboard dashboard
                     = new CourseDashboard(new Scanner(System.in, Charset.defaultCharset()), backend);
-            dashboard.addCourse();
+            try {
+                dashboard.addCourse();
+            } catch (StopOperationException ex) {
+                throw new AssertionError(ex);
+            }
         });
         thread.start();
 
