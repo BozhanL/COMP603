@@ -5,7 +5,9 @@ import com.example.assessment.backend.types.interfaces.IPerson;
 import com.google.common.collect.ImmutableList;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.errorprone.annotations.CheckReturnValue;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import lombok.AllArgsConstructor;
@@ -47,7 +49,7 @@ public class CombinedBackend implements ICombinedBackend {
     }
 
     @Override
-    public void setPerson(IPerson p) throws IOException {
+    public void setPerson(IPerson p) throws IOException, FileAlreadyExistsException {
         this.pb.setPerson(p);
     }
 
@@ -63,7 +65,7 @@ public class CombinedBackend implements ICombinedBackend {
     }
 
     @Override
-    public IPerson getPersonById(String id) throws IOException, DatabaseCorruptedException {
+    public IPerson getPersonById(String id) throws IOException, DatabaseCorruptedException, FileNotFoundException {
         return this.pb.getPersonById(id);
     }
 
@@ -73,18 +75,18 @@ public class CombinedBackend implements ICombinedBackend {
     }
 
     @Override
-    public ICourse getCourseByCode(String code) throws IOException, DatabaseCorruptedException {
+    public ICourse getCourseByCode(String code) throws IOException, DatabaseCorruptedException, FileNotFoundException {
         return this.cb.getCourseByCode(code);
     }
 
     @Override
-    public void setCourse(ICourse c) throws IOException {
+    public void setCourse(ICourse c) throws IOException, FileAlreadyExistsException {
         this.cb.setCourse(c);
     }
 
     @Override
     @CanIgnoreReturnValue
-    public boolean deleteCourseByCode(String code) throws IOException, DatabaseCorruptedException {
+    public boolean deleteCourseByCode(String code) throws IOException {
         return this.cb.deleteCourseByCode(code);
     }
 

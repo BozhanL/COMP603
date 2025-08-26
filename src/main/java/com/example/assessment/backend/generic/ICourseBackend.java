@@ -7,6 +7,7 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.errorprone.annotations.CheckReturnValue;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import lombok.NonNull;
@@ -28,10 +29,10 @@ public interface ICourseBackend extends IBackend {
 
     public abstract ICourse getCourseByCode(@NonNull String code) throws IOException, DatabaseCorruptedException, FileNotFoundException;
 
-    public abstract void setCourse(@NonNull ICourse c) throws IOException;
+    public abstract void setCourse(@NonNull ICourse c) throws IOException, FileAlreadyExistsException;
 
     @CanIgnoreReturnValue
-    public abstract boolean deleteCourseByCode(@NonNull String code) throws IOException, DatabaseCorruptedException;
+    public abstract boolean deleteCourseByCode(@NonNull String code) throws IOException;
 
     public abstract void modifyCourse(@NonNull ICourse c) throws IOException;
 
