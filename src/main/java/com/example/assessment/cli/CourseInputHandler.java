@@ -72,7 +72,7 @@ public class CourseInputHandler {
 
     public String getCourseName() throws StopOperationException {
         while (true) {
-            System.out.print("Enter course name(x for exit) : ");
+            System.out.print("Enter course name(x for exit): ");
             String input = scanner.nextLine().trim();
             if ("x".equalsIgnoreCase(input)) {
                 throw new StopOperationException();

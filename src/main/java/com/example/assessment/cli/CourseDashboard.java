@@ -177,7 +177,7 @@ public final class CourseDashboard implements IDashboard {
         try {
             courseBackend.deleteCourseByCode(courseCode.toString());
         } catch (IOException ex) {
-            System.out.println("Error deleteing course: " + ex.getMessage());
+            System.out.println("Error deleting course: " + ex.getMessage());
         }
     }
 }
