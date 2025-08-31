@@ -5,12 +5,15 @@ import com.example.assessment.backend.generic.ICombinedBackend;
 import com.example.assessment.backend.generic.IPersonBackend;
 import com.example.assessment.backend.types.interfaces.IPerson;
 import com.google.errorprone.annotations.CheckReturnValue;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.InvalidPathException;
 import java.util.Scanner;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 
+// This class is used only when the program starts
+// This class includes methods for initialize the program
 @CheckReturnValue
 @AllArgsConstructor
 public class Welcome {
@@ -18,6 +21,7 @@ public class Welcome {
     @NonNull
     private final Scanner scanner;
 
+//    Welcome message
     public static void showAsciiArt() {
         System.out.println("               _                                  ");
         System.out.println("              | |                                 ");
@@ -33,23 +37,24 @@ public class Welcome {
         System.out.println("                                                  ");
     }
 
+//    Ask for database location and construce it.
     public ICombinedBackend askForDatabase() {
         ICombinedBackend pb = null;
 
         while (pb == null) {
-            System.out.print("Enter database path (press Enter for default): ");
+            System.out.printf("Enter database path (press Enter for %s): ", ICombinedBackend.DEFAULT_DATA_LOCATION);
             String path = scanner.nextLine().trim();
 
             try {
                 if (path.isBlank()) {
                     pb = ICombinedBackend.of();
-                    System.out.println("Database = default");
+                    System.out.printf("Database = %s\n", ICombinedBackend.DEFAULT_DATA_LOCATION);
                 } else {
                     pb = ICombinedBackend.of(path);
-                    System.out.println("Database = " + path);
+                    System.out.printf("Database = %s\n", path);
                 }
             } catch (IOException e) {
-                System.out.println("Error: " + e.getMessage());
+                System.out.printf("Error: %s\n", e.getMessage());
             } catch (InvalidPathException e) {
                 System.out.println("Error: invalid path");
             }
@@ -58,50 +63,47 @@ public class Welcome {
         return pb;
     }
 
+//    Login to the system
     public IPerson login(@NonNull IPersonBackend pb) {
         IPerson p = null;
 
-        while (p == null) {
-            String id = "";
+        while (true) {
+//            Get person from ID
+            while (p == null) {
+                String id = "";
+                while (id.isBlank()) {
+                    System.out.print("Enter User ID: ");
+                    id = scanner.nextLine().trim();
 
-            while (id.isBlank()) {
-                System.out.print("Enter User ID: ");
-                id = scanner.nextLine().trim();
-
-                if (id.isBlank()) {
-                    System.out.println("ID cannot be blank, try again");
+                    if (id.isBlank()) {
+                        System.out.println("ID cannot be blank, try again.");
+                    }
                 }
-            }
 
-            try {
-                p = pb.getPersonById(id);
+                try {
+                    p = pb.getPersonById(id);
+                } catch (FileNotFoundException e) {
+                    System.out.println("No user found with that ID, try again.");
+                } catch (IOException e) {
+                    System.out.println("Error: " + e.getMessage());
+                } catch (DatabaseCorruptedException e) {
+                    System.out.println("Error: data corrupted, try another user");
+                }
 
                 if (p == null) {
                     System.out.println("No user found with that ID, try again.");
                 }
-            } catch (IOException e) {
-                System.out.println("Error: " + e.getMessage());
-            } catch (DatabaseCorruptedException e) {
-                System.out.println("Error: data corrupted, try another user");
             }
-        }
 
-        while (true) {
+//            Check whether user knows the password
             System.out.print("Enter Password: ");
-            String password = scanner.nextLine();
-
-            try {
-                if (p.safeCheckPassword(password)) {
-                    System.out.println("Login Successful");
-                    break;
-                } else {
-                    System.out.println("Incorrect password, try again.");
-                }
-            } catch (IllegalArgumentException e) {
-                System.out.println("Error: " + e.getMessage());
+            String password = scanner.nextLine().trim();
+            if (p.safeCheckPassword(password)) {
+                System.out.println("Login Successful");
+                return p;
+            } else {
+                System.out.println("Incorrect password.");
             }
         }
-
-        return p;
     }
 }

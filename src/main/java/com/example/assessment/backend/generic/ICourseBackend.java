@@ -12,6 +12,7 @@ import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import lombok.NonNull;
 
+// This is the interface for managing course
 @CheckReturnValue
 public interface ICourseBackend extends IBackend {
 
@@ -27,14 +28,20 @@ public interface ICourseBackend extends IBackend {
         return CourseFileBackend.of(p);
     }
 
+//    Return a Course with same course code as argument
     public abstract ICourse getCourseByCode(@NonNull String code) throws IOException, DatabaseCorruptedException, FileNotFoundException;
 
+//    Store the Course
+//    If the Course already exist in database, throw FileAlreadyExistsException
     public abstract void setCourse(@NonNull ICourse c) throws IOException, FileAlreadyExistsException;
 
+//    Delete the Course with same course code
     @CanIgnoreReturnValue
     public abstract boolean deleteCourseByCode(@NonNull String code) throws IOException;
 
+//    Change the Course
     public abstract void modifyCourse(@NonNull ICourse c) throws IOException;
 
+//    List all course in database
     public abstract ImmutableList<ICourse> listCourse() throws IOException, DatabaseCorruptedException;
 }

@@ -14,6 +14,7 @@ import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import lombok.Value;
 
+// This class is a wrapper for IPersonBackend and ICourseBackend
 @Value
 @CheckReturnValue
 @AllArgsConstructor(staticName = "of")
