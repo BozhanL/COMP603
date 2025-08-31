@@ -37,7 +37,7 @@ public class Welcome {
         System.out.println("                                                  ");
     }
 
-//    Ask for database location and construce it.
+//    Ask for database location and construct it.
     public ICombinedBackend askForDatabase() {
         ICombinedBackend pb = null;
 

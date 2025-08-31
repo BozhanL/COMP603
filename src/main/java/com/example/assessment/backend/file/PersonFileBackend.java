@@ -88,7 +88,7 @@ public final class PersonFileBackend extends FileBackend implements IPersonBacke
         this.setObject(p, pathFromPerson(p));
     }
 
-//    Delete a Perosn with ID
+//    Delete a Person with ID
 //    Return true if delete a file, false if file not exist
     @Override
     @CanIgnoreReturnValue

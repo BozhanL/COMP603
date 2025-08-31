@@ -50,25 +50,25 @@ public interface IPerson extends IAuthentication, Serializable, IPrettyPrint {
 //    Get the ID of the person
     public abstract String getId();
 
-//    Get the ID of the Legal first name
+//    Get the Legal first name
     public abstract String getLegalFirstName();
 
-//    Get the ID of the Legal last name
+//    Get the Legal last name
     public abstract String getLegalLastName();
 
-//    Get the ID of the Date of birth
+//    Get the Date of birth
     public abstract LocalDate getDateOfBirth();
 
-//    Get the ID of the Gender
+//    Get the Gender
     public abstract Gender getGender();
 
-//    Get the ID of the Email address
+//    Get the Email address
     public abstract String getEmail();
 
-//    Get the ID of the Phone number
+//    Get the Phone number
     public abstract String getPhone();
 
-//    Get the ID of the Address
+//    Get the Address
     public abstract IAddress getAddress();
 
 //    Get the dashboard for the person
