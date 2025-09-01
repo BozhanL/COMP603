@@ -11,10 +11,12 @@ import java.time.LocalDate;
 import java.util.Scanner;
 import lombok.NonNull;
 
+// This is the interface for manager of the system
 @Immutable
 @CheckReturnValue
 public interface IManager extends IPerson {
 
+//    Static construtor to create IManager
     public static IManager of(
             @NonNull String id,
             @NonNull String password,
@@ -29,6 +31,7 @@ public interface IManager extends IPerson {
         return Manager.of(id, password, legalFirstName, legalLastName, dateOfBirth, gender, email, phone, address);
     }
 
+//    Static construtor to create a default IManager
     public static IManager defaultManager() {
         return IManager.of(
                 "admin",
@@ -43,32 +46,41 @@ public interface IManager extends IPerson {
         );
     }
 
+//    Create a new IManager object with new password
+    @Override
+    public abstract IManager withPassword(@NonNull String password);
+
+//    Create a new IManager object with new legalFirstName
+    @Override
+    public abstract IManager withLegalFirstName(@NonNull String legalFirstName);
+
+//    Create a new IManager object with new legalLastName
+    @Override
+    public abstract IManager withLegalLastName(@NonNull String legalLastName);
+
+//    Create a new IManager object with new dateOfBirth
+    @Override
+    public abstract IManager withDateOfBirth(@NonNull LocalDate dateOfBirth);
+
+//    Create a new IManager object with new gender
+    @Override
+    public abstract IManager withGender(@NonNull Gender gender);
+
+//    Create a new IManager object with new email
+    @Override
+    public abstract IManager withEmail(@NonNull String email);
+
+//    Create a new IManager object with new phone
+    @Override
+    public abstract IManager withPhone(@NonNull String phone);
+
+//    Create a new IManager object with new address
+    @Override
+    public abstract IManager withAddress(@NonNull IAddress address);
+
+//    Return a dashboard to display IManager
     @Override
     public default IMainDashboard getDashboard(@NonNull Scanner sc, @NonNull ICombinedBackend cb) {
         return new ManagerDashboard(sc, cb);
     }
-
-    @Override
-    public abstract IManager withPassword(@NonNull String password);
-
-    @Override
-    public abstract IManager withLegalFirstName(@NonNull String legalFirstName);
-
-    @Override
-    public abstract IManager withLegalLastName(@NonNull String legalLastName);
-
-    @Override
-    public abstract IManager withDateOfBirth(@NonNull LocalDate dateOfBirth);
-
-    @Override
-    public abstract IManager withGender(@NonNull Gender gender);
-
-    @Override
-    public abstract IManager withEmail(@NonNull String email);
-
-    @Override
-    public abstract IManager withPhone(@NonNull String phone);
-
-    @Override
-    public abstract IManager withAddress(@NonNull IAddress address);
 }

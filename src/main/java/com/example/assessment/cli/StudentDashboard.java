@@ -8,6 +8,7 @@ import java.util.Scanner;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 
+// This is the main dashboard for student
 @CheckReturnValue
 @AllArgsConstructor
 public class StudentDashboard implements IMainDashboard {
@@ -25,10 +26,13 @@ public class StudentDashboard implements IMainDashboard {
         this(scanner, cb, p, new PersonInputHandler(scanner));
     }
 
+//    Display the menu
     @Override
     public void displayMenu() {
         while (true) {
+//            Print the menu
             printMainMenu();
+//            Ask user for option
             String choice = scanner.nextLine().trim();
 
             try {
@@ -60,12 +64,16 @@ public class StudentDashboard implements IMainDashboard {
         }
     }
 
+//    Save modified student into database
     private void saveStudent() {
         boolean success = true;
+//        Max retry is 3
         for (int i = 0; i < 3; i++) {
             success = true;
             try {
+//                modify the student in database
                 this.cb.modifyPerson(this.p);
+//                exit the loop
                 break;
             } catch (IOException ex) {
                 System.out.println("Error: " + ex.getMessage());
@@ -73,6 +81,7 @@ public class StudentDashboard implements IMainDashboard {
             }
         }
 
+//        print error message is failed after three tries
         if (!success) {
             System.out.println("Error: Unable to modify student!");
         } else {

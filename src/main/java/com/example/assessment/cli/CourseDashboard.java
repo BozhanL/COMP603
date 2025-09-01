@@ -13,6 +13,7 @@ import java.util.Scanner;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 
+// This is the dashboard to manage course in the system
 @CheckReturnValue
 @AllArgsConstructor
 public final class CourseDashboard implements IDashboard {
@@ -28,21 +29,15 @@ public final class CourseDashboard implements IDashboard {
         this(scanner, courseBackend, new CourseInputHandler(scanner));
     }
 
-    private static void printMainMenu() {
-        System.out.println("[COURSE DASHBOARD]");
-        System.out.println("1. Add Course\t4. List Course");
-        System.out.println("2. Get Course\t5. Delete Course");
-        System.out.println("3. Modify Course");
-        System.out.println("6. Exit");
-        System.out.print("Select an option: ");
-    }
-
     @Override
     public void displayMenu() {
         while (true) {
+//            Print options
             printMainMenu();
+//            Get the input
             String choice = scanner.nextLine().trim();
 
+//            Execute
             try {
                 switch (choice) {
                     case "1" ->
@@ -67,6 +62,7 @@ public final class CourseDashboard implements IDashboard {
         }
     }
 
+//    Add a new course to database
     public void addCourse() throws StopOperationException {
         // user inputs
         String deptCode = inputHandler.getDepartmentCode();
@@ -99,14 +95,19 @@ public final class CourseDashboard implements IDashboard {
         }
     }
 
+//    Get a course by course code
     private void getCourse() throws StopOperationException {
+//        Get the course code from user
         String deptCode = inputHandler.getDepartmentCode();
         int level = inputHandler.getCourseLevel();
         int courseNum = inputHandler.getCourseNumber();
+
+//        Construct ICourseCode
         ICourseCode courseCode = ICourseCode.of(deptCode, level, courseNum);
 
         ICourse c;
         try {
+//            Get the course from backend
             c = courseBackend.getCourseByCode(courseCode.toString());
         } catch (FileNotFoundException ex) {
             System.out.println("Error: course not found");
@@ -119,17 +120,23 @@ public final class CourseDashboard implements IDashboard {
             return;
         }
 
+//        print the course
         System.out.println(c.prettyToString());
     }
 
+//    Modify and store it to backend
     private void modifyCourse() throws StopOperationException {
+//        Get the course code from user
         String deptCode = inputHandler.getDepartmentCode();
         int level = inputHandler.getCourseLevel();
         int courseNum = inputHandler.getCourseNumber();
+
+//        Construct ICourseCode
         ICourseCode courseCode = ICourseCode.of(deptCode, level, courseNum);
 
         ICourse c;
         try {
+//            Get the course from backend
             c = courseBackend.getCourseByCode(courseCode.toString());
         } catch (FileNotFoundException ex) {
             System.out.println("Error: course not found");
@@ -142,17 +149,21 @@ public final class CourseDashboard implements IDashboard {
             return;
         }
 
+//        Modify the course
         c = inputHandler.getModifiedCourse(c);
         try {
+//            Store it to the database
             courseBackend.modifyCourse(c);
         } catch (IOException ex) {
             System.out.println("Error: " + ex.getMessage());
         }
     }
 
+//    List all course from database
     private void listCourse() {
         ImmutableList<ICourse> cs;
         try {
+//            List all course
             cs = courseBackend.listCourse();
         } catch (IOException ex) {
             System.out.println("Error: " + ex.getMessage());
@@ -162,22 +173,37 @@ public final class CourseDashboard implements IDashboard {
             return;
         }
 
+//        print course one by one
         for (ICourse c : cs) {
             System.out.println(c.prettyToString());
             System.out.println("------------------------------------------------");
         }
     }
 
+//    Delete a course from database
     private void deleteCourse() throws StopOperationException {
+//        Get the course code from user
         String deptCode = inputHandler.getDepartmentCode();
         int level = inputHandler.getCourseLevel();
         int courseNum = inputHandler.getCourseNumber();
+
+//        Construct ICourseCode
         ICourseCode courseCode = ICourseCode.of(deptCode, level, courseNum);
 
         try {
+//            Delete the course
             courseBackend.deleteCourseByCode(courseCode.toString());
         } catch (IOException ex) {
             System.out.println("Error deleting course: " + ex.getMessage());
         }
+    }
+
+    private static void printMainMenu() {
+        System.out.println("[COURSE DASHBOARD]");
+        System.out.println("1. Add Course\t4. List Course");
+        System.out.println("2. Get Course\t5. Delete Course");
+        System.out.println("3. Modify Course");
+        System.out.println("6. Exit");
+        System.out.print("Select an option: ");
     }
 }

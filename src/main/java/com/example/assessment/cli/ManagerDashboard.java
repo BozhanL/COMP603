@@ -6,6 +6,7 @@ import java.util.Scanner;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 
+// This is the main dashboard for manager
 @CheckReturnValue
 @AllArgsConstructor
 public class ManagerDashboard implements IMainDashboard {
@@ -21,10 +22,13 @@ public class ManagerDashboard implements IMainDashboard {
         this(scanner, new CourseDashboard(scanner, cb), new PersonDashboard(scanner, cb));
     }
 
+//    Display the menu
     @Override
     public void displayMenu() {
         while (true) {
+//            Print the menu
             printMainMenu();
+//            Ask user for option
             String choice = scanner.nextLine().trim();
 
             switch (choice) {

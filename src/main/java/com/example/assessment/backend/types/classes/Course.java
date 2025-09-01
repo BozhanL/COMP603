@@ -11,6 +11,9 @@ import lombok.NonNull;
 import lombok.Value;
 import lombok.With;
 
+// This class implements ICourse,
+// and used to store information about course detail.
+// Unlike StudentCourseInfo, this does not include grade or start date
 @With
 @Value
 @Immutable
@@ -45,6 +48,7 @@ public class Course implements ICourse {
         return new Course(departmentCode, level, courseNumber, name, points, description);
     }
 
+//    Convert it to string with format of one variable per line
     @Override
     public String prettyToString() {
         StringBuilder sb = new StringBuilder();

@@ -21,7 +21,6 @@ import java.nio.file.Files;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Objects;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.ToString;
@@ -131,7 +130,7 @@ public abstract class FileBackend implements IBackend {
     protected <T> ImmutableList<T> listObject(@NonNull Class<T> cl) throws IOException, DatabaseCorruptedException {
         File folder = this.db.toFile();
         File[] files = folder.listFiles();
-        if (Objects.isNull(files)) {
+        if (files == null) {
             files = new File[0];
         }
         ArrayList<T> out = new ArrayList<>(files.length);

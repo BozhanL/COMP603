@@ -1,5 +1,9 @@
 package com.example.assessment.backend.types.enums;
 
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+// This contains greade for student
 public enum Grade {
     AP("A+"), A("A"), AM("A-"),
     BP("B+"), B("B"), BM("B-"),
@@ -13,6 +17,22 @@ public enum Grade {
 
     private Grade(String name) {
         this.name = name;
+    }
+
+//    Return the Grade that have same name compare to input
+    public static Grade getEnum(String value) {
+        for (Grade v : values()) {
+            if (v.toString().equalsIgnoreCase(value)) {
+                return v;
+            }
+        }
+
+        throw new IllegalArgumentException();
+    }
+
+//    Return a string contain all values
+    public static String allValues() {
+        return Stream.of(values()).map((v) -> v.toString()).collect(Collectors.joining(", "));
     }
 
     @Override

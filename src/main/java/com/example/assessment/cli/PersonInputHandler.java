@@ -15,6 +15,7 @@ import java.util.Scanner;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 
+// This is the helper for promote user to enter person information
 @CheckReturnValue
 @AllArgsConstructor
 public final class PersonInputHandler {
@@ -28,12 +29,16 @@ public final class PersonInputHandler {
         this(scanner, new StudentCourseInputHandler(scanner));
     }
 
+//    Ask user for person ID
     public String getId() throws StopOperationException {
         while (true) {
+//            Ask for input
             System.out.print("Please enter ID(x for exit): ");
+//            Get the input
             String input = scanner.nextLine().trim().toLowerCase(Locale.getDefault());
+//            Check whether it is blank or want to stop
             if (input.isBlank()) {
-                System.out.println("ID must not be blank!");
+                System.out.println("Error: ID must not be blank!");
                 continue;
             } else if ("x".equalsIgnoreCase(input)) {
                 throw new StopOperationException();
@@ -44,12 +49,16 @@ public final class PersonInputHandler {
         }
     }
 
+//    Ask user for Password
     public String getPassword() throws StopOperationException {
         while (true) {
+//            Ask for input
             System.out.print("Please enter Password(x for exit): ");
+//            Get the input
             String input = scanner.nextLine().trim().toLowerCase(Locale.getDefault());
+//            Check whether it is blank or want to stop
             if (input.isBlank()) {
-                System.out.println("Password must not be blank!");
+                System.out.println("Error: Password must not be blank!");
                 continue;
             } else if ("x".equalsIgnoreCase(input)) {
                 throw new StopOperationException();
@@ -60,12 +69,16 @@ public final class PersonInputHandler {
         }
     }
 
+//    Ask user for LegalFirstName
     public String getLegalFirstName() throws StopOperationException {
         while (true) {
+//            Ask for input
             System.out.print("Please enter Legal First Name(x for exit): ");
+//            Get the input
             String input = scanner.nextLine().trim();
+//            Check whether it is blank or want to stop
             if (input.isBlank()) {
-                System.out.println("Name must not be blank!");
+                System.out.println("Error: Name must not be blank!");
                 continue;
             } else if ("x".equalsIgnoreCase(input)) {
                 throw new StopOperationException();
@@ -76,12 +89,16 @@ public final class PersonInputHandler {
         }
     }
 
+//    Ask user for LegalLastName
     public String getLegalLastName() throws StopOperationException {
         while (true) {
+//            Ask for input
             System.out.print("Please enter Legal Last Name(x for exit): ");
+//            Get the input
             String input = scanner.nextLine().trim();
+//            Check whether it is blank or want to stop
             if (input.isBlank()) {
-                System.out.println("Name must not be blank!");
+                System.out.println("Error: Name must not be blank!");
                 continue;
             } else if ("x".equalsIgnoreCase(input)) {
                 throw new StopOperationException();
@@ -92,17 +109,22 @@ public final class PersonInputHandler {
         }
     }
 
+//    Ask user for DateOfBirth
     public LocalDate getDateOfBirth() throws StopOperationException {
         while (true) {
+//            Ask for input
             System.out.print("Please enter Date of Birth(x for exit) (e.g, 2025-08-16): ");
+//            Get the input
             String input = scanner.nextLine().trim();
+//            Check whether it is blank or want to stop
             if (input.isBlank()) {
-                System.out.println("Date of Birth must not be blank!");
+                System.out.println("Error: Date of Birth must not be blank!");
                 continue;
             } else if ("x".equalsIgnoreCase(input)) {
                 throw new StopOperationException();
             }
 
+//            Convert it to LocalDate
             LocalDate date;
             try {
                 date = LocalDate.parse(input);
@@ -116,17 +138,22 @@ public final class PersonInputHandler {
         }
     }
 
+//    Ask user for Gender
     public Gender getGender() throws StopOperationException {
         while (true) {
+//            Ask for input
             System.out.print("Please enter Gender(x for exit) (One of: MALE, FEMALE, OTHER): ");
+//            Get the input
             String input = scanner.nextLine().trim().toUpperCase(Locale.getDefault());
+//            Check whether it is blank or want to stop
             if (input.isBlank()) {
-                System.out.println("Gender must not be blank!");
+                System.out.println("Error: Gender must not be blank!");
                 continue;
             } else if ("x".equalsIgnoreCase(input)) {
                 throw new StopOperationException();
             }
 
+//            Convert it to Gender
             Gender g;
             try {
                 g = Gender.valueOf(input);
@@ -140,12 +167,16 @@ public final class PersonInputHandler {
         }
     }
 
+//    Ask user for Email
     public String getEmail() throws StopOperationException {
         while (true) {
+//            Ask for input
             System.out.print("Please enter Email(x for exit): ");
+//            Get the input
             String input = scanner.nextLine().trim().toLowerCase(Locale.getDefault());
+//            Check whether it is blank or want to stop
             if (input.isBlank()) {
-                System.out.println("Email must not be blank!");
+                System.out.println("Error: Email must not be blank!");
                 continue;
             } else if ("x".equalsIgnoreCase(input)) {
                 throw new StopOperationException();
@@ -156,12 +187,16 @@ public final class PersonInputHandler {
         }
     }
 
+//    Ask user for Phone
     public String getPhone() throws StopOperationException {
         while (true) {
+//            Ask for input
             System.out.print("Please enter Phone(x for exit): ");
+//            Get the input
             String input = scanner.nextLine().trim();
+//            Check whether it is blank or want to stop
             if (input.isBlank()) {
-                System.out.println("Phone must not be blank!");
+                System.out.println("Error: Phone must not be blank!");
                 continue;
             } else if ("x".equalsIgnoreCase(input)) {
                 throw new StopOperationException();
@@ -172,7 +207,9 @@ public final class PersonInputHandler {
         }
     }
 
+//    Ask user for Address
     public IAddress getAddress() throws StopOperationException {
+//        Get the address
         String code = getPostCode();
         String country = getCountry();
         String state = getState();
@@ -182,20 +219,26 @@ public final class PersonInputHandler {
         String streetNumber = getStreetNumber();
         String unit = getUnit();
 
+//        Create an object
         return IAddress.of(unit, streetNumber, streetName, suburb, city, state, country, code);
     }
 
+//    Ask user for ResidencyStatus
     public Residency getResidencyStatus() throws StopOperationException {
         while (true) {
+//            Ask for input
             System.out.print("Please enter Residency Status(x for exit) (One of: DOMESTIC, INTERNATIONAL): ");
+//            Get the input
             String input = scanner.nextLine().trim().toUpperCase(Locale.getDefault());
+//            Check whether it is blank or want to stop
             if (input.isBlank()) {
-                System.out.println("Status must not be blank!");
+                System.out.println("Error: Status must not be blank!");
                 continue;
             } else if ("x".equalsIgnoreCase(input)) {
                 throw new StopOperationException();
             }
 
+//            Convert it to Residency
             Residency r;
             try {
                 r = Residency.valueOf(input);
@@ -209,8 +252,10 @@ public final class PersonInputHandler {
         }
     }
 
+//    Promote user to change student
     public IStudent getModifiedStudent(@NonNull IStudent ori) throws StopOperationException {
         while (true) {
+//            print options
             System.out.println("1. Change password\t6. Change Email");
             System.out.println("2. Change Legal First Name\t7. Change Phone");
             System.out.println("3. Change Legal Last Name\t8. Change Address");
@@ -220,8 +265,10 @@ public final class PersonInputHandler {
             System.out.println("11. Save\t12. Exit");
             System.out.print("Select an option(1-12): ");
 
+//            Get the input
             String choice = scanner.nextLine().trim();
 
+//            Execute
             switch (choice) {
                 case "1" ->
                     ori = ori.withPassword(this.getPassword());
@@ -260,8 +307,10 @@ public final class PersonInputHandler {
         return this.scih.changeCourse(courses);
     }
 
+//    Promote user to change manager
     public IManager getModifiedManager(@NonNull IManager ori) throws StopOperationException {
         while (true) {
+//            Print options
             System.out.println("1. Change password\t6. Change Email");
             System.out.println("2. Change Legal First Name\t7. Change Phone");
             System.out.println("3. Change Legal Last Name\t8. Change Address");
@@ -271,8 +320,10 @@ public final class PersonInputHandler {
             System.out.println("9. Save\t10. Exit");
             System.out.print("Select an option(1-10): ");
 
+//            Get the input
             String choice = scanner.nextLine().trim();
 
+//            Execute
             switch (choice) {
                 case "1" ->
                     ori = ori.withPassword(this.getPassword());
@@ -301,12 +352,16 @@ public final class PersonInputHandler {
         }
     }
 
+//    Ask user for PostCode
     private String getPostCode() throws StopOperationException {
         while (true) {
+//            Ask for input
             System.out.print("Please enter Post Code(x for exit): ");
+//            Get the input
             String input = scanner.nextLine().trim();
+//            Check whether it is blank or want to stop
             if (input.isBlank()) {
-                System.out.println("Post Code must not be blank!");
+                System.out.println("Error: Post Code must not be blank!");
                 continue;
             } else if ("x".equalsIgnoreCase(input)) {
                 throw new StopOperationException();
@@ -317,12 +372,16 @@ public final class PersonInputHandler {
         }
     }
 
+//    Ask user for Country
     private String getCountry() throws StopOperationException {
         while (true) {
+//            Ask for input
             System.out.print("Please enter Country(x for exit): ");
+//            Get the input
             String input = scanner.nextLine().trim();
+//            Check whether it is blank or want to stop
             if (input.isBlank()) {
-                System.out.println("Country must not be blank!");
+                System.out.println("Error: Country must not be blank!");
                 continue;
             } else if ("x".equalsIgnoreCase(input)) {
                 throw new StopOperationException();
@@ -333,12 +392,16 @@ public final class PersonInputHandler {
         }
     }
 
+//    Ask user for State
     private String getState() throws StopOperationException {
         while (true) {
+//            Ask for input
             System.out.print("Please enter State(x for exit): ");
+//            Get the input
             String input = scanner.nextLine().trim();
+//            Check whether it is blank or want to stop
             if (input.isBlank()) {
-                System.out.println("State must not be blank!");
+                System.out.println("Error: State must not be blank!");
                 continue;
             } else if ("x".equalsIgnoreCase(input)) {
                 throw new StopOperationException();
@@ -349,12 +412,16 @@ public final class PersonInputHandler {
         }
     }
 
+//    Ask user for City
     private String getCity() throws StopOperationException {
         while (true) {
+//            Ask for input
             System.out.print("Please enter City(x for exit): ");
+//            Get the input
             String input = scanner.nextLine().trim();
+//            Check whether it is blank or want to stop
             if (input.isBlank()) {
-                System.out.println("City must not be blank!");
+                System.out.println("Error: City must not be blank!");
                 continue;
             } else if ("x".equalsIgnoreCase(input)) {
                 throw new StopOperationException();
@@ -365,11 +432,18 @@ public final class PersonInputHandler {
         }
     }
 
+//    Ask user for Suburb
     private String getSuburb() throws StopOperationException {
         while (true) {
+//            Ask for input
             System.out.print("Please enter Suburb(x for exit) (optional): ");
+//            Get the input
             String input = scanner.nextLine().trim();
-            if ("x".equalsIgnoreCase(input)) {
+//            Check whether it is blank or want to stop
+            if (input.isBlank()) {
+                System.out.println("Error: Suburb must not be blank!");
+                continue;
+            } else if ("x".equalsIgnoreCase(input)) {
                 throw new StopOperationException();
             }
 
@@ -378,11 +452,18 @@ public final class PersonInputHandler {
         }
     }
 
+//    Ask user for StreetName
     private String getStreetName() throws StopOperationException {
         while (true) {
+//            Ask for input
             System.out.print("Please enter Street Name(x for exit) (optional): ");
+//            Get the input
             String input = scanner.nextLine().trim();
-            if ("x".equalsIgnoreCase(input)) {
+//            Check whether it is blank or want to stop
+            if (input.isBlank()) {
+                System.out.println("Error: Street Name must not be blank!");
+                continue;
+            } else if ("x".equalsIgnoreCase(input)) {
                 throw new StopOperationException();
             }
 
@@ -391,11 +472,18 @@ public final class PersonInputHandler {
         }
     }
 
+//    Ask user for StreetNumber
     private String getStreetNumber() throws StopOperationException {
         while (true) {
+//            Ask for input
             System.out.print("Please enter Street Number(x for exit) (optional): ");
+//            Get the input
             String input = scanner.nextLine().trim();
-            if ("x".equalsIgnoreCase(input)) {
+//            Check whether it is blank or want to stop
+            if (input.isBlank()) {
+                System.out.println("Error: Street Number must not be blank!");
+                continue;
+            } else if ("x".equalsIgnoreCase(input)) {
                 throw new StopOperationException();
             }
 
@@ -404,11 +492,18 @@ public final class PersonInputHandler {
         }
     }
 
+//    Ask user for Unit
     private String getUnit() throws StopOperationException {
         while (true) {
+//            Ask for input
             System.out.print("Please enter Unit(x for exit) (optional): ");
+//            Get the input
             String input = scanner.nextLine().trim();
-            if ("x".equalsIgnoreCase(input)) {
+//            Check whether it is blank or want to stop
+            if (input.isBlank()) {
+                System.out.println("Error: Unit must not be blank!");
+                continue;
+            } else if ("x".equalsIgnoreCase(input)) {
                 throw new StopOperationException();
             }
 

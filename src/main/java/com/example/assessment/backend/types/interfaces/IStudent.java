@@ -13,10 +13,12 @@ import java.time.LocalDate;
 import java.util.Scanner;
 import lombok.NonNull;
 
+// This is the interface for student of the system
 @Immutable
 @CheckReturnValue
 public interface IStudent extends IPerson {
 
+//    Static construtor to create IStudent with courses
     public static IStudent of(
             @NonNull String id,
             @NonNull String password,
@@ -33,6 +35,7 @@ public interface IStudent extends IPerson {
         return Student.of(id, password, legalFirstName, legalLastName, dateOfBirth, gender, email, phone, address, residencyStatus, courses);
     }
 
+//    Static construtor to create IStudent without courses
     public static IStudent of(
             @NonNull String id,
             @NonNull String password,
@@ -48,11 +51,7 @@ public interface IStudent extends IPerson {
         return IStudent.of(id, password, legalFirstName, legalLastName, dateOfBirth, gender, email, phone, address, residencyStatus, ImmutableMap.of());
     }
 
-    @Override
-    public default IMainDashboard getDashboard(@NonNull Scanner sc, @NonNull ICombinedBackend cb) {
-        return new StudentDashboard(sc, cb, this);
-    }
-
+//    Create a new IStudent object with new password
     @Override
     public abstract IStudent withPassword(@NonNull String password);
 
@@ -84,4 +83,10 @@ public interface IStudent extends IPerson {
     public abstract Residency getResidencyStatus();
 
     public abstract ImmutableMap<String, IStudentCourseInfo> getCourses();
+
+//    Return a dashboard to display IStudent
+    @Override
+    public default IMainDashboard getDashboard(@NonNull Scanner sc, @NonNull ICombinedBackend cb) {
+        return new StudentDashboard(sc, cb, this);
+    }
 }
