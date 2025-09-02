@@ -91,7 +91,7 @@ public class Welcome {
                 }
 
                 if (p == null) {
-                    System.out.println("No user found with that ID, try again.");
+                    System.out.printf("Error: unable to load '%s'\n", id);
                 }
             }
 

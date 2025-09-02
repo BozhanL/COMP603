@@ -3,7 +3,7 @@ package com.example.assessment.backend.types.enums;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-// This contains greade for student
+// This contains grade for student
 public enum Grade {
     AP("A+"), A("A"), AM("A-"),
     BP("B+"), B("B"), BM("B-"),

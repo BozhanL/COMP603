@@ -10,7 +10,7 @@ import java.util.Scanner;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 
-// This is the helper for promote user to enter course information
+// This is the helper to prompt user to enter course information
 @CheckReturnValue
 @AllArgsConstructor
 public class CourseInputHandler {
@@ -155,7 +155,7 @@ public class CourseInputHandler {
         return input;
     }
 
-//    Promote user to modify a course
+//    Prompt user to modify a course
     public ICourse getModifiedCourse(ICourse ori) throws StopOperationException {
         while (true) {
 //            Print options

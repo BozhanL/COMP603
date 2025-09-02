@@ -12,7 +12,7 @@ import java.util.Scanner;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 
-// This is the helper for promote user to enter student course information
+// This is the helper to prompt user to enter student course information
 @CheckReturnValue
 @AllArgsConstructor
 public class StudentCourseInputHandler {

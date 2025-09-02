@@ -15,7 +15,7 @@ import java.util.Scanner;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 
-// This is the helper for promote user to enter person information
+// This is the helper to prompt user to enter person information
 @CheckReturnValue
 @AllArgsConstructor
 public final class PersonInputHandler {
@@ -252,7 +252,7 @@ public final class PersonInputHandler {
         }
     }
 
-//    Promote user to change student
+//    Prompt user to change student
     public IStudent getModifiedStudent(@NonNull IStudent ori) throws StopOperationException {
         while (true) {
 //            print options
@@ -307,7 +307,7 @@ public final class PersonInputHandler {
         return this.scih.changeCourse(courses);
     }
 
-//    Promote user to change manager
+//    Prompt user to change manager
     public IManager getModifiedManager(@NonNull IManager ori) throws StopOperationException {
         while (true) {
 //            Print options
@@ -439,11 +439,8 @@ public final class PersonInputHandler {
             System.out.print("Please enter Suburb(x for exit) (optional): ");
 //            Get the input
             String input = scanner.nextLine().trim();
-//            Check whether it is blank or want to stop
-            if (input.isBlank()) {
-                System.out.println("Error: Suburb must not be blank!");
-                continue;
-            } else if ("x".equalsIgnoreCase(input)) {
+//            Check whether user want to stop
+            if ("x".equalsIgnoreCase(input)) {
                 throw new StopOperationException();
             }
 
@@ -459,11 +456,8 @@ public final class PersonInputHandler {
             System.out.print("Please enter Street Name(x for exit) (optional): ");
 //            Get the input
             String input = scanner.nextLine().trim();
-//            Check whether it is blank or want to stop
-            if (input.isBlank()) {
-                System.out.println("Error: Street Name must not be blank!");
-                continue;
-            } else if ("x".equalsIgnoreCase(input)) {
+//            Check whether user want to stop
+            if ("x".equalsIgnoreCase(input)) {
                 throw new StopOperationException();
             }
 
@@ -479,11 +473,8 @@ public final class PersonInputHandler {
             System.out.print("Please enter Street Number(x for exit) (optional): ");
 //            Get the input
             String input = scanner.nextLine().trim();
-//            Check whether it is blank or want to stop
-            if (input.isBlank()) {
-                System.out.println("Error: Street Number must not be blank!");
-                continue;
-            } else if ("x".equalsIgnoreCase(input)) {
+//            Check whether user want to stop
+            if ("x".equalsIgnoreCase(input)) {
                 throw new StopOperationException();
             }
 
@@ -499,11 +490,8 @@ public final class PersonInputHandler {
             System.out.print("Please enter Unit(x for exit) (optional): ");
 //            Get the input
             String input = scanner.nextLine().trim();
-//            Check whether it is blank or want to stop
-            if (input.isBlank()) {
-                System.out.println("Error: Unit must not be blank!");
-                continue;
-            } else if ("x".equalsIgnoreCase(input)) {
+//            Check whether user want to stop
+            if ("x".equalsIgnoreCase(input)) {
                 throw new StopOperationException();
             }
 
