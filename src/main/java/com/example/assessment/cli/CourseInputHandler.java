@@ -31,7 +31,7 @@ public class CourseInputHandler {
             } else if (input.matches("[A-Z]{2,4}")) {
                 return input;
             }
-            System.out.println("Invalid format. Use 2-4 letters (e.g., 'COMP', 'MATH').");
+            System.out.println("Error: Invalid format. Use 2-4 letters (e.g., 'COMP', 'MATH').");
         }
     }
 
@@ -163,6 +163,7 @@ public class CourseInputHandler {
             System.out.println("2. Change Name");
             System.out.println("3. Change Points");
             System.out.println("4. Change Description");
+            System.out.println();
             System.out.println("5. Save\t6. Exit");
             System.out.print("Select an option(1-6): ");
 
@@ -191,7 +192,7 @@ public class CourseInputHandler {
                 case "6" ->
                     throw new StopOperationException();
                 default ->
-                    System.out.println("Invalid option. Try again.");
+                    System.out.println("Error: Invalid option. Try again.");
             }
         }
     }

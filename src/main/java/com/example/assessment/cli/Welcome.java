@@ -77,14 +77,14 @@ public class Welcome {
                     id = scanner.nextLine().trim();
 
                     if (id.isBlank()) {
-                        System.out.println("ID cannot be blank, try again.");
+                        System.out.println("Error: ID cannot be blank, try again.");
                     }
                 }
 
                 try {
                     p = pb.getPersonById(id);
                 } catch (FileNotFoundException e) {
-                    System.out.println("No user found with that ID, try again.");
+                    System.out.println("Error: No user found with that ID, try again.");
                 } catch (IOException e) {
                     System.out.println("Error: " + e.getMessage());
                 } catch (DatabaseCorruptedException e) {
@@ -103,7 +103,7 @@ public class Welcome {
                 System.out.println("Login Successful");
                 return p;
             } else {
-                System.out.println("Incorrect password.");
+                System.out.println("Error: Incorrect password.");
             }
         }
     }

@@ -40,7 +40,7 @@ public class ManagerDashboard implements IMainDashboard {
                     return; // exit to previous menu
                 }
                 default ->
-                    System.out.println("Invalid option. Try again.\n");
+                    System.out.println("Error: Invalid option. Try again.");
             }
         }
     }
@@ -49,6 +49,7 @@ public class ManagerDashboard implements IMainDashboard {
         System.out.println("[MANAGER DASHBOARD]");
         System.out.println("1. Manage Course");
         System.out.println("2. Manage Person");
+        System.out.println();
         System.out.println("3. Exit");
         System.out.print("Select an option: ");
     }

@@ -41,7 +41,7 @@ public class StudentCourseInputHandler {
             String input = scanner.nextLine().trim();
 //            Check whether it is blank or user want to stop this operation
             if (input.isBlank()) {
-                System.out.println("Status must not be blank!");
+                System.out.println("Error: Status must not be blank!");
                 continue;
             } else if ("x".equalsIgnoreCase(input)) {
                 throw new StopOperationException();
@@ -109,7 +109,7 @@ public class StudentCourseInputHandler {
         while (true) {
 //            Print options
             System.out.println("1. Change Course Code\t4. Change Location");
-            System.out.println("2. Change Grade\t5. Delete this course");
+            System.out.println("2. Change Grade\t\t5. Delete this course");
             System.out.println("3. Change Start Date");
             System.out.println();
             System.out.println("6. Save\t7. Exit");
@@ -137,7 +137,7 @@ public class StudentCourseInputHandler {
                 case "7" ->
                     throw new StopOperationException();
                 default ->
-                    System.out.println("Invalid option. Try again.");
+                    System.out.println("Error: Invalid option. Try again.");
             }
         }
     }
@@ -151,7 +151,7 @@ public class StudentCourseInputHandler {
             String input = scanner.nextLine().trim();
 //            Check whether it is blank or want to stop
             if (input.isBlank()) {
-                System.out.println("Course Code must not be blank!");
+                System.out.println("Error: Course Code must not be blank!");
                 continue;
             } else if ("x".equalsIgnoreCase(input)) {
                 throw new StopOperationException();
@@ -172,7 +172,7 @@ public class StudentCourseInputHandler {
             String input = scanner.nextLine().trim();
 //            Check whether it is blank or want to stop
             if (input.isBlank()) {
-                System.out.println("Grade must not be blank!");
+                System.out.println("Error: Grade must not be blank!");
                 continue;
             } else if ("x".equalsIgnoreCase(input)) {
                 throw new StopOperationException();
@@ -181,7 +181,7 @@ public class StudentCourseInputHandler {
             Grade g;
 //            Convert it to grade
             try {
-                g = Grade.valueOf(input);
+                g = Grade.getEnum(input);
             } catch (IllegalArgumentException e) {
                 System.out.printf("Error: input must be one of: %s\n", Grade.allValues());
                 continue;
@@ -201,7 +201,7 @@ public class StudentCourseInputHandler {
             String input = scanner.nextLine().trim();
 //            Check whether it is blank or want to stop
             if (input.isBlank()) {
-                System.out.println("Starts must not be blank!");
+                System.out.println("Error: Starts must not be blank!");
                 continue;
             } else if ("x".equalsIgnoreCase(input)) {
                 throw new StopOperationException();
@@ -230,7 +230,7 @@ public class StudentCourseInputHandler {
             String input = scanner.nextLine().trim();
 //            Check whether it is blank or want to stop
             if (input.isBlank()) {
-                System.out.println("Location must not be blank!");
+                System.out.println("Error: Location must not be blank!");
                 continue;
             } else if ("x".equalsIgnoreCase(input)) {
                 throw new StopOperationException();

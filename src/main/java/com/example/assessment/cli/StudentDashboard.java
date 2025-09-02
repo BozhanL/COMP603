@@ -56,7 +56,7 @@ public class StudentDashboard implements IMainDashboard {
                         return;
                     }
                     default ->
-                        System.out.println("Invalid option. Try again.\n");
+                        System.out.println("Error: Invalid option. Try again.");
                 }
             } catch (StopOperationException e) {
                 System.out.println("Operation canceled!");
@@ -92,8 +92,9 @@ public class StudentDashboard implements IMainDashboard {
     private static void printMainMenu() {
         System.out.println("[STUDENT DASHBOARD]");
         System.out.println("1. Get Current Information\t4. Change Email");
-        System.out.println("2. Change Password\t5. Change Phone");
-        System.out.println("3. Change Gender\t6. List Course");
+        System.out.println("2. Change Password\t\t5. Change Phone");
+        System.out.println("3. Change Gender\t\t6. List Course");
+        System.out.println();
         System.out.println("7. Save\t8. Exit");
         System.out.print("Select an option: ");
     }

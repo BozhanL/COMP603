@@ -253,14 +253,15 @@ public final class PersonInputHandler {
     }
 
 //    Prompt user to change student
-    public IStudent getModifiedStudent(@NonNull IStudent ori) throws StopOperationException {
+    public IStudent getModifiedStudent(@NonNull IStudent ori) {
+        IStudent n = ori;
         while (true) {
 //            print options
-            System.out.println("1. Change password\t6. Change Email");
+            System.out.println("1. Change password\t\t6. Change Email");
             System.out.println("2. Change Legal First Name\t7. Change Phone");
             System.out.println("3. Change Legal Last Name\t8. Change Address");
             System.out.println("4. Change Date of Birth\t9. Change Residency Status");
-            System.out.println("5. Change Gender\t10. Change Courses");
+            System.out.println("5. Change Gender\t\t10. Change Courses");
             System.out.println();
             System.out.println("11. Save\t12. Exit");
             System.out.print("Select an option(1-12): ");
@@ -269,34 +270,39 @@ public final class PersonInputHandler {
             String choice = scanner.nextLine().trim();
 
 //            Execute
-            switch (choice) {
-                case "1" ->
-                    ori = ori.withPassword(this.getPassword());
-                case "2" ->
-                    ori = ori.withLegalFirstName(this.getLegalFirstName());
-                case "3" ->
-                    ori = ori.withLegalLastName(this.getLegalLastName());
-                case "4" ->
-                    ori = ori.withDateOfBirth(this.getDateOfBirth());
-                case "5" ->
-                    ori = ori.withGender(this.getGender());
-                case "6" ->
-                    ori = ori.withEmail(this.getEmail());
-                case "7" ->
-                    ori = ori.withPhone(this.getPhone());
-                case "8" ->
-                    ori = ori.withAddress(this.getAddress());
-                case "9" ->
-                    ori = ori.withResidencyStatus(this.getResidencyStatus());
-                case "10" ->
-                    ori = ori.withCourses(this.changeCourse(ori.getCourses()));
-                case "11" -> {
-                    return ori;
+            try {
+                switch (choice) {
+                    case "1" ->
+                        n = n.withPassword(this.getPassword());
+                    case "2" ->
+                        n = n.withLegalFirstName(this.getLegalFirstName());
+                    case "3" ->
+                        n = n.withLegalLastName(this.getLegalLastName());
+                    case "4" ->
+                        n = n.withDateOfBirth(this.getDateOfBirth());
+                    case "5" ->
+                        n = n.withGender(this.getGender());
+                    case "6" ->
+                        n = n.withEmail(this.getEmail());
+                    case "7" ->
+                        n = n.withPhone(this.getPhone());
+                    case "8" ->
+                        n = n.withAddress(this.getAddress());
+                    case "9" ->
+                        n = n.withResidencyStatus(this.getResidencyStatus());
+                    case "10" ->
+                        n = n.withCourses(this.changeCourse(n.getCourses()));
+                    case "11" -> {
+                        return n;
+                    }
+                    case "12" -> {
+                        return ori;
+                    }
+                    default ->
+                        System.out.println("Invalid option. Try again.");
                 }
-                case "12" ->
-                    throw new StopOperationException();
-                default ->
-                    System.out.println("Invalid option. Try again.");
+            } catch (StopOperationException ex) {
+                System.out.println("Operation canceled!");
             }
         }
     }
@@ -311,7 +317,7 @@ public final class PersonInputHandler {
     public IManager getModifiedManager(@NonNull IManager ori) throws StopOperationException {
         while (true) {
 //            Print options
-            System.out.println("1. Change password\t6. Change Email");
+            System.out.println("1. Change password\t\t6. Change Email");
             System.out.println("2. Change Legal First Name\t7. Change Phone");
             System.out.println("3. Change Legal Last Name\t8. Change Address");
             System.out.println("4. Change Date of Birth");
@@ -347,7 +353,7 @@ public final class PersonInputHandler {
                 case "10" ->
                     throw new StopOperationException();
                 default ->
-                    System.out.println("Invalid option. Try again.");
+                    System.out.println("Error: Invalid option. Try again.");
             }
         }
     }

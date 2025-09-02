@@ -54,7 +54,7 @@ public final class CourseDashboard implements IDashboard {
                         return; // exit to previous menu
                     }
                     default ->
-                        System.out.println("Invalid option. Try again.\n");
+                        System.out.println("Error: Invalid option. Try again.");
                 }
             } catch (StopOperationException e) {
                 System.out.println("Operation canceled!");
@@ -195,15 +195,16 @@ public final class CourseDashboard implements IDashboard {
             courseBackend.deleteCourseByCode(courseCode.toString());
         } catch (IOException ex) {
 //            Fix spell by Copilot
-            System.out.println("Error deleting course: " + ex.getMessage());
+            System.out.println("Error: " + ex.getMessage());
         }
     }
 
     private static void printMainMenu() {
         System.out.println("[COURSE DASHBOARD]");
-        System.out.println("1. Add Course\t4. List Course");
-        System.out.println("2. Get Course\t5. Delete Course");
+        System.out.println("1. Add Course\t\t4. List Course");
+        System.out.println("2. Get Course\t\t5. Delete Course");
         System.out.println("3. Modify Course");
+        System.out.println();
         System.out.println("6. Exit");
         System.out.print("Select an option: ");
     }

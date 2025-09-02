@@ -68,7 +68,7 @@ public final class PersonDashboard implements IDashboard {
                         return; // exit to previous menu
                     }
                     default ->
-                        System.out.println("Invalid option. Try again.");
+                        System.out.println("Error: Invalid option. Try again.");
                 }
             } catch (StopOperationException e) {
                 System.out.println("Operation canceled!");
@@ -387,11 +387,12 @@ public final class PersonDashboard implements IDashboard {
 
     private static void printMenu() {
         System.out.println("[EDIT PERSON DASHBOARD]");
-        System.out.println("1. Add Student\t6. Add Manager");
-        System.out.println("2. Get Student\t7. Get Manager");
+        System.out.println("1. Add Student\t\t6. Add Manager");
+        System.out.println("2. Get Student\t\t7. Get Manager");
         System.out.println("3. Modify Student\t8. Modify Manager");
-        System.out.println("4. List Student\t9. List Manager");
+        System.out.println("4. List Student\t\t9. List Manager");
         System.out.println("5. Delete Student\t10. Delete Manager");
+        System.out.println();
         System.out.println("11. Exit");
         System.out.print("Select an option(1-11): ");
     }
