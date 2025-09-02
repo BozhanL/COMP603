@@ -1,6 +1,6 @@
 # COMP603 Program Design and Construction
 
-Student Information Management System
+Project: Student Information Management System
 
 GitHub Repository: [https://github.com/BozhanL/COMP603](https://github.com/BozhanL/COMP603)
 
@@ -11,21 +11,27 @@ GitHub Repository: [https://github.com/BozhanL/COMP603](https://github.com/Bozha
 
 ## Contribution
 
-Details can be found on [GitHub](https://github.com/BozhanL/COMP603/graphs/contributors)
+Details can be found on [GitHub](https://github.com/BozhanL/COMP603/graphs/contributors).
 
-| Name                          | Lines | Percentage |
-| ----------------------------- | ----- | ---------- |
-| Ben Samountry(@TheSalmonTree) | 0     | 0%         |
-| Bozhan Liang(@BozhanL)        | 0     | 0%         |
-| **Total**                     | 2774  | 100%       |
+| Name                                                              | Lines | Percentage |
+| ----------------------------------------------------------------- | ----- | ---------- |
+| Ben Samountry([@TheSalmonTree](https://github.com/TheSalmonTree)) | 303   | 10.868%    |
+| Bozhan Liang([@BozhanL](https://github.com/BozhanL))              | 2485  | 89.132%    |
+| **Total**                                                         | 2788  | 100%       |
+
+\* Result based on [cloc](https://github.com/AlDanial/cloc) calculation
 
 ### Implementation Details
 
 - **Ben**:
-  - AssessmentOne
-  - Welcome
-  - CourseInputHandler
-  - CourseDashboard::displayMenu
-  - CourseDashboard::addCourse
-  - CourseDashboard::printMainMenu
+  - AssessmentOne [#13](https://github.com/BozhanL/COMP603/pull/13)
+  - Welcome [#13](https://github.com/BozhanL/COMP603/pull/13)
+  - CourseInputHandler (excl. CourseInputHandler::getModifiedCourse) [#18](https://github.com/BozhanL/COMP603/pull/18)
+  - CourseDashboard::displayMenu [#18](https://github.com/BozhanL/COMP603/pull/18)
+  - CourseDashboard::addCourse [#18](https://github.com/BozhanL/COMP603/pull/18)
+  - CourseDashboard::printMainMenu [#18](https://github.com/BozhanL/COMP603/pull/18)
 - **Bozhan**: All other functionalities not covered by Ben
+
+## Credit
+
+Copilot fixes some of the spelling errors.
