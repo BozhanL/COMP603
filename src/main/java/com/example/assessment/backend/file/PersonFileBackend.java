@@ -53,9 +53,12 @@ public final class PersonFileBackend extends FileBackend implements IPersonBacke
             IManager o = IManager.defaultManager();
             Path path = this.db.resolve(pathFromPerson(o));
 
+//            Convert to File
             File f = path.toFile();
 
+//            Open the File
             try (ObjectOutputStream oos = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(f)))) {
+//                Write the manager object to it
                 oos.writeObject(o);
             }
         }

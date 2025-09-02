@@ -39,6 +39,5 @@ public class AssessmentOne {
                 System.out.println();
             }
         }
-
     }
 }

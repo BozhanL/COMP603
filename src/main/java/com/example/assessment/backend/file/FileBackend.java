@@ -56,9 +56,12 @@ public abstract class FileBackend implements IBackend {
     protected Object getObjectByPath(@NonNull String fName) throws IOException, DatabaseCorruptedException, FileNotFoundException {
         Path p = this.db.resolve(Path.of(fName));
 
+//        Convert to File
         File f = p.toFile();
 
+//        Open the file
         try (ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(new FileInputStream(f)))) {
+//            Read the content as object
             Object o = ois.readObject();
             return o;
         } catch (ClassNotFoundException | InvalidClassException | StreamCorruptedException e) {
@@ -71,10 +74,14 @@ public abstract class FileBackend implements IBackend {
     protected <T> T getObjectByPath(@NonNull Class<T> cl, @NonNull Path fName) throws IOException, DatabaseCorruptedException, FileNotFoundException {
         Path p = this.db.resolve(fName);
 
+//        Convert to File
         File f = p.toFile();
 
+//        Open the file
         try (ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(new FileInputStream(f)))) {
+//            Read the content as object
             Object o = ois.readObject();
+//            Cast to type T
             if (cl.isInstance(o)) {
                 return cl.cast(o);
             }
@@ -94,9 +101,12 @@ public abstract class FileBackend implements IBackend {
             throw new FileAlreadyExistsException(path.toString());
         }
 
+//        Convert to File
         File f = path.toFile();
 
+//        Open the file
         try (ObjectOutputStream oos = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(f)))) {
+//            Write the object to file
             oos.writeObject(o);
         }
     }
@@ -119,8 +129,12 @@ public abstract class FileBackend implements IBackend {
 
         Files.deleteIfExists(path);
 
+//        Convert to File
         File f = path.toFile();
+
+//        Open the file
         try (ObjectOutputStream oos = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(f)))) {
+//            Write the object to file
             oos.writeObject(o);
         }
     }
@@ -128,17 +142,26 @@ public abstract class FileBackend implements IBackend {
 //    List all object at this.db with type T
 //    Return empty list if no valid object at this.db
     protected <T> ImmutableList<T> listObject(@NonNull Class<T> cl) throws IOException, DatabaseCorruptedException {
+//        Convert to File
         File folder = this.db.toFile();
+
+//        List the files in the folder
         File[] files = folder.listFiles();
+//        Set it to an empty list if it is null
         if (files == null) {
             files = new File[0];
         }
+
+//        Create an ArrayList for output
         ArrayList<T> out = new ArrayList<>(files.length);
 
         for (File f : files) {
+//            Open each file
             try (ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(new FileInputStream(f)))) {
+//            Read the content as object
                 Object o = ois.readObject();
                 if (cl.isInstance(o)) {
+//                    Cast to type T
                     out.add(cl.cast(o));
                 }
             } catch (ClassNotFoundException | InvalidClassException | StreamCorruptedException e) {
@@ -146,6 +169,7 @@ public abstract class FileBackend implements IBackend {
             }
         }
 
+//        Return an immutable copy of list
         return ImmutableList.copyOf(out);
     }
 }

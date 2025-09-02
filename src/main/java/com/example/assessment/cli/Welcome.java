@@ -103,6 +103,8 @@ public class Welcome {
                 System.out.println("Login Successful");
                 return p;
             } else {
+//                Reset login status, ask for ID again
+                p = null;
                 System.out.println("Error: Incorrect password.");
             }
         }
