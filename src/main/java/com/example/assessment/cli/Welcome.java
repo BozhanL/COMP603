@@ -37,6 +37,7 @@ public class Welcome {
         System.out.println("                                                  ");
     }
 
+//    Fix spell by Copilot
 //    Ask for database location and construct it.
     public ICombinedBackend askForDatabase() {
         ICombinedBackend pb = null;
