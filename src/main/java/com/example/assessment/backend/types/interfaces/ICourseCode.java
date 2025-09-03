@@ -13,7 +13,7 @@ import lombok.NonNull;
 public interface ICourseCode extends Serializable, IPrettyPrint {
 
 //    Static construtor to create ICourseCode
-    public static ICourseCode of(String departmentCode, int level, int courseNumber) {
+    public static ICourseCode of(@NonNull String departmentCode, int level, int courseNumber) {
         return CourseCode.of(departmentCode, level, courseNumber);
     }
 

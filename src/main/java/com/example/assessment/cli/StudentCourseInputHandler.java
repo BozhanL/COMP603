@@ -8,6 +8,7 @@ import com.google.errorprone.annotations.CheckReturnValue;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Scanner;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
@@ -104,14 +105,15 @@ public class StudentCourseInputHandler {
     }
 
 //    Ask user what to change for a course, and return a new one
-    private IStudentCourseInfo modifyStudentCourseInfo(IStudentCourseInfo c)
-            throws StopOperationException {
+    private IStudentCourseInfo modifyStudentCourseInfo(@NonNull IStudentCourseInfo ori) {
+        IStudentCourseInfo n = ori;
         while (true) {
 //            Print options
             System.out.println("1. Change Course Code\t4. Change Location");
-            System.out.println("2. Change Grade\t\t5. Delete this course");
+            System.out.println("2. Change Grade");
             System.out.println("3. Change Start Date");
             System.out.println();
+            System.out.println("5. Delete this course and save");
             System.out.println("6. Save\t7. Exit");
             System.out.print("Select an option(1-7): ");
 
@@ -119,25 +121,29 @@ public class StudentCourseInputHandler {
             String choice = scanner.nextLine().trim();
 
 //            Execute
-            switch (choice) {
-                case "1" ->
-                    c = c.withCourseCode(this.getCourseCode());
-                case "2" ->
-                    c = c.withGrade(this.getGrade());
-                case "3" ->
-                    c = c.withStarts(this.getStarts());
-                case "4" ->
-                    c = c.withLocation(this.getLocation());
-                case "5" -> {
-                    return null;
+            try {
+                switch (choice) {
+                    case "1" ->
+                        n = n.withCourseCode(this.getCourseCode());
+                    case "2" ->
+                        n = n.withGrade(this.getGrade());
+                    case "3" ->
+                        n = n.withStarts(this.getStarts());
+                    case "4" ->
+                        n = n.withLocation(this.getLocation());
+                    case "5" -> {
+                        return null;
+                    }
+                    case "6" ->
+                        ori = n;
+                    case "7" -> {
+                        return ori;
+                    }
+                    default ->
+                        System.out.println("Error: Invalid option. Try again.");
                 }
-                case "6" -> {
-                    return c;
-                }
-                case "7" ->
-                    throw new StopOperationException();
-                default ->
-                    System.out.println("Error: Invalid option. Try again.");
+            } catch (StopOperationException ex) {
+                System.out.println("Operation canceled!");
             }
         }
     }
@@ -146,9 +152,9 @@ public class StudentCourseInputHandler {
     private String getCourseCode() throws StopOperationException {
         while (true) {
 //            Ask for input
-            System.out.print("Please enter Course Code(x for exit): ");
+            System.out.print("Please enter Course Code(x for exit) (e.g., 'COMP509'): ");
 //            Get the input
-            String input = scanner.nextLine().trim();
+            String input = scanner.nextLine().trim().toUpperCase(Locale.getDefault());
 //            Check whether it is blank or want to stop
             if (input.isBlank()) {
                 System.out.println("Error: Course Code must not be blank!");
@@ -169,7 +175,7 @@ public class StudentCourseInputHandler {
 //            Ask for input
             System.out.print("Please enter Grade(x for exit): ");
 //            Get the input
-            String input = scanner.nextLine().trim();
+            String input = scanner.nextLine().trim().toUpperCase(Locale.getDefault());
 //            Check whether it is blank or want to stop
             if (input.isBlank()) {
                 System.out.println("Error: Grade must not be blank!");

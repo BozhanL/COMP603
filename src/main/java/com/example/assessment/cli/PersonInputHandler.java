@@ -55,7 +55,7 @@ public final class PersonInputHandler {
 //            Ask for input
             System.out.print("Please enter Password(x for exit): ");
 //            Get the input
-            String input = scanner.nextLine().trim().toLowerCase(Locale.getDefault());
+            String input = scanner.nextLine().trim();
 //            Check whether it is blank or want to stop
             if (input.isBlank()) {
                 System.out.println("Error: Password must not be blank!");
@@ -84,7 +84,7 @@ public final class PersonInputHandler {
                 throw new StopOperationException();
             }
 
-            System.out.printf("Name = '%s'\n", input);
+            System.out.printf("Legal First Name = '%s'\n", input);
             return input;
         }
     }
@@ -104,7 +104,7 @@ public final class PersonInputHandler {
                 throw new StopOperationException();
             }
 
-            System.out.printf("Name = '%s'\n", input);
+            System.out.printf("Legal Last Name = '%s'\n", input);
             return input;
         }
     }
@@ -292,14 +292,13 @@ public final class PersonInputHandler {
                         n = n.withResidencyStatus(this.getResidencyStatus());
                     case "10" ->
                         n = n.withCourses(this.changeCourse(n.getCourses()));
-                    case "11" -> {
-                        return n;
-                    }
+                    case "11" ->
+                        ori = n;
                     case "12" -> {
                         return ori;
                     }
                     default ->
-                        System.out.println("Invalid option. Try again.");
+                        System.out.println("Error: Invalid option. Try again.");
                 }
             } catch (StopOperationException ex) {
                 System.out.println("Operation canceled!");
@@ -314,7 +313,8 @@ public final class PersonInputHandler {
     }
 
 //    Prompt user to change manager
-    public IManager getModifiedManager(@NonNull IManager ori) throws StopOperationException {
+    public IManager getModifiedManager(@NonNull IManager ori) {
+        IManager n = ori;
         while (true) {
 //            Print options
             System.out.println("1. Change password\t\t6. Change Email");
@@ -330,30 +330,34 @@ public final class PersonInputHandler {
             String choice = scanner.nextLine().trim();
 
 //            Execute
-            switch (choice) {
-                case "1" ->
-                    ori = ori.withPassword(this.getPassword());
-                case "2" ->
-                    ori = ori.withLegalFirstName(this.getLegalFirstName());
-                case "3" ->
-                    ori = ori.withLegalLastName(this.getLegalLastName());
-                case "4" ->
-                    ori = ori.withDateOfBirth(this.getDateOfBirth());
-                case "5" ->
-                    ori = ori.withGender(this.getGender());
-                case "6" ->
-                    ori = ori.withEmail(this.getEmail());
-                case "7" ->
-                    ori = ori.withPhone(this.getPhone());
-                case "8" ->
-                    ori = ori.withAddress(this.getAddress());
-                case "9" -> {
-                    return ori;
+            try {
+                switch (choice) {
+                    case "1" ->
+                        n = n.withPassword(this.getPassword());
+                    case "2" ->
+                        n = n.withLegalFirstName(this.getLegalFirstName());
+                    case "3" ->
+                        n = n.withLegalLastName(this.getLegalLastName());
+                    case "4" ->
+                        n = n.withDateOfBirth(this.getDateOfBirth());
+                    case "5" ->
+                        n = n.withGender(this.getGender());
+                    case "6" ->
+                        n = n.withEmail(this.getEmail());
+                    case "7" ->
+                        n = n.withPhone(this.getPhone());
+                    case "8" ->
+                        n = n.withAddress(this.getAddress());
+                    case "9" ->
+                        ori = n;
+                    case "10" -> {
+                        return ori;
+                    }
+                    default ->
+                        System.out.println("Error: Invalid option. Try again.");
                 }
-                case "10" ->
-                    throw new StopOperationException();
-                default ->
-                    System.out.println("Error: Invalid option. Try again.");
+            } catch (StopOperationException ex) {
+                System.out.println("Operation canceled!");
             }
         }
     }

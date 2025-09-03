@@ -79,7 +79,7 @@ public final class PersonFileBackend extends FileBackend implements IPersonBacke
 
 //    Get a Person with ID
     @Override
-    public IPerson getPersonById(String id) throws IOException, DatabaseCorruptedException, FileNotFoundException {
+    public IPerson getPersonById(@NonNull String id) throws IOException, DatabaseCorruptedException, FileNotFoundException {
         return this.getObjectByPath(IPerson.class, pathFromId(id));
     }
 

@@ -24,16 +24,16 @@ public interface IStudentCourseInfo extends Serializable, IPrettyPrint {
     }
 
 //    Create a new IStudentCourseInfo object with new courseCode
-    public abstract IStudentCourseInfo withCourseCode(String courseCode);
+    public abstract IStudentCourseInfo withCourseCode(@NonNull String courseCode);
 
 //    Create a new IStudentCourseInfo object with new grade
-    public abstract IStudentCourseInfo withGrade(Grade grade);
+    public abstract IStudentCourseInfo withGrade(@NonNull Grade grade);
 
 //    Create a new IStudentCourseInfo object with new starts
-    public abstract IStudentCourseInfo withStarts(LocalDate starts);
+    public abstract IStudentCourseInfo withStarts(@NonNull LocalDate starts);
 
 //    Create a new IStudentCourseInfo object with new location
-    public abstract IStudentCourseInfo withLocation(String location);
+    public abstract IStudentCourseInfo withLocation(@NonNull String location);
 
 //    Return the courseCode of IStudentCourseInfo
     public abstract String getCourseCode();

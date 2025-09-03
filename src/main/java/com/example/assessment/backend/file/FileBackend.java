@@ -93,7 +93,7 @@ public abstract class FileBackend implements IBackend {
 
 //    Create and store the object o at location this.db/p
 //    Throw FileAlreadyExistsException if this.db/p already exists
-    protected void setObject(@NonNull Object o, Path p) throws IOException, FileAlreadyExistsException {
+    protected void setObject(@NonNull Object o, @NonNull Path p) throws IOException, FileAlreadyExistsException {
         Path path = this.db.resolve(p);
 
 //        Check whether file exist
@@ -124,7 +124,7 @@ public abstract class FileBackend implements IBackend {
     }
 
 //    Delete the file at this.db/p, and then store the object at this.db/p
-    protected void modifyObject(@NonNull Object o, Path p) throws IOException {
+    protected void modifyObject(@NonNull Object o, @NonNull Path p) throws IOException {
         Path path = this.db.resolve(p);
 
         Files.deleteIfExists(path);

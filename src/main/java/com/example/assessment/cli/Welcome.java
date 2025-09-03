@@ -8,6 +8,7 @@ import com.google.errorprone.annotations.CheckReturnValue;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.InvalidPathException;
+import java.util.Locale;
 import java.util.Scanner;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
@@ -74,7 +75,7 @@ public class Welcome {
                 String id = "";
                 while (id.isBlank()) {
                     System.out.print("Enter User ID: ");
-                    id = scanner.nextLine().trim();
+                    id = scanner.nextLine().trim().toLowerCase(Locale.getDefault());
 
                     if (id.isBlank()) {
                         System.out.println("Error: ID cannot be blank, try again.");

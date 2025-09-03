@@ -54,7 +54,7 @@ public class CourseCode implements ICourseCode {
         this.courseNumber = courseNumber;
     }
 
-    public static ICourseCode of(String departmentCode, int level, int courseNumber) {
+    public static ICourseCode of(@NonNull String departmentCode, int level, int courseNumber) {
         return new CourseCode(departmentCode, level, courseNumber);
     }
 

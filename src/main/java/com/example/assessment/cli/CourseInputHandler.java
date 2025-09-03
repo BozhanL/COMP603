@@ -156,7 +156,8 @@ public class CourseInputHandler {
     }
 
 //    Prompt user to modify a course
-    public ICourse getModifiedCourse(ICourse ori) throws StopOperationException {
+    public ICourse getModifiedCourse(@NonNull ICourse ori) {
+        ICourse n = ori;
         while (true) {
 //            Print options
             System.out.println("1. Change Course Code");
@@ -171,28 +172,32 @@ public class CourseInputHandler {
             String choice = scanner.nextLine().trim();
 
 //            Execute
-            switch (choice) {
-                case "1" -> {
-                    String deptCode = this.getDepartmentCode();
-                    int level = this.getCourseLevel();
-                    int courseNum = this.getCourseNumber();
-                    ICourseCode courseCode = ICourseCode.of(deptCode, level, courseNum);
+            try {
+                switch (choice) {
+                    case "1" -> {
+                        String deptCode = this.getDepartmentCode();
+                        int level = this.getCourseLevel();
+                        int courseNum = this.getCourseNumber();
+                        ICourseCode courseCode = ICourseCode.of(deptCode, level, courseNum);
 
-                    ori = ori.withCode(courseCode);
+                        n = n.withCode(courseCode);
+                    }
+                    case "2" ->
+                        n = n.withName(this.getCourseName());
+                    case "3" ->
+                        n = n.withPoints(this.getCreditPoints());
+                    case "4" ->
+                        n = n.withDescription(this.getDescription());
+                    case "5" ->
+                        ori = n;
+                    case "6" -> {
+                        return ori;
+                    }
+                    default ->
+                        System.out.println("Error: Invalid option. Try again.");
                 }
-                case "2" ->
-                    ori = ori.withName(this.getCourseName());
-                case "3" ->
-                    ori = ori.withPoints(this.getCreditPoints());
-                case "4" ->
-                    ori = ori.withDescription(this.getDescription());
-                case "5" -> {
-                    return ori;
-                }
-                case "6" ->
-                    throw new StopOperationException();
-                default ->
-                    System.out.println("Error: Invalid option. Try again.");
+            } catch (StopOperationException e) {
+                System.out.println("Operation canceled!");
             }
         }
     }
