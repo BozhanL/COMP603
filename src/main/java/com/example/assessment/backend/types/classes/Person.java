@@ -122,6 +122,9 @@ public abstract class Person implements IPerson {
         sb.append("\ndateOfBirth: ");
         sb.append(dateOfBirth);
 
+        sb.append("\nage: ");
+        sb.append(getAge());
+
         sb.append("\ngender: ");
         sb.append(gender);
 
