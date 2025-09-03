@@ -35,3 +35,11 @@ Details can be found on [GitHub](https://github.com/BozhanL/COMP603/graphs/contr
 ## Credit
 
 Copilot fixes some of the spelling errors.
+
+## Libraries
+
+- [Error Prone](https://github.com/google/error-prone)
+- [Guava](https://github.com/google/guava)
+- [Hamcrest](https://github.com/hamcrest/JavaHamcrest)
+- [JUnit](https://github.com/junit-team/junit-framework)
+- [Project Lombok](https://github.com/projectlombok/lombok)
