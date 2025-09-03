@@ -9,6 +9,8 @@ import com.example.assessment.backend.types.interfaces.IStudentCourseInfo;
 import com.google.common.collect.ImmutableMap;
 import com.google.errorprone.annotations.CheckReturnValue;
 import java.time.LocalDate;
+import java.time.Period;
+import java.time.ZoneId;
 import java.time.format.DateTimeParseException;
 import java.util.Locale;
 import java.util.Scanner;
@@ -133,6 +135,11 @@ public final class PersonInputHandler {
                 continue;
             }
 
+            if (Period.between(date, LocalDate.now(ZoneId.systemDefault())).normalized().isNegative()) {
+                System.out.println("Error: Date of Birth must not be future date");
+                continue;
+            }
+
             System.out.printf("Date of Birth = '%s'\n", date);
             return date;
         }
@@ -200,6 +207,9 @@ public final class PersonInputHandler {
                 continue;
             } else if ("x".equalsIgnoreCase(input)) {
                 throw new StopOperationException();
+            } else if (!input.matches("\\+?\\d*")) {
+                System.out.println("Error: Invalid phone number format");
+                continue;
             }
 
             System.out.printf("Phone = '%s'\n", input);
