@@ -14,6 +14,7 @@ import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import lombok.Value;
 
+// This class is a wrapper for IPersonBackend and ICourseBackend
 @Value
 @CheckReturnValue
 @AllArgsConstructor(staticName = "of")
@@ -49,23 +50,23 @@ public class CombinedBackend implements ICombinedBackend {
     }
 
     @Override
-    public void setPerson(IPerson p) throws IOException, FileAlreadyExistsException {
+    public void setPerson(@NonNull IPerson p) throws IOException, FileAlreadyExistsException {
         this.pb.setPerson(p);
     }
 
     @Override
-    public void modifyPerson(IPerson p) throws IOException {
+    public void modifyPerson(@NonNull IPerson p) throws IOException {
         this.pb.modifyPerson(p);
     }
 
     @Override
     @CanIgnoreReturnValue
-    public boolean deletePersonById(String id) throws IOException {
+    public boolean deletePersonById(@NonNull String id) throws IOException {
         return this.pb.deletePersonById(id);
     }
 
     @Override
-    public IPerson getPersonById(String id) throws IOException, DatabaseCorruptedException, FileNotFoundException {
+    public IPerson getPersonById(@NonNull String id) throws IOException, DatabaseCorruptedException, FileNotFoundException {
         return this.pb.getPersonById(id);
     }
 
@@ -75,23 +76,23 @@ public class CombinedBackend implements ICombinedBackend {
     }
 
     @Override
-    public ICourse getCourseByCode(String code) throws IOException, DatabaseCorruptedException, FileNotFoundException {
+    public ICourse getCourseByCode(@NonNull String code) throws IOException, DatabaseCorruptedException, FileNotFoundException {
         return this.cb.getCourseByCode(code);
     }
 
     @Override
-    public void setCourse(ICourse c) throws IOException, FileAlreadyExistsException {
+    public void setCourse(@NonNull ICourse c) throws IOException, FileAlreadyExistsException {
         this.cb.setCourse(c);
     }
 
     @Override
     @CanIgnoreReturnValue
-    public boolean deleteCourseByCode(String code) throws IOException {
+    public boolean deleteCourseByCode(@NonNull String code) throws IOException {
         return this.cb.deleteCourseByCode(code);
     }
 
     @Override
-    public void modifyCourse(ICourse c) throws IOException {
+    public void modifyCourse(@NonNull ICourse c) throws IOException {
         this.cb.modifyCourse(c);
     }
 

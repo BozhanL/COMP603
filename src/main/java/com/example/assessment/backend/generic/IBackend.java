@@ -3,6 +3,7 @@ package com.example.assessment.backend.generic;
 import com.google.errorprone.annotations.CheckReturnValue;
 import java.nio.file.Path;
 
+// Basic interface for a backend
 @CheckReturnValue
 public interface IBackend {
 

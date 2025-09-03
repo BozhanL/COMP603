@@ -54,9 +54,11 @@ public class WelcomeTest {
         assertNotNull(p);
 
         assertEquals(String.format(
-                "Enter database path (press Enter for default): Database = %s",
+                "Enter database path (press Enter for %s): Database = %s",
+                ICombinedBackend.DEFAULT_DATA_LOCATION,
                 this.folder
-        ), sc.nextLine());
+        ), sc.nextLine()
+        );
     }
 
     @Test

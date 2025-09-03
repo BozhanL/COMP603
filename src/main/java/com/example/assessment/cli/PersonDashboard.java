@@ -13,11 +13,11 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.FileAlreadyExistsException;
 import java.time.LocalDate;
-import java.util.Objects;
 import java.util.Scanner;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 
+// This is the dashboard to manage person in the system
 @CheckReturnValue
 @AllArgsConstructor
 public final class PersonDashboard implements IDashboard {
@@ -36,8 +36,12 @@ public final class PersonDashboard implements IDashboard {
     @Override
     public void displayMenu() {
         while (true) {
+//            Print options
             printMenu();
+//            Get the input
             String choice = scanner.nextLine().trim();
+
+//            Execute
             try {
                 switch (choice) {
                     case "1" ->
@@ -64,7 +68,7 @@ public final class PersonDashboard implements IDashboard {
                         return; // exit to previous menu
                     }
                     default ->
-                        System.out.println("Invalid option. Try again.");
+                        System.out.println("Error: Invalid option. Try again.");
                 }
             } catch (StopOperationException e) {
                 System.out.println("Operation canceled!");
@@ -72,7 +76,9 @@ public final class PersonDashboard implements IDashboard {
         }
     }
 
+//    Add a new student to database
     private void addStudent() throws StopOperationException {
+//        Get student information
         String id = personInputHandler.getId();
         String password = personInputHandler.getPassword();
         String legalFirstName = personInputHandler.getLegalFirstName();
@@ -84,12 +90,15 @@ public final class PersonDashboard implements IDashboard {
         IAddress address = personInputHandler.getAddress();
         Residency residencyStatus = personInputHandler.getResidencyStatus();
 
+//        Create a new one
         IStudent student = IStudent.of(id, password, legalFirstName, legalLastName, dateOfBirth, gender, email, phone, address, residencyStatus);
 
         boolean success = true;
+//        Max retry is 3
         for (int i = 0; i < 3; i++) {
             success = true;
             try {
+//                Store the person
                 this.personBackend.setPerson(student);
                 break;
             } catch (FileAlreadyExistsException e) {
@@ -106,12 +115,15 @@ public final class PersonDashboard implements IDashboard {
         }
     }
 
+//    print a student's information by id
     private void getStudent() throws StopOperationException {
         while (true) {
+//            Get the id of student
             String id = personInputHandler.getId();
 
             IStudent st;
             try {
+//                Get it from database
                 st = this.personBackend.getStudentById(id);
             } catch (FileNotFoundException ex) {
                 System.out.println("Error: user does not exist");
@@ -124,17 +136,21 @@ public final class PersonDashboard implements IDashboard {
                 continue;
             }
 
+//            print the student's information
             System.out.println(st.prettyToString());
             return;
         }
     }
 
+//    Change a studnet's information
     private void modifyStudent() throws StopOperationException {
         while (true) {
+//            Get the id of student
             String id = personInputHandler.getId();
 
             IStudent st;
             try {
+//                Get it from database
                 st = this.personBackend.getStudentById(id);
             } catch (FileNotFoundException ex) {
                 System.out.println("Error: user does not exist");
@@ -147,11 +163,15 @@ public final class PersonDashboard implements IDashboard {
                 continue;
             }
 
+//            Get the modified one
             st = personInputHandler.getModifiedStudent(st);
+
             boolean success = true;
+//            Max retry is 3
             for (int i = 0; i < 3; i++) {
                 success = true;
                 try {
+//                    Store it to database
                     this.personBackend.modifyPerson(st);
                     break;
                 } catch (IOException ex) {
@@ -167,13 +187,16 @@ public final class PersonDashboard implements IDashboard {
         }
     }
 
+//    List all students in the database
     private void listStudent() {
         ImmutableList<IStudent> li = null;
 
         boolean success = true;
+//        Max retry is 3
         for (int i = 0; i < 3; i++) {
             success = true;
             try {
+//                Get the student from backend
                 li = this.personBackend.listStudent();
                 break;
             } catch (IOException ex) {
@@ -184,27 +207,33 @@ public final class PersonDashboard implements IDashboard {
                 return;
             }
         }
-        if (!success || Objects.isNull(li)) {
+        if (!success || li == null) {
             System.out.println("Error: Unable to list student!");
             return;
         }
 
+//        print the students one by one
         for (IStudent s : li) {
             System.out.println(s.prettyToString());
             System.out.println("------------------------------------------------");
         }
     }
 
+//    Delete a student from database
     private void deleteStudent() throws StopOperationException {
+//            Get the id of student
         String id = personInputHandler.getId();
         try {
+//            Delete the student
             this.personBackend.deletePersonById(id);
         } catch (IOException ex) {
             System.out.println("Error: " + ex.getMessage());
         }
     }
 
+//    Add a manager to the database
     private void addManager() throws StopOperationException {
+//        Get manager information
         String id = personInputHandler.getId();
         String password = personInputHandler.getPassword();
         String legalFirstName = personInputHandler.getLegalFirstName();
@@ -215,12 +244,15 @@ public final class PersonDashboard implements IDashboard {
         String phone = personInputHandler.getPhone();
         IAddress address = personInputHandler.getAddress();
 
+//        Create a new one
         IManager ma = IManager.of(id, password, legalFirstName, legalLastName, dateOfBirth, gender, email, phone, address);
 
         boolean success = true;
+//        Max retry is 3
         for (int i = 0; i < 3; i++) {
             success = true;
             try {
+//                Store the person
                 this.personBackend.setPerson(ma);
                 break;
             } catch (FileAlreadyExistsException e) {
@@ -237,12 +269,15 @@ public final class PersonDashboard implements IDashboard {
         }
     }
 
+//    print a manager's information by id
     private void getManager() throws StopOperationException {
         while (true) {
+//            Get the id of manager
             String id = personInputHandler.getId();
 
             IManager ma;
             try {
+//                Get it from database
                 ma = this.personBackend.getManagerById(id);
             } catch (FileNotFoundException ex) {
                 System.out.println("Error: user does not exist");
@@ -255,17 +290,21 @@ public final class PersonDashboard implements IDashboard {
                 continue;
             }
 
+//            print the manager's information
             System.out.println(ma.prettyToString());
             return;
         }
     }
 
+//    Change a manager's information
     private void modifyManager() throws StopOperationException {
         while (true) {
+//            Get the id of manager
             String id = personInputHandler.getId();
 
             IManager ma;
             try {
+//                Get it from database
                 ma = this.personBackend.getManagerById(id);
             } catch (FileNotFoundException ex) {
                 System.out.println("Error: user does not exist");
@@ -278,11 +317,15 @@ public final class PersonDashboard implements IDashboard {
                 continue;
             }
 
+//            Get the modified one
             ma = personInputHandler.getModifiedManager(ma);
+
             boolean success = true;
+//            Max retry is 3
             for (int i = 0; i < 3; i++) {
                 success = true;
                 try {
+//                    Store it to database
                     this.personBackend.modifyPerson(ma);
                     break;
                 } catch (IOException ex) {
@@ -298,13 +341,16 @@ public final class PersonDashboard implements IDashboard {
         }
     }
 
+//    List all manager in the database
     private void listManager() {
         ImmutableList<IManager> li = null;
 
         boolean success = true;
+//        Max retry is 3
         for (int i = 0; i < 3; i++) {
             success = true;
             try {
+//                Get the manager from backend
                 li = this.personBackend.listManager();
                 break;
             } catch (IOException ex) {
@@ -315,20 +361,24 @@ public final class PersonDashboard implements IDashboard {
                 return;
             }
         }
-        if (!success || Objects.isNull(li)) {
+        if (!success || li == null) {
             System.out.println("Error: Unable to list student!");
             return;
         }
 
+//        print the managers one by one
         for (IManager ma : li) {
             System.out.println(ma.prettyToString());
             System.out.println("------------------------------------------------");
         }
     }
 
+//    Delete a manager from database
     private void deleteManager() throws StopOperationException {
+//            Get the id of manager
         String id = personInputHandler.getId();
         try {
+//            Delete the manager
             this.personBackend.deletePersonById(id);
         } catch (IOException ex) {
             System.out.println("Error: " + ex.getMessage());
@@ -337,11 +387,12 @@ public final class PersonDashboard implements IDashboard {
 
     private static void printMenu() {
         System.out.println("[EDIT PERSON DASHBOARD]");
-        System.out.println("1. Add Student\t6. Add Manager");
-        System.out.println("2. Get Student\t7. Get Manager");
+        System.out.println("1. Add Student\t\t6. Add Manager");
+        System.out.println("2. Get Student\t\t7. Get Manager");
         System.out.println("3. Modify Student\t8. Modify Manager");
-        System.out.println("4. List Student\t9. List Manager");
+        System.out.println("4. List Student\t\t9. List Manager");
         System.out.println("5. Delete Student\t10. Delete Manager");
+        System.out.println();
         System.out.println("11. Exit");
         System.out.print("Select an option(1-11): ");
     }

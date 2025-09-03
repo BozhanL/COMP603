@@ -64,6 +64,7 @@ public class ManagerDashboardTest {
         });
         thread.start();
 
+//        Change style by Copilot
         ps.println("COMP");
         ps.println("5");
         ps.println("09");

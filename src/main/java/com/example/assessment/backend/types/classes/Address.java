@@ -8,6 +8,8 @@ import lombok.NonNull;
 import lombok.Value;
 import lombok.With;
 
+// This class implements IAddress,
+// and used to store information about person addrsss
 @With
 @Immutable
 @CheckReturnValue
@@ -34,6 +36,8 @@ public class Address implements IAddress {
     @NonNull
     String postCode;
 
+//    Get the string format of Address
+//    E.g. `561 Blockhouse Bay Road Blockhouse Bay Auckland Auckland NZ 0600`
     @Override
     public String toString() {
         StringBuilder s = new StringBuilder();

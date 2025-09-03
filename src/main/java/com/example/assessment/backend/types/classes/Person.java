@@ -18,6 +18,7 @@ import lombok.Value;
 import lombok.With;
 import lombok.experimental.NonFinal;
 
+// This is the base class for all person in this system
 @With
 @Value
 @NonFinal
@@ -27,31 +28,6 @@ public abstract class Person implements IPerson {
 
     @Serial
     private static final long serialVersionUID = 1L;
-
-    protected Person(
-            @NonNull String id,
-            @NonNull String password,
-            @NonNull String legalFirstName,
-            @NonNull String legalLastName,
-            @NonNull LocalDate dateOfBirth,
-            @NonNull Gender gender,
-            @NonNull String email,
-            @NonNull String phone,
-            @NonNull IAddress address
-    ) throws IllegalArgumentException {
-        if (id.isBlank()) {
-            throw new IllegalArgumentException("id must not be blank!");
-        }
-        this.id = id;
-        this.password = password;
-        this.legalFirstName = legalFirstName;
-        this.legalLastName = legalLastName;
-        this.dateOfBirth = dateOfBirth;
-        this.gender = gender;
-        this.email = email;
-        this.phone = phone;
-        this.address = address;
-    }
 
     @NonNull
     @With(AccessLevel.NONE)
@@ -78,22 +54,50 @@ public abstract class Person implements IPerson {
     @NonNull
     protected IAddress address;
 
+    protected Person(
+            @NonNull String id,
+            @NonNull String password,
+            @NonNull String legalFirstName,
+            @NonNull String legalLastName,
+            @NonNull LocalDate dateOfBirth,
+            @NonNull Gender gender,
+            @NonNull String email,
+            @NonNull String phone,
+            @NonNull IAddress address
+    ) throws IllegalArgumentException {
+        if (id.isBlank()) {
+            throw new IllegalArgumentException("id must not be blank!");
+        }
+        this.id = id;
+        this.password = password;
+        this.legalFirstName = legalFirstName;
+        this.legalLastName = legalLastName;
+        this.dateOfBirth = dateOfBirth;
+        this.gender = gender;
+        this.email = email;
+        this.phone = phone;
+        this.address = address;
+    }
+
     @Override
     public int getAge() {
         return Period.between(this.dateOfBirth, LocalDate.now(ZoneId.systemDefault())).normalized().getYears();
     }
 
+//    Safely check password, ensure constant time comparison
     @Override
     public boolean safeCheckPassword(@NonNull String other) {
         byte[] a = this.getPassword().getBytes(StandardCharsets.UTF_8);
         byte[] b = other.getBytes(StandardCharsets.UTF_8);
 
+//        Compare the length
         if (a.length != b.length) {
             return false;
         }
 
         int ret = 0;
 
+//        Compare the data without early return
         for (int i = 0; i < a.length; i++) {
             ret |= a[i] ^ b[i];
         }
@@ -101,6 +105,7 @@ public abstract class Person implements IPerson {
         return ret == 0;
     }
 
+//    Convert it to string with format of one variable per line
     @Override
     public String prettyToString() {
         StringBuilder sb = new StringBuilder();
@@ -116,6 +121,9 @@ public abstract class Person implements IPerson {
 
         sb.append("\ndateOfBirth: ");
         sb.append(dateOfBirth);
+
+        sb.append("\nage: ");
+        sb.append(getAge());
 
         sb.append("\ngender: ");
         sb.append(gender);

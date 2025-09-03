@@ -15,6 +15,8 @@ import lombok.ToString;
 import lombok.Value;
 import lombok.With;
 
+// This class implements IManager,
+// and to store information for someone who has full access to the system
 @With
 @Value
 @Immutable
@@ -55,51 +57,63 @@ public class Manager extends Person implements IManager {
         return new Manager(id, password, legalFirstName, legalLastName, dateOfBirth, gender, email, phone, address);
     }
 
+//    Create a new Manager object with new password
     @Override
     public Manager withPassword(@NonNull String password) {
         return Objects.equals(this.password, password) ? this : new Manager(id, password, legalFirstName, legalLastName, dateOfBirth, gender, email, phone, address);
     }
 
+//    Create a new Manager object with new legalFirstName
     @Override
     public Manager withLegalFirstName(@NonNull String legalFirstName) {
         return Objects.equals(this.legalFirstName, legalFirstName) ? this : new Manager(id, password, legalFirstName, legalLastName, dateOfBirth, gender, email, phone, address);
     }
 
+//    Create a new Manager object with new legalLastName
     @Override
     public Manager withLegalLastName(@NonNull String legalLastName) {
         return Objects.equals(this.legalLastName, legalLastName) ? this : new Manager(id, password, legalFirstName, legalLastName, dateOfBirth, gender, email, phone, address);
     }
 
+//    Create a new Manager object with new dateOfBirth
     @Override
     public Manager withDateOfBirth(@NonNull LocalDate dateOfBirth) {
         return Objects.equals(this.dateOfBirth, dateOfBirth) ? this : new Manager(id, password, legalFirstName, legalLastName, dateOfBirth, gender, email, phone, address);
     }
 
+//    Create a new Manager object with new gender
     @Override
     public Manager withGender(@NonNull Gender gender) {
         return Objects.equals(this.gender, gender) ? this : new Manager(id, password, legalFirstName, legalLastName, dateOfBirth, gender, email, phone, address);
     }
 
+//    Create a new Manager object with new email
     @Override
     public Manager withEmail(@NonNull String email) {
         return Objects.equals(this.email, email) ? this : new Manager(id, password, legalFirstName, legalLastName, dateOfBirth, gender, email, phone, address);
     }
 
+//    Create a new Manager object with new phone
     @Override
     public Manager withPhone(@NonNull String phone) {
         return Objects.equals(this.phone, phone) ? this : new Manager(id, password, legalFirstName, legalLastName, dateOfBirth, gender, email, phone, address);
     }
 
+//    Create a new Manager object with new address
     @Override
     public Manager withAddress(@NonNull IAddress address) {
         return Objects.equals(this.address, address) ? this : new Manager(id, password, legalFirstName, legalLastName, dateOfBirth, gender, email, phone, address);
     }
 
+//    Get the type of this class
+//    Always return UserType.MANAGER
     @Override
     public UserType getType() {
         return getTypeStatic();
     }
 
+//    Get the type of this class
+//    Always return UserType.MANAGER
     public static UserType getTypeStatic() {
         return TYPE;
     }

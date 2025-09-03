@@ -6,6 +6,7 @@ import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import lombok.NonNull;
 
+// This interface is a wrapper for IPersonBackend and ICourseBackend
 @CheckReturnValue
 public interface ICombinedBackend extends IPersonBackend, ICourseBackend {
 

@@ -10,6 +10,8 @@ import lombok.NonNull;
 import lombok.Value;
 import lombok.With;
 
+// This class implements ICourseCode,
+// and used to store course code for a corse
 @With
 @Value
 @Immutable
@@ -19,11 +21,18 @@ public class CourseCode implements ICourseCode {
     @Serial
     private static final long serialVersionUID = 1L;
 
+//    For COMP500, store as:
+//    E.g. COMP
     @NonNull
     String departmentCode;
+//    E.g. 5
     int level;
+//    E.g. 00
     int courseNumber;
 
+//    This constructor will take the string form of course code and parse it to
+//    three parts.
+//    Throw exceptions when code is not valid
     private CourseCode(@NonNull String code) throws ParseException, NumberFormatException, IndexOutOfBoundsException {
         this.departmentCode = code.replaceAll("\\d", "");
         String nums = code.replaceAll("[^\\d]", "");
@@ -45,7 +54,7 @@ public class CourseCode implements ICourseCode {
         this.courseNumber = courseNumber;
     }
 
-    public static ICourseCode of(String departmentCode, int level, int courseNumber) {
+    public static ICourseCode of(@NonNull String departmentCode, int level, int courseNumber) {
         return new CourseCode(departmentCode, level, courseNumber);
     }
 
@@ -53,6 +62,7 @@ public class CourseCode implements ICourseCode {
         return new CourseCode(code);
     }
 
+//    Create a new ICourseCode with new departmentCode
     @Override
     public ICourseCode withDepartmentCode(@NonNull String departmentCode) throws IllegalArgumentException {
         if (departmentCode.isBlank()) {
@@ -62,6 +72,7 @@ public class CourseCode implements ICourseCode {
         return Objects.equals(this.departmentCode, departmentCode) ? this : new CourseCode(departmentCode, level, courseNumber);
     }
 
+//    Convert it to string format, E.g. COMP500
     @Override
     public String toString() {
         return String.format("%s%01d%02d", this.getDepartmentCode(), this.getLevel(), this.getCourseNumber());
