@@ -13,11 +13,11 @@ GitHub Repository: [https://github.com/BozhanL/COMP603](https://github.com/Bozha
 
 Details can be found on [GitHub](https://github.com/BozhanL/COMP603/graphs/contributors).
 
-| Name                                                              | Lines | Percentage |
-| ----------------------------------------------------------------- | ----- | ---------- |
-| Ben Samountry([@TheSalmonTree](https://github.com/TheSalmonTree)) | 303   | 10.868%    |
-| Bozhan Liang([@BozhanL](https://github.com/BozhanL))              | 2485  | 89.132%    |
-| **Total**                                                         | 2788  | 100%       |
+| Name                                                                       | Lines | Percentage |
+| -------------------------------------------------------------------------- | ----- | ---------- |
+| Ben Samountry([@TheSalmonTree](https://github.com/TheSalmonTree)) 23219911 | 303   | 10.868%    |
+| Bozhan Liang([@BozhanL](https://github.com/BozhanL)) 23209715              | 2485  | 89.132%    |
+| **Total**                                                                  | 2788  | 100%       |
 
 \* Result based on [cloc](https://github.com/AlDanial/cloc) calculation
 
