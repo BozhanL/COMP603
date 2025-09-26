@@ -9,28 +9,27 @@ GitHub Repository: [https://github.com/BozhanL/COMP603](https://github.com/Bozha
 - Username: admin
 - Password: admin
 
+## Default database credentials
+
+- Username: pdc
+- Password: pdc
+
 ## Contribution
 
 Details can be found on [GitHub](https://github.com/BozhanL/COMP603/graphs/contributors).
 
 | Name                                                                       | Lines | Percentage |
 | -------------------------------------------------------------------------- | ----- | ---------- |
-| Ben Samountry([@TheSalmonTree](https://github.com/TheSalmonTree)) 23219911 | 303   | 10.868%    |
-| Bozhan Liang([@BozhanL](https://github.com/BozhanL)) 23209715              | 2485  | 89.132%    |
-| **Total**                                                                  | 2788  | 100%       |
+| Ben Samountry([@TheSalmonTree](https://github.com/TheSalmonTree)) 23219911 | 0     | 0%         |
+| Bozhan Liang([@BozhanL](https://github.com/BozhanL)) 23209715              | 0     | 0%         |
+| **Total**                                                                  | 0     | 0%         |
 
 \* Result based on [cloc](https://github.com/AlDanial/cloc) calculation
 
 ### Implementation Details
 
 - **Ben**:
-  - AssessmentOne [#13](https://github.com/BozhanL/COMP603/pull/13)
-  - Welcome [#13](https://github.com/BozhanL/COMP603/pull/13)
-  - CourseInputHandler (excl. CourseInputHandler::getModifiedCourse) [#18](https://github.com/BozhanL/COMP603/pull/18)
-  - CourseDashboard::displayMenu [#18](https://github.com/BozhanL/COMP603/pull/18)
-  - CourseDashboard::addCourse [#18](https://github.com/BozhanL/COMP603/pull/18)
-  - CourseDashboard::printMainMenu [#18](https://github.com/BozhanL/COMP603/pull/18)
-- **Bozhan**: All other functionalities not covered by Ben
+- **Bozhan**:
 
 ## Credit
 

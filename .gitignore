@@ -26,6 +26,9 @@ replay_pid*
 # IDEA
 .idea/
 
+# Compiled source
+/target/
+
 # Assignment description
 /Project\ 1.pdf
-/target/
+/Project\ 2.pdf
