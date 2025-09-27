@@ -26,6 +26,12 @@ replay_pid*
 # IDEA
 .idea/
 
+# Compiled source
+/target/
+
+# Database folder
+/database/
+
 # Assignment description
 /Project\ 1.pdf
-/target/
+/Project\ 2.pdf
