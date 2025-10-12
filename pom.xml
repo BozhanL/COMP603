@@ -119,11 +119,18 @@
             <artifactId>hibernate-core</artifactId>
             <version>${hibernate.version}</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.hibernate.orm/hibernate-community-dialects -->
+        <dependency>
+            <groupId>org.hibernate.orm</groupId>
+            <artifactId>hibernate-community-dialects</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
     </dependencies>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.release>21</maven.compiler.release>
-        <mainClass>com.example.assessment.gui.AssessmentTwo</mainClass>
+        <!--<mainClass>com.example.assessment.gui.AssessmentTwo</mainClass>-->
+        <mainClass>com.example.assessment.cli.AssessmentOne</mainClass>
         <lombok.version>1.18.38</lombok.version>
         <errorprone.version>2.41.0</errorprone.version>
         <guava.version>33.4.8-jre</guava.version>

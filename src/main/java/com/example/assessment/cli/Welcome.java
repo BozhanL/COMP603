@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.nio.file.InvalidPathException;
 import java.util.Locale;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 
@@ -59,6 +61,8 @@ public class Welcome {
                 System.out.printf("Error: %s\n", e.getMessage());
             } catch (InvalidPathException e) {
                 System.out.println("Error: invalid path");
+            } catch (IllegalArgumentException | DatabaseCorruptedException ex) {
+                Logger.getLogger(Welcome.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
 
@@ -66,8 +70,8 @@ public class Welcome {
     }
 
 //    Login to the system
-    public IPerson login(@NonNull IPersonBackend pb) {
-        IPerson p = null;
+    public IPerson<?> login(@NonNull IPersonBackend pb) {
+        IPerson<?> p = null;
 
         while (true) {
 //            Get person from ID

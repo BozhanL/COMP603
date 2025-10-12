@@ -1,6 +1,8 @@
 package com.example.assessment.backend.types.interfaces;
 
+import com.example.assessment.backend.derby.IToHibernateEntity;
 import com.example.assessment.backend.types.classes.Address;
+import com.example.assessment.backend.types.entity.AddressEntity;
 import com.google.errorprone.annotations.CheckReturnValue;
 import com.google.errorprone.annotations.Immutable;
 import java.io.Serializable;
@@ -9,7 +11,7 @@ import lombok.NonNull;
 // This is the interface for address of a person
 @Immutable
 @CheckReturnValue
-public interface IAddress extends Serializable, IPrettyPrint {
+public interface IAddress extends Serializable, IPrettyPrint, IToHibernateEntity<AddressEntity> {
 
 //    Static construtor to create IAddress
     public static IAddress of(

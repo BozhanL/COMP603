@@ -10,15 +10,15 @@ import lombok.NonNull;
 @CheckReturnValue
 public interface ICombinedBackend extends IPersonBackend, ICourseBackend {
 
-    public static ICombinedBackend of() throws IOException {
+    public static ICombinedBackend of() throws IOException, IllegalArgumentException, DatabaseCorruptedException {
         return CombinedBackend.of();
     }
 
-    public static ICombinedBackend of(@NonNull String p) throws IOException, IllegalArgumentException, InvalidPathException {
+    public static ICombinedBackend of(@NonNull String p) throws IOException, IllegalArgumentException, InvalidPathException, IllegalArgumentException, DatabaseCorruptedException {
         return CombinedBackend.of(p);
     }
 
-    public static ICombinedBackend of(@NonNull Path p) throws IOException, IllegalArgumentException {
+    public static ICombinedBackend of(@NonNull Path p) throws IOException, IllegalArgumentException, IllegalArgumentException, DatabaseCorruptedException {
         return CombinedBackend.of(p);
     }
 

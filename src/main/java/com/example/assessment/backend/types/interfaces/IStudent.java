@@ -2,6 +2,7 @@ package com.example.assessment.backend.types.interfaces;
 
 import com.example.assessment.backend.generic.ICombinedBackend;
 import com.example.assessment.backend.types.classes.Student;
+import com.example.assessment.backend.types.entity.StudentEntity;
 import com.example.assessment.backend.types.enums.Gender;
 import com.example.assessment.backend.types.enums.Residency;
 import com.example.assessment.cli.IMainDashboard;
@@ -16,10 +17,10 @@ import lombok.NonNull;
 // This is the interface for student of the system
 @Immutable
 @CheckReturnValue
-public interface IStudent extends IPerson {
+public interface IStudent<T extends StudentEntity> extends IPerson<T> {
 
 //    Static construtor to create IStudent with courses
-    public static IStudent of(
+    public static IStudent<?> of(
             @NonNull String id,
             @NonNull String password,
             @NonNull String legalFirstName,
@@ -36,7 +37,7 @@ public interface IStudent extends IPerson {
     }
 
 //    Static construtor to create IStudent without courses
-    public static IStudent of(
+    public static IStudent<?> of(
             @NonNull String id,
             @NonNull String password,
             @NonNull String legalFirstName,
@@ -53,32 +54,32 @@ public interface IStudent extends IPerson {
 
 //    Create a new IStudent object with new password
     @Override
-    public abstract IStudent withPassword(@NonNull String password);
+    public abstract IStudent<?> withPassword(@NonNull String password);
 
     @Override
-    public abstract IStudent withLegalFirstName(@NonNull String legalFirstName);
+    public abstract IStudent<?> withLegalFirstName(@NonNull String legalFirstName);
 
     @Override
-    public abstract IStudent withLegalLastName(@NonNull String legalLastName);
+    public abstract IStudent<?> withLegalLastName(@NonNull String legalLastName);
 
     @Override
-    public abstract IStudent withDateOfBirth(@NonNull LocalDate dateOfBirth);
+    public abstract IStudent<?> withDateOfBirth(@NonNull LocalDate dateOfBirth);
 
     @Override
-    public abstract IStudent withGender(@NonNull Gender gender);
+    public abstract IStudent<?> withGender(@NonNull Gender gender);
 
     @Override
-    public abstract IStudent withEmail(@NonNull String email);
+    public abstract IStudent<?> withEmail(@NonNull String email);
 
     @Override
-    public abstract IStudent withPhone(@NonNull String phone);
+    public abstract IStudent<?> withPhone(@NonNull String phone);
 
     @Override
-    public abstract IStudent withAddress(@NonNull IAddress address);
+    public abstract IStudent<?> withAddress(@NonNull IAddress address);
 
-    public abstract IStudent withResidencyStatus(@NonNull Residency residencyStatus);
+    public abstract IStudent<?> withResidencyStatus(@NonNull Residency residencyStatus);
 
-    public abstract IStudent withCourses(@NonNull ImmutableMap<String, IStudentCourseInfo> courses);
+    public abstract IStudent<?> withCourses(@NonNull ImmutableMap<String, IStudentCourseInfo> courses);
 
     public abstract Residency getResidencyStatus();
 

@@ -91,7 +91,7 @@ public final class PersonDashboard implements IDashboard {
         Residency residencyStatus = personInputHandler.getResidencyStatus();
 
 //        Create a new one
-        IStudent student = IStudent.of(id, password, legalFirstName, legalLastName, dateOfBirth, gender, email, phone, address, residencyStatus);
+        IStudent<?> student = IStudent.of(id, password, legalFirstName, legalLastName, dateOfBirth, gender, email, phone, address, residencyStatus);
 
         boolean success = true;
 //        Max retry is 3
@@ -121,7 +121,7 @@ public final class PersonDashboard implements IDashboard {
 //            Get the id of student
             String id = personInputHandler.getId();
 
-            IStudent st;
+            IStudent<?> st;
             try {
 //                Get it from database
                 st = this.personBackend.getStudentById(id);
@@ -148,7 +148,7 @@ public final class PersonDashboard implements IDashboard {
 //            Get the id of student
             String id = personInputHandler.getId();
 
-            IStudent st;
+            IStudent<?> st;
             try {
 //                Get it from database
                 st = this.personBackend.getStudentById(id);
@@ -189,7 +189,7 @@ public final class PersonDashboard implements IDashboard {
 
 //    List all students in the database
     private void listStudent() {
-        ImmutableList<IStudent> li = null;
+        ImmutableList<IStudent<?>> li = null;
 
         boolean success = true;
 //        Max retry is 3
@@ -213,7 +213,7 @@ public final class PersonDashboard implements IDashboard {
         }
 
 //        print the students one by one
-        for (IStudent s : li) {
+        for (IStudent<?> s : li) {
             System.out.println(s.prettyToString());
             System.out.println("------------------------------------------------");
         }
@@ -245,7 +245,7 @@ public final class PersonDashboard implements IDashboard {
         IAddress address = personInputHandler.getAddress();
 
 //        Create a new one
-        IManager ma = IManager.of(id, password, legalFirstName, legalLastName, dateOfBirth, gender, email, phone, address);
+        IManager<?> ma = IManager.of(id, password, legalFirstName, legalLastName, dateOfBirth, gender, email, phone, address);
 
         boolean success = true;
 //        Max retry is 3
@@ -275,7 +275,7 @@ public final class PersonDashboard implements IDashboard {
 //            Get the id of manager
             String id = personInputHandler.getId();
 
-            IManager ma;
+            IManager<?> ma;
             try {
 //                Get it from database
                 ma = this.personBackend.getManagerById(id);
@@ -302,7 +302,7 @@ public final class PersonDashboard implements IDashboard {
 //            Get the id of manager
             String id = personInputHandler.getId();
 
-            IManager ma;
+            IManager<?> ma;
             try {
 //                Get it from database
                 ma = this.personBackend.getManagerById(id);
@@ -343,7 +343,7 @@ public final class PersonDashboard implements IDashboard {
 
 //    List all manager in the database
     private void listManager() {
-        ImmutableList<IManager> li = null;
+        ImmutableList<IManager<?>> li = null;
 
         boolean success = true;
 //        Max retry is 3
@@ -367,7 +367,7 @@ public final class PersonDashboard implements IDashboard {
         }
 
 //        print the managers one by one
-        for (IManager ma : li) {
+        for (IManager<?> ma : li) {
             System.out.println(ma.prettyToString());
             System.out.println("------------------------------------------------");
         }

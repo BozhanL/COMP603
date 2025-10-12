@@ -1,5 +1,6 @@
 package com.example.assessment.backend.types.classes;
 
+import com.example.assessment.backend.types.entity.CourseCodeEntity;
 import com.example.assessment.backend.types.interfaces.ICourseCode;
 import com.google.errorprone.annotations.CheckReturnValue;
 import com.google.errorprone.annotations.Immutable;
@@ -54,11 +55,11 @@ public class CourseCode implements ICourseCode {
         this.courseNumber = courseNumber;
     }
 
-    public static ICourseCode of(@NonNull String departmentCode, int level, int courseNumber) {
+    public static CourseCode of(@NonNull String departmentCode, int level, int courseNumber) {
         return new CourseCode(departmentCode, level, courseNumber);
     }
 
-    public static ICourseCode of(@NonNull String code) throws ParseException, NumberFormatException, IndexOutOfBoundsException {
+    public static CourseCode of(@NonNull String code) throws ParseException, NumberFormatException, IndexOutOfBoundsException {
         return new CourseCode(code);
     }
 
@@ -81,5 +82,10 @@ public class CourseCode implements ICourseCode {
     @Override
     public String prettyToString() {
         return this.toString();
+    }
+
+    @Override
+    public CourseCodeEntity toEntity() {
+        return CourseCodeEntity.of(departmentCode, level, courseNumber);
     }
 }

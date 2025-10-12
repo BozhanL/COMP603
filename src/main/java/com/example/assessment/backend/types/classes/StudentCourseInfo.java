@@ -1,5 +1,6 @@
 package com.example.assessment.backend.types.classes;
 
+import com.example.assessment.backend.types.entity.StudentCourseInfoEntity;
 import com.example.assessment.backend.types.enums.Grade;
 import com.example.assessment.backend.types.interfaces.IStudentCourseInfo;
 import com.google.errorprone.annotations.CheckReturnValue;
@@ -49,5 +50,10 @@ public class StudentCourseInfo implements IStudentCourseInfo {
         sb.append(location);
 
         return sb.toString();
+    }
+
+    @Override
+    public StudentCourseInfoEntity toEntity() {
+        return StudentCourseInfoEntity.of(courseCode, grade, starts, location);
     }
 }

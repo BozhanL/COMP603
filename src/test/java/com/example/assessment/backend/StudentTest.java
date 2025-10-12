@@ -20,10 +20,10 @@ import org.junit.jupiter.api.Test;
 
 public class StudentTest {
 
-    IStudent s;
+    IStudent<?> s;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         IAddress a = IAddress.of("", "561", "Blockhouse Bay Road", "Blockhouse Bay", "Auckland", "Auckland", "NZ", "0600");
         HashMap<String, IStudentCourseInfo> sci = new HashMap<>();
         sci.put("COMP500", IStudentCourseInfo.of("COMP500", Grade.AP, LocalDate.of(2024, 2, 12), "City"));
@@ -62,7 +62,7 @@ public class StudentTest {
 
     @Test
     void testWith() {
-        IStudent n;
+        IStudent<?> n;
 
         n = this.s.withAddress(IAddress.of("", "", "", "", "", "", "NZ", "0600"));
         assertEquals(n.getAddress(), IAddress.of("", "", "", "", "", "", "NZ", "0600"));

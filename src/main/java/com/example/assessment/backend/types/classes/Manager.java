@@ -1,5 +1,7 @@
 package com.example.assessment.backend.types.classes;
 
+import com.example.assessment.backend.types.entity.AddressEntity;
+import com.example.assessment.backend.types.entity.ManagerEntity;
 import com.example.assessment.backend.types.enums.Gender;
 import com.example.assessment.backend.types.enums.UserType;
 import com.example.assessment.backend.types.interfaces.IAddress;
@@ -23,7 +25,7 @@ import lombok.With;
 @CheckReturnValue
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-public class Manager extends Person implements IManager {
+public class Manager extends Person<ManagerEntity> implements IManager<ManagerEntity> {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -43,7 +45,7 @@ public class Manager extends Person implements IManager {
         super(id, password, legalFirstName, legalLastName, dateOfBirth, gender, email, phone, address);
     }
 
-    public static IManager of(
+    public static Manager of(
             @NonNull String id,
             @NonNull String password,
             @NonNull String legalFirstName,
@@ -121,5 +123,11 @@ public class Manager extends Person implements IManager {
     @Override
     public String prettyToString() {
         return super.prettyToString();
+    }
+
+    @Override
+    public ManagerEntity toEntity() {
+        AddressEntity ae = address.toEntity();
+        return ManagerEntity.of(id, password, legalFirstName, legalLastName, dateOfBirth, gender, email, phone, ae);
     }
 }

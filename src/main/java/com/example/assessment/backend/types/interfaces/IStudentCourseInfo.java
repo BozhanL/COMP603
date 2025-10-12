@@ -1,6 +1,8 @@
 package com.example.assessment.backend.types.interfaces;
 
+import com.example.assessment.backend.derby.IToHibernateEntity;
 import com.example.assessment.backend.types.classes.StudentCourseInfo;
+import com.example.assessment.backend.types.entity.StudentCourseInfoEntity;
 import com.example.assessment.backend.types.enums.Grade;
 import com.google.errorprone.annotations.CheckReturnValue;
 import com.google.errorprone.annotations.Immutable;
@@ -11,7 +13,7 @@ import lombok.NonNull;
 // This is the interface for course information for a student
 @Immutable
 @CheckReturnValue
-public interface IStudentCourseInfo extends Serializable, IPrettyPrint {
+public interface IStudentCourseInfo extends Serializable, IPrettyPrint, IToHibernateEntity<StudentCourseInfoEntity> {
 
 //    Static construtor to create IStudentCourseInfo
     public static IStudentCourseInfo of(

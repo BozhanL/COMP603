@@ -2,6 +2,7 @@ package com.example.assessment.backend.types.interfaces;
 
 import com.example.assessment.backend.generic.ICombinedBackend;
 import com.example.assessment.backend.types.classes.Manager;
+import com.example.assessment.backend.types.entity.ManagerEntity;
 import com.example.assessment.backend.types.enums.Gender;
 import com.example.assessment.cli.IMainDashboard;
 import com.example.assessment.cli.ManagerDashboard;
@@ -14,10 +15,10 @@ import lombok.NonNull;
 // This is the interface for manager of the system
 @Immutable
 @CheckReturnValue
-public interface IManager extends IPerson {
+public interface IManager<T extends ManagerEntity> extends IPerson<T> {
 
 //    Static construtor to create IManager
-    public static IManager of(
+    public static IManager<?> of(
             @NonNull String id,
             @NonNull String password,
             @NonNull String legalFirstName,
@@ -32,13 +33,13 @@ public interface IManager extends IPerson {
     }
 
 //    Static construtor to create a default IManager
-    public static IManager defaultManager() {
+    public static IManager<?> defaultManager() {
         return IManager.of(
                 "admin",
                 "admin",
                 "admin",
                 "admin",
-                LocalDate.MIN,
+                LocalDate.EPOCH,
                 Gender.OTHER,
                 "",
                 "",
@@ -48,35 +49,35 @@ public interface IManager extends IPerson {
 
 //    Create a new IManager object with new password
     @Override
-    public abstract IManager withPassword(@NonNull String password);
+    public abstract IManager<?> withPassword(@NonNull String password);
 
 //    Create a new IManager object with new legalFirstName
     @Override
-    public abstract IManager withLegalFirstName(@NonNull String legalFirstName);
+    public abstract IManager<?> withLegalFirstName(@NonNull String legalFirstName);
 
 //    Create a new IManager object with new legalLastName
     @Override
-    public abstract IManager withLegalLastName(@NonNull String legalLastName);
+    public abstract IManager<?> withLegalLastName(@NonNull String legalLastName);
 
 //    Create a new IManager object with new dateOfBirth
     @Override
-    public abstract IManager withDateOfBirth(@NonNull LocalDate dateOfBirth);
+    public abstract IManager<?> withDateOfBirth(@NonNull LocalDate dateOfBirth);
 
 //    Create a new IManager object with new gender
     @Override
-    public abstract IManager withGender(@NonNull Gender gender);
+    public abstract IManager<?> withGender(@NonNull Gender gender);
 
 //    Create a new IManager object with new email
     @Override
-    public abstract IManager withEmail(@NonNull String email);
+    public abstract IManager<?> withEmail(@NonNull String email);
 
 //    Create a new IManager object with new phone
     @Override
-    public abstract IManager withPhone(@NonNull String phone);
+    public abstract IManager<?> withPhone(@NonNull String phone);
 
 //    Create a new IManager object with new address
     @Override
-    public abstract IManager withAddress(@NonNull IAddress address);
+    public abstract IManager<?> withAddress(@NonNull IAddress address);
 
 //    Return a dashboard to display IManager
     @Override

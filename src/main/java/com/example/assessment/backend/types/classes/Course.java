@@ -1,5 +1,6 @@
 package com.example.assessment.backend.types.classes;
 
+import com.example.assessment.backend.types.entity.CourseEntity;
 import com.example.assessment.backend.types.interfaces.ICourse;
 import com.example.assessment.backend.types.interfaces.ICourseCode;
 import com.google.errorprone.annotations.CheckReturnValue;
@@ -40,11 +41,11 @@ public class Course implements ICourse {
         this(ICourseCode.of(departmentCode, level, courseNumber), name, points, description);
     }
 
-    public static ICourse of(@NonNull String code, @NonNull String name, int points, @NonNull String description) throws ParseException, NumberFormatException, IndexOutOfBoundsException {
+    public static Course of(@NonNull String code, @NonNull String name, int points, @NonNull String description) throws ParseException, NumberFormatException, IndexOutOfBoundsException {
         return new Course(code, name, points, description);
     }
 
-    public static ICourse of(@NonNull String departmentCode, int level, int courseNumber, @NonNull String name, int points, @NonNull String description) throws IllegalArgumentException {
+    public static Course of(@NonNull String departmentCode, int level, int courseNumber, @NonNull String name, int points, @NonNull String description) throws IllegalArgumentException {
         return new Course(departmentCode, level, courseNumber, name, points, description);
     }
 
@@ -66,5 +67,10 @@ public class Course implements ICourse {
         sb.append(description);
 
         return sb.toString();
+    }
+
+    @Override
+    public CourseEntity toEntity() {
+        return CourseEntity.of(CourseCode.of(code.getDepartmentCode(), code.getLevel(), code.getCourseNumber()), name, points, description);
     }
 }

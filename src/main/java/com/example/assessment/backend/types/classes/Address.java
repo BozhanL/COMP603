@@ -1,9 +1,11 @@
 package com.example.assessment.backend.types.classes;
 
+import com.example.assessment.backend.types.entity.AddressEntity;
 import com.example.assessment.backend.types.interfaces.IAddress;
 import com.google.errorprone.annotations.CheckReturnValue;
 import com.google.errorprone.annotations.Immutable;
 import java.io.Serial;
+import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import lombok.Value;
 import lombok.With;
@@ -11,9 +13,10 @@ import lombok.With;
 // This class implements IAddress,
 // and used to store information about person addrsss
 @With
+@Value
 @Immutable
 @CheckReturnValue
-@Value(staticConstructor = "of")
+@AllArgsConstructor(staticName = "of")
 public class Address implements IAddress {
 
     @Serial
@@ -64,5 +67,10 @@ public class Address implements IAddress {
     @Override
     public String prettyToString() {
         return this.toString();
+    }
+
+    @Override
+    public AddressEntity toEntity() {
+        return AddressEntity.of(unit, streetNumber, streetName, suburb, city, state, country, postCode);
     }
 }

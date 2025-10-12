@@ -1,6 +1,6 @@
 package com.example.assessment.backend.generic;
 
-import com.example.assessment.backend.file.CourseFileBackend;
+import com.example.assessment.backend.derby.CourseDerbyBackend;
 import com.example.assessment.backend.types.interfaces.ICourse;
 import com.google.common.collect.ImmutableList;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
@@ -17,15 +17,15 @@ import lombok.NonNull;
 public interface ICourseBackend extends IBackend {
 
     public static ICourseBackend of() throws IOException {
-        return CourseFileBackend.of();
+        return CourseDerbyBackend.of();
     }
 
     public static ICourseBackend of(@NonNull String p) throws IOException, IllegalArgumentException, InvalidPathException {
-        return CourseFileBackend.of(p);
+        return CourseDerbyBackend.of(p);
     }
 
     public static ICourseBackend of(@NonNull Path p) throws IOException, IllegalArgumentException {
-        return CourseFileBackend.of(p);
+        return CourseDerbyBackend.of(p);
     }
 
 //    Return a Course with same course code as argument
