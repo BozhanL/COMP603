@@ -53,14 +53,13 @@ public class HibernateHelper {
 
     public static synchronized void closeSessionFactory(String db) throws SQLException {
         SessionFactory sf = sfm.remove(db);
-        if (sf != null) {
-            sf.close();
-            try {
-                DriverManager.getConnection(db + ";shutdown=true");
-            } catch (SQLException e) {
-                if (!"08006".equals(e.getSQLState())) { // normal shutdown
-                    throw e;
-                }
+
+        sf.close();
+        try {
+            DriverManager.getConnection(db + ";shutdown=true");
+        } catch (SQLException e) {
+            if (!"08006".equals(e.getSQLState())) { // normal shutdown
+                throw e;
             }
         }
     }

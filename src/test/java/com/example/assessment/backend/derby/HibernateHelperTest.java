@@ -1,8 +1,8 @@
 package com.example.assessment.backend.derby;
 
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import org.hibernate.SessionFactory;
@@ -21,7 +21,7 @@ public class HibernateHelperTest {
     @TempDir
     Path baseTempDir;
 
-    private ArrayList<Path> tempFolders;
+    private final ArrayList<Path> tempFolders = new ArrayList<>();
 
     @BeforeAll
     public static void setUpClass() {
@@ -33,17 +33,23 @@ public class HibernateHelperTest {
 
     @BeforeEach
     public void setUp() throws IOException {
-        tempFolders = new ArrayList<>();
+        tempFolders.clear();
 
         // Generate 5 temporary folders inside baseTempDir
         for (int i = 0; i < 5; i++) {
-            Path tempFolder = Files.createTempDirectory(baseTempDir, "tempFolder" + i + "_");
+            Path tempFolder = baseTempDir.resolve(Integer.toString(i));
             tempFolders.add(tempFolder);
         }
     }
 
     @AfterEach
-    public void tearDown() {
+    public void tearDown() throws SQLException {
+        for (Path p : tempFolders) {
+            String db = getDb(p);
+            HibernateHelper.closeSessionFactory(db);
+        }
+
+        tempFolders.clear();
     }
 
     /**
@@ -54,15 +60,15 @@ public class HibernateHelperTest {
         System.out.println("getSessionFactory");
         HashMap<String, SessionFactory> sfs = new HashMap<>();
 
-        for (Path p : baseTempDir) {
-            String db = String.format("jdbc:derby:%s;create=true", p.toAbsolutePath().normalize());
+        for (Path p : tempFolders) {
+            String db = getDb(p);
             SessionFactory sf = HibernateHelper.getSessionFactory(db);
             assertNotNull(sf);
             sfs.put(db, sf);
         }
 
-        for (Path p : baseTempDir) {
-            String db = String.format("jdbc:derby:%s;create=true", p.toAbsolutePath().normalize());
+        for (Path p : tempFolders) {
+            String db = getDb(p);
             SessionFactory sf1 = HibernateHelper.getSessionFactory(db);
             assertNotNull(sf1);
 
@@ -71,8 +77,8 @@ public class HibernateHelperTest {
             assertEquals(sf2, sf1);
         }
 
-        for (Path p : baseTempDir) {
-            String db = String.format("jdbc:derby:%s;create=true", p.toAbsolutePath().normalize());
+        for (Path p : tempFolders) {
+            String db = getDb(p);
             SessionFactory sf1 = HibernateHelper.getSessionFactory(db);
             assertNotNull(sf1);
 
@@ -80,5 +86,9 @@ public class HibernateHelperTest {
             assertSame(sf2, sf1);
             assertEquals(sf2, sf1);
         }
+    }
+
+    private static String getDb(Path p) {
+        return String.format("jdbc:derby:%s;create=true", p.toAbsolutePath().normalize());
     }
 }

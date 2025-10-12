@@ -14,11 +14,11 @@ public interface ICombinedBackend extends IPersonBackend, ICourseBackend {
         return CombinedBackend.of();
     }
 
-    public static ICombinedBackend of(@NonNull String p) throws IOException, IllegalArgumentException, InvalidPathException, IllegalArgumentException, DatabaseCorruptedException {
+    public static ICombinedBackend of(@NonNull String p) throws IOException, IllegalArgumentException, InvalidPathException, DatabaseCorruptedException {
         return CombinedBackend.of(p);
     }
 
-    public static ICombinedBackend of(@NonNull Path p) throws IOException, IllegalArgumentException, IllegalArgumentException, DatabaseCorruptedException {
+    public static ICombinedBackend of(@NonNull Path p) throws IOException, IllegalArgumentException, DatabaseCorruptedException {
         return CombinedBackend.of(p);
     }
 

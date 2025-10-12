@@ -31,11 +31,6 @@ public class PersonFileBackendTest {
 
     IPersonBackend pfb;
 
-//    @BeforeAll
-//    static void configureDerby() {
-//        System.setProperty("derby.storage.fileSyncTransactionLog", "false");
-//        System.setProperty("derby.storage.useDefaultFileSync", "false");
-//    }
     @BeforeEach
     public void setUp() throws IOException, IllegalArgumentException, DatabaseCorruptedException {
         this.pfb = IPersonBackend.of(folder);
