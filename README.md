@@ -11,8 +11,9 @@ GitHub Repository: [https://github.com/BozhanL/COMP603](https://github.com/Bozha
 
 ## Default database credentials
 
-- Username: pdc
-- Password: pdc
+- Database: PDC
+- Username: PDC
+- Password: PDC
 
 ## Contribution
 

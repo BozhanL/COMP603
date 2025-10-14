@@ -6,8 +6,6 @@ import com.example.assessment.backend.types.interfaces.IStudent;
 import com.example.assessment.backend.types.interfaces.IStudentCourseInfo;
 import com.google.common.collect.ImmutableMap;
 import com.google.errorprone.annotations.CheckReturnValue;
-import jakarta.persistence.CollectionTable;
-import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
@@ -37,8 +35,6 @@ public class StudentEntity extends PersonEntity<IStudent<?>> {
 //    Courses that a student has enrolled
     @NonNull
     @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "course_code")
-    @Column(name = "course_info")
     Map<String, StudentCourseInfoEntity> courses;
 
     private StudentEntity(

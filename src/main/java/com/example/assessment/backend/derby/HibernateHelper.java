@@ -45,7 +45,6 @@ public class HibernateHelper {
                     .buildSessionFactory();
 
             sfm.put(db, sf);
-            return sf;
         }
 
         return sfm.get(db);
