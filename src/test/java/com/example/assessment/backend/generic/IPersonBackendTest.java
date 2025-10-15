@@ -40,17 +40,17 @@ public class IPersonBackendTest {
     }
 
     @BeforeEach
-    public void setUp()  {
+    public void setUp() throws IOException, DatabaseCorruptedException {
         this.pfb = IPersonBackend.of(folder);
     }
 
     @AfterEach
-    public void tearDown()  {
+    public void tearDown() throws SQLException {
         HibernateHelper.closeSessionFactory(this.pfb.getDb());
     }
 
     @Test
-    void testSetAndGetStudent()  {
+    void testSetAndGetStudent() {
         IAddress a = IAddress.of("", "561", "Blockhouse Bay Road", "Blockhouse Bay", "Auckland", "Auckland", "NZ", "0600");
         HashMap<String, IStudentCourseInfo> sci = new HashMap<>();
         sci.put("COMP500", IStudentCourseInfo.of("COMP500", Grade.AP, LocalDate.of(2024, 2, 12), "City"));
@@ -64,7 +64,7 @@ public class IPersonBackendTest {
     }
 
     @Test
-    void testGetDefaultManager()  {
+    void testGetDefaultManager() {
         IManager DEFAULT_MANAGER = IManager.defaultManager();
         IManager id = this.pfb.getManagerById("admin");
 
@@ -72,7 +72,7 @@ public class IPersonBackendTest {
     }
 
     @Test
-    void testDeletePerson()  {
+    void testDeletePerson() {
         IAddress a = IAddress.of("", "561", "Blockhouse Bay Road", "Blockhouse Bay", "Auckland", "Auckland", "NZ", "0600");
         HashMap<String, IStudentCourseInfo> sci = new HashMap<>();
         sci.put("COMP500", IStudentCourseInfo.of("COMP500", Grade.AP, LocalDate.of(2024, 2, 12), "City"));
@@ -85,7 +85,7 @@ public class IPersonBackendTest {
     }
 
     @Test
-    void testSetExistPerson()  {
+    void testSetExistPerson() {
         IAddress a = IAddress.of("", "561", "Blockhouse Bay Road", "Blockhouse Bay", "Auckland", "Auckland", "NZ", "0600");
         HashMap<String, IStudentCourseInfo> sci = new HashMap<>();
         sci.put("COMP500", IStudentCourseInfo.of("COMP500", Grade.AP, LocalDate.of(2024, 2, 12), "City"));

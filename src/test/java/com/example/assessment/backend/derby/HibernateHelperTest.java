@@ -1,6 +1,5 @@
 package com.example.assessment.backend.derby;
 
-import java.io.IOException;
 import java.nio.file.Path;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -32,7 +31,7 @@ public class HibernateHelperTest {
     }
 
     @BeforeEach
-    public void setUp()  {
+    public void setUp() {
         tempFolders.clear();
 
         // Generate 5 temporary folders inside baseTempDir
@@ -43,7 +42,7 @@ public class HibernateHelperTest {
     }
 
     @AfterEach
-    public void tearDown()  {
+    public void tearDown() throws SQLException {
         for (Path p : tempFolders) {
             String db = getDb(p);
             HibernateHelper.closeSessionFactory(db);
