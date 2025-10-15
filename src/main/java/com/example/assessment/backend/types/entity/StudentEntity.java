@@ -9,6 +9,8 @@ import com.google.errorprone.annotations.CheckReturnValue;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import java.time.LocalDate;
 import java.util.Map;
@@ -30,6 +32,7 @@ public class StudentEntity extends PersonEntity<IStudent> {
 
 //    The residency status for a student
     @NonNull
+    @Enumerated(EnumType.STRING)
     Residency residencyStatus;
 
 //    Courses that a student has enrolled

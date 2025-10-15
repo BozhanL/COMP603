@@ -1,26 +1,34 @@
-package com.example.assessment.backend;
+package com.example.assessment.backend.types.interfaces;
 
 import static com.example.assessment.backend.types.classes.Student.getTypeStatic;
 import com.example.assessment.backend.types.enums.Gender;
 import com.example.assessment.backend.types.enums.Grade;
 import com.example.assessment.backend.types.enums.Residency;
 import com.example.assessment.backend.types.enums.UserType;
-import com.example.assessment.backend.types.interfaces.IAddress;
-import com.example.assessment.backend.types.interfaces.IStudent;
-import com.example.assessment.backend.types.interfaces.IStudentCourseInfo;
 import com.google.common.collect.ImmutableMap;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.HashMap;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class StudentTest {
+public class IStudentTest {
 
     IStudent s;
+
+    @BeforeAll
+    public static void setUpClass() {
+    }
+
+    @AfterAll
+    public static void tearDownClass() {
+    }
 
     @BeforeEach
     public void setUp() {
@@ -29,6 +37,10 @@ public class StudentTest {
         sci.put("COMP500", IStudentCourseInfo.of("COMP500", Grade.AP, LocalDate.of(2024, 2, 12), "City"));
         sci.put("COMP501", IStudentCourseInfo.of("COMP501", Grade.A, LocalDate.of(2021, 2, 12), "North"));
         this.s = IStudent.of("wby5780", "password", "legalFirstName", "legalLastName", LocalDate.now(ZoneId.systemDefault()), Gender.MALE, "email", "phone", a, Residency.INTERNATIONAL, ImmutableMap.copyOf(sci));
+    }
+
+    @AfterEach
+    public void tearDown() {
     }
 
     @Test

@@ -1,8 +1,6 @@
-package com.example.assessment.backend;
+package com.example.assessment.backend.generic;
 
 import com.example.assessment.backend.derby.HibernateHelper;
-import com.example.assessment.backend.generic.DatabaseCorruptedException;
-import com.example.assessment.backend.generic.IPersonBackend;
 import com.example.assessment.backend.types.enums.Gender;
 import com.example.assessment.backend.types.enums.Grade;
 import com.example.assessment.backend.types.enums.Residency;
@@ -17,19 +15,29 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.HashMap;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
-public class PersonFileBackendTest {
+public class IPersonBackendTest {
 
     @TempDir
     Path folder;
 
     IPersonBackend pfb;
+
+    @BeforeAll
+    public static void setUpClass() {
+    }
+
+    @AfterAll
+    public static void tearDownClass() {
+    }
 
     @BeforeEach
     public void setUp() throws IOException, IllegalArgumentException, DatabaseCorruptedException {
@@ -37,7 +45,7 @@ public class PersonFileBackendTest {
     }
 
     @AfterEach
-    public void tearDown() throws InterruptedException, SQLException {
+    public void tearDown() throws SQLException {
         HibernateHelper.closeSessionFactory(this.pfb.getDb());
     }
 

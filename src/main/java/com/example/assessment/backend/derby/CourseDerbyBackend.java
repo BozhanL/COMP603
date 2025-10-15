@@ -4,12 +4,14 @@ import com.example.assessment.backend.generic.DatabaseCorruptedException;
 import com.example.assessment.backend.generic.ICourseBackend;
 import com.example.assessment.backend.types.entity.CourseEntity;
 import com.example.assessment.backend.types.interfaces.ICourse;
+import com.example.assessment.backend.types.interfaces.ICourseCode;
 import com.google.common.collect.ImmutableList;
 import com.google.errorprone.annotations.CheckReturnValue;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Path;
+import java.text.ParseException;
 import lombok.NonNull;
 import lombok.ToString;
 
@@ -42,8 +44,8 @@ public final class CourseDerbyBackend extends DerbyBackend implements ICourseBac
     }
 
     @Override
-    public ICourse getCourseByCode(@NonNull String code) throws IOException, DatabaseCorruptedException, FileNotFoundException {
-        var e = this.getObject(CourseEntity.class, code);
+    public ICourse getCourseByCode(@NonNull String code) throws IOException, DatabaseCorruptedException, FileNotFoundException, ParseException {
+        var e = this.getObject(CourseEntity.class, ICourseCode.of(code).toEntity());
         if (e == null) {
             return null;
         }
@@ -56,8 +58,8 @@ public final class CourseDerbyBackend extends DerbyBackend implements ICourseBac
     }
 
     @Override
-    public boolean deleteCourseByCode(@NonNull String code) throws IOException {
-        return this.deleteObjectByID(CourseEntity.class, code);
+    public boolean deleteCourseByCode(@NonNull String code) throws IOException, ParseException {
+        return this.deleteObjectByID(CourseEntity.class, ICourseCode.of(code).toEntity());
     }
 
     @Override

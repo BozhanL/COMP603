@@ -29,9 +29,6 @@ public interface ICourse extends Serializable, IPrettyPrint, IToHibernateEntity<
         return Course.of(departmentCode, level, courseNumber, name, points, description);
     }
 
-//    Create a new ICourse object with new code
-    public abstract ICourse withCode(@NonNull ICourseCode code);
-
 //    Create a new ICourse object with new name
     public abstract ICourse withName(@NonNull String name);
 

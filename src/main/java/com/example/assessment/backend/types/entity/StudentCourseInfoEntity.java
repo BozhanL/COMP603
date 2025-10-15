@@ -6,6 +6,8 @@ import com.example.assessment.backend.types.enums.Grade;
 import com.example.assessment.backend.types.interfaces.IStudentCourseInfo;
 import com.google.errorprone.annotations.CheckReturnValue;
 import jakarta.persistence.Embeddable;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import java.time.LocalDate;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -23,6 +25,7 @@ public class StudentCourseInfoEntity implements IToImmutable<IStudentCourseInfo>
     @NonNull
     String courseCode;
     @NonNull
+    @Enumerated(EnumType.STRING)
     Grade grade;
     @NonNull
     LocalDate starts;

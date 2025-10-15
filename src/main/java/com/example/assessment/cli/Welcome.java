@@ -58,6 +58,7 @@ public class Welcome {
                     System.out.printf("Database = %s\n", path);
                 }
             } catch (IOException e) {
+                e.printStackTrace();
                 System.out.printf("Error: %s\n", e.getMessage());
             } catch (InvalidPathException e) {
                 System.out.println("Error: invalid path");

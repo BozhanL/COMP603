@@ -8,6 +8,8 @@ import com.google.errorprone.annotations.CheckReturnValue;
 import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import java.time.LocalDate;
@@ -42,6 +44,7 @@ public abstract class PersonEntity<T extends IPerson> implements IToImmutable<T>
     @NonNull
     protected LocalDate dateOfBirth;
     @NonNull
+    @Enumerated(EnumType.STRING)
     protected Gender gender;
 
     @NonNull

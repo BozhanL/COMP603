@@ -7,9 +7,11 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
 import java.io.IOException;
+import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Objects;
 import lombok.Cleanup;
 import lombok.Getter;
 import lombok.NonNull;
@@ -29,19 +31,28 @@ public abstract class DerbyBackend implements IBackend {
     @NonNull
     protected final SessionFactory sf;
 
+//    https://stackoverflow.com/a/5937917
+    private static boolean isDirEmpty(final Path directory) throws IOException {
+        try (DirectoryStream<Path> dirStream = Files.newDirectoryStream(directory)) {
+            return !dirStream.iterator().hasNext();
+        }
+    }
+
     protected DerbyBackend(@NonNull Path p) throws IOException {
         if (EMPTY.equals(p)) {
             throw new IllegalArgumentException("Path must not be empty!");
         }
 
-        Files.deleteIfExists(p);
+        if (Files.isDirectory(p) && isDirEmpty(p)) {
+            Files.deleteIfExists(p);
+        }
 
         this.db = String.format("jdbc:derby:%s;create=true", p.toAbsolutePath().normalize());
         System.out.println(this.db);
         this.sf = HibernateHelper.getSessionFactory(this.db);
     }
 
-    protected <T> T getObject(@NonNull Class<T> cl, @NonNull String id) {
+    protected <T> T getObject(@NonNull Class<T> cl, @NonNull Object id) {
         Session se = this.sf.getCurrentSession();
         @Cleanup("commit")
         Transaction _transaction = se.beginTransaction();
@@ -59,7 +70,7 @@ public abstract class DerbyBackend implements IBackend {
         se.flush();
     }
 
-    protected <T extends IEntity<?>> boolean deleteObjectByID(@NonNull Class<T> cl, @NonNull String id) {
+    protected <T extends IEntity<?>> boolean deleteObjectByID(@NonNull Class<T> cl, @NonNull Object id) {
         Session se = this.sf.getCurrentSession();
         @Cleanup("commit")
         Transaction _transaction = se.beginTransaction();
@@ -77,8 +88,7 @@ public abstract class DerbyBackend implements IBackend {
         Session se = this.sf.getCurrentSession();
         @Cleanup("commit")
         Transaction _transaction = se.beginTransaction();
-
-        se.persist(obj);
+        se.merge(obj);
     }
 
     protected <T extends IEntity<?>> ImmutableList<T> listObject(@NonNull Class<T> cl) {

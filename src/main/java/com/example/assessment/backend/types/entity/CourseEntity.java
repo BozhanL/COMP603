@@ -22,7 +22,7 @@ public class CourseEntity implements IToImmutable<ICourse>, IEntity<ICourse> {
 
     @NonNull
     @EmbeddedId
-    CourseCode code;
+    CourseCodeEntity code;
 
     @NonNull
     String name;
@@ -34,6 +34,6 @@ public class CourseEntity implements IToImmutable<ICourse>, IEntity<ICourse> {
 
     @Override
     public ICourse toImmutable() {
-        return ICourse.of(code, name, points, description);
+        return ICourse.of(code.toImmutable(), name, points, description);
     }
 }

@@ -160,7 +160,6 @@ public class CourseInputHandler {
         ICourse n = ori;
         while (true) {
 //            Print options
-            System.out.println("1. Change Course Code");
             System.out.println("2. Change Name");
             System.out.println("3. Change Points");
             System.out.println("4. Change Description");
@@ -174,14 +173,6 @@ public class CourseInputHandler {
 //            Execute
             try {
                 switch (choice) {
-                    case "1" -> {
-                        String deptCode = this.getDepartmentCode();
-                        int level = this.getCourseLevel();
-                        int courseNum = this.getCourseNumber();
-                        ICourseCode courseCode = ICourseCode.of(deptCode, level, courseNum);
-
-                        n = n.withCode(courseCode);
-                    }
                     case "2" ->
                         n = n.withName(this.getCourseName());
                     case "3" ->

@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
+import java.text.ParseException;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import lombok.Value;
@@ -76,7 +77,7 @@ public class CombinedBackend implements ICombinedBackend {
     }
 
     @Override
-    public ICourse getCourseByCode(@NonNull String code) throws IOException, DatabaseCorruptedException, FileNotFoundException {
+    public ICourse getCourseByCode(@NonNull String code) throws IOException, DatabaseCorruptedException, FileNotFoundException, ParseException {
         return this.cb.getCourseByCode(code);
     }
 
@@ -87,7 +88,7 @@ public class CombinedBackend implements ICombinedBackend {
 
     @Override
     @CanIgnoreReturnValue
-    public boolean deleteCourseByCode(@NonNull String code) throws IOException {
+    public boolean deleteCourseByCode(@NonNull String code) throws IOException, ParseException {
         return this.cb.deleteCourseByCode(code);
     }
 

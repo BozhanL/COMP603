@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
+import java.text.ParseException;
 import lombok.NonNull;
 
 // This is the interface for managing course
@@ -29,7 +30,7 @@ public interface ICourseBackend extends IBackend {
     }
 
 //    Return a Course with same course code as argument
-    public abstract ICourse getCourseByCode(@NonNull String code) throws IOException, DatabaseCorruptedException, FileNotFoundException;
+    public abstract ICourse getCourseByCode(@NonNull String code) throws IOException, DatabaseCorruptedException, FileNotFoundException, ParseException;
 
 //    Store the Course
 //    If the Course already exist in database, throw FileAlreadyExistsException
@@ -37,7 +38,7 @@ public interface ICourseBackend extends IBackend {
 
 //    Delete the Course with same course code
     @CanIgnoreReturnValue
-    public abstract boolean deleteCourseByCode(@NonNull String code) throws IOException;
+    public abstract boolean deleteCourseByCode(@NonNull String code) throws IOException, ParseException;
 
 //    Change the Course
     public abstract void modifyCourse(@NonNull ICourse c) throws IOException;

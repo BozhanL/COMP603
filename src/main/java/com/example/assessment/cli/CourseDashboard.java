@@ -9,7 +9,10 @@ import com.google.errorprone.annotations.CheckReturnValue;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.FileAlreadyExistsException;
+import java.text.ParseException;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 
@@ -118,6 +121,9 @@ public final class CourseDashboard implements IDashboard {
         } catch (DatabaseCorruptedException ex) {
             System.out.println("Error: data corrupted, try another course");
             return;
+        } catch (ParseException ex) {
+            Logger.getLogger(CourseDashboard.class.getName()).log(Level.SEVERE, null, ex);
+            return;
         }
 
 //        print the course
@@ -146,6 +152,9 @@ public final class CourseDashboard implements IDashboard {
             return;
         } catch (DatabaseCorruptedException ex) {
             System.out.println("Error: data corrupted, try another course");
+            return;
+        } catch (ParseException ex) {
+            Logger.getLogger(CourseDashboard.class.getName()).log(Level.SEVERE, null, ex);
             return;
         }
 
@@ -196,6 +205,8 @@ public final class CourseDashboard implements IDashboard {
         } catch (IOException ex) {
 //            Fix spell by Copilot
             System.out.println("Error: " + ex.getMessage());
+        } catch (ParseException ex) {
+            Logger.getLogger(CourseDashboard.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

@@ -7,6 +7,7 @@ import com.google.errorprone.annotations.CheckReturnValue;
 import com.google.errorprone.annotations.Immutable;
 import java.io.Serial;
 import java.text.ParseException;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import lombok.Value;
@@ -26,6 +27,7 @@ public class Course implements ICourse {
     private static final long serialVersionUID = 1L;
 
     @NonNull
+    @With(AccessLevel.NONE)
     ICourseCode code;
     @NonNull
     String name;
@@ -71,6 +73,6 @@ public class Course implements ICourse {
 
     @Override
     public CourseEntity toEntity() {
-        return CourseEntity.of(CourseCode.of(code.getDepartmentCode(), code.getLevel(), code.getCourseNumber()), name, points, description);
+        return CourseEntity.of(code.toEntity(), name, points, description);
     }
 }
