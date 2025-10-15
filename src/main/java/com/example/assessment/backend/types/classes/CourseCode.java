@@ -34,7 +34,7 @@ public class CourseCode implements ICourseCode {
 //    This constructor will take the string form of course code and parse it to
 //    three parts.
 //    Throw exceptions when code is not valid
-    private CourseCode(@NonNull String code) throws ParseException, NumberFormatException, IndexOutOfBoundsException {
+    private CourseCode(@NonNull String code) throws ParseException {
         this.departmentCode = code.replaceAll("\\d", "");
         String nums = code.replaceAll("[^\\d]", "");
         this.level = Integer.parseInt(nums.substring(0, 1));
@@ -45,7 +45,7 @@ public class CourseCode implements ICourseCode {
         }
     }
 
-    private CourseCode(@NonNull String departmentCode, int level, int courseNumber) throws IllegalArgumentException {
+    private CourseCode(@NonNull String departmentCode, int level, int courseNumber) {
         if (departmentCode.isBlank()) {
             throw new IllegalArgumentException("departmentCode must not be blank!");
         }
@@ -59,13 +59,13 @@ public class CourseCode implements ICourseCode {
         return new CourseCode(departmentCode, level, courseNumber);
     }
 
-    public static CourseCode of(@NonNull String code) throws ParseException, NumberFormatException, IndexOutOfBoundsException {
+    public static CourseCode of(@NonNull String code) throws ParseException {
         return new CourseCode(code);
     }
 
 //    Create a new ICourseCode with new departmentCode
     @Override
-    public ICourseCode withDepartmentCode(@NonNull String departmentCode) throws IllegalArgumentException {
+    public ICourseCode withDepartmentCode(@NonNull String departmentCode) {
         if (departmentCode.isBlank()) {
             throw new IllegalArgumentException("departmentCode must not be blank!");
         }

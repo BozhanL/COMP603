@@ -35,19 +35,19 @@ public class Course implements ICourse {
     @NonNull
     String description;
 
-    public Course(@NonNull String code, @NonNull String name, int points, @NonNull String description) throws ParseException, NumberFormatException, IndexOutOfBoundsException {
+    public Course(@NonNull String code, @NonNull String name, int points, @NonNull String description) throws ParseException {
         this(ICourseCode.of(code), name, points, description);
     }
 
-    public Course(@NonNull String departmentCode, int level, int courseNumber, @NonNull String name, int points, @NonNull String description) throws IllegalArgumentException {
+    public Course(@NonNull String departmentCode, int level, int courseNumber, @NonNull String name, int points, @NonNull String description) {
         this(ICourseCode.of(departmentCode, level, courseNumber), name, points, description);
     }
 
-    public static Course of(@NonNull String code, @NonNull String name, int points, @NonNull String description) throws ParseException, NumberFormatException, IndexOutOfBoundsException {
+    public static Course of(@NonNull String code, @NonNull String name, int points, @NonNull String description) throws ParseException {
         return new Course(code, name, points, description);
     }
 
-    public static Course of(@NonNull String departmentCode, int level, int courseNumber, @NonNull String name, int points, @NonNull String description) throws IllegalArgumentException {
+    public static Course of(@NonNull String departmentCode, int level, int courseNumber, @NonNull String name, int points, @NonNull String description) {
         return new Course(departmentCode, level, courseNumber, name, points, description);
     }
 

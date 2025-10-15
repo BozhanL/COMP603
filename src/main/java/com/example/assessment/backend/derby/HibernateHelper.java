@@ -24,7 +24,7 @@ public class HibernateHelper {
     private static final HashMap<String, SessionFactory> sfm = new HashMap<>();
     private static final Pattern NORMAL_SHUTDOWN_PATTERN = Pattern.compile("^Database '.*' shutdown\\.$");
 
-    public static synchronized SessionFactory getSessionFactory(String db) {
+    public static synchronized SessionFactory getSessionFactory(String db) throws IllegalStateException {
         if (!sfm.containsKey(db)) {
             Configuration configuration = new Configuration();
 

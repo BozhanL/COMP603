@@ -1,6 +1,5 @@
 package com.example.assessment.cli;
 
-import com.example.assessment.backend.generic.DatabaseCorruptedException;
 import com.example.assessment.backend.generic.IPersonBackend;
 import com.example.assessment.backend.types.enums.Gender;
 import com.example.assessment.backend.types.enums.Residency;
@@ -9,9 +8,6 @@ import com.example.assessment.backend.types.interfaces.IManager;
 import com.example.assessment.backend.types.interfaces.IStudent;
 import com.google.common.collect.ImmutableList;
 import com.google.errorprone.annotations.CheckReturnValue;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.nio.file.FileAlreadyExistsException;
 import java.time.LocalDate;
 import java.util.Scanner;
 import lombok.AllArgsConstructor;
@@ -97,17 +93,9 @@ public final class PersonDashboard implements IDashboard {
 //        Max retry is 3
         for (int i = 0; i < 3; i++) {
             success = true;
-            try {
 //                Store the person
-                this.personBackend.setPerson(student);
-                break;
-            } catch (FileAlreadyExistsException e) {
-                System.out.println("Error: Student already exist! returing to menu");
-                return;
-            } catch (IOException e) {
-                System.out.println("Error: " + e.getMessage());
-                success = false;
-            }
+            this.personBackend.setPerson(student);
+            break;
         }
 
         if (!success) {
@@ -122,19 +110,8 @@ public final class PersonDashboard implements IDashboard {
             String id = personInputHandler.getId();
 
             IStudent st;
-            try {
 //                Get it from database
-                st = this.personBackend.getStudentById(id);
-            } catch (FileNotFoundException ex) {
-                System.out.println("Error: user does not exist");
-                continue;
-            } catch (IOException ex) {
-                System.out.println("Error: " + ex.getMessage());
-                continue;
-            } catch (DatabaseCorruptedException ex) {
-                System.out.println("Error: data corrupted, try another user");
-                continue;
-            }
+            st = this.personBackend.getStudentById(id);
 
 //            print the student's information
             System.out.println(st.prettyToString());
@@ -149,19 +126,8 @@ public final class PersonDashboard implements IDashboard {
             String id = personInputHandler.getId();
 
             IStudent st;
-            try {
 //                Get it from database
-                st = this.personBackend.getStudentById(id);
-            } catch (FileNotFoundException ex) {
-                System.out.println("Error: user does not exist");
-                continue;
-            } catch (IOException ex) {
-                System.out.println("Error: " + ex.getMessage());
-                continue;
-            } catch (DatabaseCorruptedException ex) {
-                System.out.println("Error: data corrupted, try another user");
-                continue;
-            }
+            st = this.personBackend.getStudentById(id);
 
 //            Get the modified one
             st = personInputHandler.getModifiedStudent(st);
@@ -170,14 +136,9 @@ public final class PersonDashboard implements IDashboard {
 //            Max retry is 3
             for (int i = 0; i < 3; i++) {
                 success = true;
-                try {
 //                    Store it to database
-                    this.personBackend.modifyPerson(st);
-                    break;
-                } catch (IOException ex) {
-                    System.out.println("Error: " + ex.getMessage());
-                    success = false;
-                }
+                this.personBackend.modifyPerson(st);
+                break;
             }
 
             if (!success) {
@@ -195,17 +156,9 @@ public final class PersonDashboard implements IDashboard {
 //        Max retry is 3
         for (int i = 0; i < 3; i++) {
             success = true;
-            try {
 //                Get the student from backend
-                li = this.personBackend.listStudent();
-                break;
-            } catch (IOException ex) {
-                System.out.println("Error: " + ex.getMessage());
-                success = false;
-            } catch (DatabaseCorruptedException ex) {
-                System.out.println("Error: data corrupted, aborty");
-                return;
-            }
+            li = this.personBackend.listStudent();
+            break;
         }
         if (!success || li == null) {
             System.out.println("Error: Unable to list student!");
@@ -223,12 +176,8 @@ public final class PersonDashboard implements IDashboard {
     private void deleteStudent() throws StopOperationException {
 //            Get the id of student
         String id = personInputHandler.getId();
-        try {
 //            Delete the student
-            this.personBackend.deletePersonById(id);
-        } catch (IOException ex) {
-            System.out.println("Error: " + ex.getMessage());
-        }
+        this.personBackend.deletePersonById(id);
     }
 
 //    Add a manager to the database
@@ -251,17 +200,9 @@ public final class PersonDashboard implements IDashboard {
 //        Max retry is 3
         for (int i = 0; i < 3; i++) {
             success = true;
-            try {
 //                Store the person
-                this.personBackend.setPerson(ma);
-                break;
-            } catch (FileAlreadyExistsException e) {
-                System.out.println("Error: Student already exist! returing to menu");
-                return;
-            } catch (IOException e) {
-                System.out.println("Error: " + e.getMessage());
-                success = false;
-            }
+            this.personBackend.setPerson(ma);
+            break;
         }
 
         if (!success) {
@@ -276,19 +217,8 @@ public final class PersonDashboard implements IDashboard {
             String id = personInputHandler.getId();
 
             IManager ma;
-            try {
 //                Get it from database
-                ma = this.personBackend.getManagerById(id);
-            } catch (FileNotFoundException ex) {
-                System.out.println("Error: user does not exist");
-                continue;
-            } catch (IOException ex) {
-                System.out.println("Error: " + ex.getMessage());
-                continue;
-            } catch (DatabaseCorruptedException ex) {
-                System.out.println("Error: data corrupted, try another user");
-                continue;
-            }
+            ma = this.personBackend.getManagerById(id);
 
 //            print the manager's information
             System.out.println(ma.prettyToString());
@@ -303,19 +233,8 @@ public final class PersonDashboard implements IDashboard {
             String id = personInputHandler.getId();
 
             IManager ma;
-            try {
 //                Get it from database
-                ma = this.personBackend.getManagerById(id);
-            } catch (FileNotFoundException ex) {
-                System.out.println("Error: user does not exist");
-                continue;
-            } catch (IOException ex) {
-                System.out.println("Error: " + ex.getMessage());
-                continue;
-            } catch (DatabaseCorruptedException ex) {
-                System.out.println("Error: data corrupted, try another user");
-                continue;
-            }
+            ma = this.personBackend.getManagerById(id);
 
 //            Get the modified one
             ma = personInputHandler.getModifiedManager(ma);
@@ -324,14 +243,9 @@ public final class PersonDashboard implements IDashboard {
 //            Max retry is 3
             for (int i = 0; i < 3; i++) {
                 success = true;
-                try {
 //                    Store it to database
-                    this.personBackend.modifyPerson(ma);
-                    break;
-                } catch (IOException ex) {
-                    System.out.println("Error: " + ex.getMessage());
-                    success = false;
-                }
+                this.personBackend.modifyPerson(ma);
+                break;
             }
 
             if (!success) {
@@ -349,17 +263,9 @@ public final class PersonDashboard implements IDashboard {
 //        Max retry is 3
         for (int i = 0; i < 3; i++) {
             success = true;
-            try {
 //                Get the manager from backend
-                li = this.personBackend.listManager();
-                break;
-            } catch (IOException ex) {
-                System.out.println("Error: " + ex.getMessage());
-                success = false;
-            } catch (DatabaseCorruptedException ex) {
-                System.out.println("Error: data corrupted, aborty");
-                return;
-            }
+            li = this.personBackend.listManager();
+            break;
         }
         if (!success || li == null) {
             System.out.println("Error: Unable to list student!");
@@ -377,12 +283,8 @@ public final class PersonDashboard implements IDashboard {
     private void deleteManager() throws StopOperationException {
 //            Get the id of manager
         String id = personInputHandler.getId();
-        try {
 //            Delete the manager
-            this.personBackend.deletePersonById(id);
-        } catch (IOException ex) {
-            System.out.println("Error: " + ex.getMessage());
-        }
+        this.personBackend.deletePersonById(id);
     }
 
     private static void printMenu() {

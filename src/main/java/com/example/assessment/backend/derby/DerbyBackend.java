@@ -1,5 +1,6 @@
 package com.example.assessment.backend.derby;
 
+import com.example.assessment.backend.generic.DatabaseCorruptedException;
 import com.example.assessment.backend.generic.IBackend;
 import com.google.common.collect.ImmutableList;
 import com.google.errorprone.annotations.CheckReturnValue;
@@ -30,14 +31,14 @@ public abstract class DerbyBackend implements IBackend {
     @NonNull
     protected final SessionFactory sf;
 
-//    https://stackoverflow.com/a/5937917
+//    Copied from: https://stackoverflow.com/a/5937917
     private static boolean isDirEmpty(final Path directory) throws IOException {
         try (DirectoryStream<Path> dirStream = Files.newDirectoryStream(directory)) {
             return !dirStream.iterator().hasNext();
         }
     }
 
-    protected DerbyBackend(@NonNull Path p) throws IOException {
+    protected DerbyBackend(@NonNull Path p) throws IOException, DatabaseCorruptedException {
         if (EMPTY.equals(p)) {
             throw new IllegalArgumentException("Path must not be empty!");
         }
@@ -48,7 +49,11 @@ public abstract class DerbyBackend implements IBackend {
 
         this.db = String.format("jdbc:derby:%s;create=true", p.toAbsolutePath().normalize());
 
-        this.sf = HibernateHelper.getSessionFactory(this.db);
+        try {
+            this.sf = HibernateHelper.getSessionFactory(this.db);
+        } catch (IllegalStateException e) {
+            throw new DatabaseCorruptedException(e);
+        }
     }
 
     protected <T> T getObject(@NonNull Class<T> cl, @NonNull Object id) {

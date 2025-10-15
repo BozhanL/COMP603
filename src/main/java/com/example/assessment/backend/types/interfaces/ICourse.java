@@ -20,12 +20,12 @@ public interface ICourse extends Serializable, IPrettyPrint, IToHibernateEntity<
     }
 
 //    Static construtor to create ICourse
-    public static ICourse of(@NonNull String code, @NonNull String name, int points, @NonNull String description) throws ParseException, NumberFormatException, IndexOutOfBoundsException {
+    public static ICourse of(@NonNull String code, @NonNull String name, int points, @NonNull String description) throws ParseException {
         return Course.of(code, name, points, description);
     }
 
 //    Static construtor to create ICourse
-    public static ICourse of(@NonNull String departmentCode, int level, int courseNumber, @NonNull String name, int points, @NonNull String description) throws IllegalArgumentException {
+    public static ICourse of(@NonNull String departmentCode, int level, int courseNumber, @NonNull String name, int points, @NonNull String description) {
         return Course.of(departmentCode, level, courseNumber, name, points, description);
     }
 

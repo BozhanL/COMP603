@@ -1,14 +1,10 @@
 package com.example.assessment.cli;
 
-import com.example.assessment.backend.generic.DatabaseCorruptedException;
 import com.example.assessment.backend.generic.ICourseBackend;
 import com.example.assessment.backend.types.interfaces.ICourse;
 import com.example.assessment.backend.types.interfaces.ICourseCode;
 import com.google.common.collect.ImmutableList;
 import com.google.errorprone.annotations.CheckReturnValue;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.nio.file.FileAlreadyExistsException;
 import java.text.ParseException;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -87,15 +83,10 @@ public final class CourseDashboard implements IDashboard {
 
         // save
         ICourse newCourse = ICourse.of(courseCode, name, points, description);
-        try {
-            courseBackend.setCourse(newCourse);
-            // use backend function
-            System.out.println("Course " + newCourse.getCode() + " created successfully!");
-        } catch (FileAlreadyExistsException e) {
-            System.out.println("Error: Course already exists");
-        } catch (IOException e) {
-            System.out.println("Error: " + e.getMessage());
-        }
+
+        courseBackend.setCourse(newCourse);
+        // use backend function
+        System.out.println("Course " + newCourse.getCode() + " created successfully!");
     }
 
 //    Get a course by course code
@@ -110,17 +101,8 @@ public final class CourseDashboard implements IDashboard {
 
         ICourse c;
         try {
-//            Get the course from backend
+            //            Get the course from backend
             c = courseBackend.getCourseByCode(courseCode.toString());
-        } catch (FileNotFoundException ex) {
-            System.out.println("Error: course not found");
-            return;
-        } catch (IOException ex) {
-            System.out.println("Error: " + ex.getMessage());
-            return;
-        } catch (DatabaseCorruptedException ex) {
-            System.out.println("Error: data corrupted, try another course");
-            return;
         } catch (ParseException ex) {
             Logger.getLogger(CourseDashboard.class.getName()).log(Level.SEVERE, null, ex);
             return;
@@ -142,17 +124,8 @@ public final class CourseDashboard implements IDashboard {
 
         ICourse c;
         try {
-//            Get the course from backend
+            //            Get the course from backend
             c = courseBackend.getCourseByCode(courseCode.toString());
-        } catch (FileNotFoundException ex) {
-            System.out.println("Error: course not found");
-            return;
-        } catch (IOException ex) {
-            System.out.println("Error: " + ex.getMessage());
-            return;
-        } catch (DatabaseCorruptedException ex) {
-            System.out.println("Error: data corrupted, try another course");
-            return;
         } catch (ParseException ex) {
             Logger.getLogger(CourseDashboard.class.getName()).log(Level.SEVERE, null, ex);
             return;
@@ -160,27 +133,15 @@ public final class CourseDashboard implements IDashboard {
 
 //        Modify the course
         c = inputHandler.getModifiedCourse(c);
-        try {
 //            Store it to the database
-            courseBackend.modifyCourse(c);
-        } catch (IOException ex) {
-            System.out.println("Error: " + ex.getMessage());
-        }
+        courseBackend.modifyCourse(c);
     }
 
 //    List all course from database
     private void listCourse() {
         ImmutableList<ICourse> cs;
-        try {
 //            List all course
-            cs = courseBackend.listCourse();
-        } catch (IOException ex) {
-            System.out.println("Error: " + ex.getMessage());
-            return;
-        } catch (DatabaseCorruptedException ex) {
-            System.out.println("Error: data corrupted");
-            return;
-        }
+        cs = courseBackend.listCourse();
 
 //        print course one by one
         for (ICourse c : cs) {
@@ -200,11 +161,8 @@ public final class CourseDashboard implements IDashboard {
         ICourseCode courseCode = ICourseCode.of(deptCode, level, courseNum);
 
         try {
-//            Delete the course
+            //            Delete the course
             courseBackend.deleteCourseByCode(courseCode.toString());
-        } catch (IOException ex) {
-//            Fix spell by Copilot
-            System.out.println("Error: " + ex.getMessage());
         } catch (ParseException ex) {
             Logger.getLogger(CourseDashboard.class.getName()).log(Level.SEVERE, null, ex);
         }

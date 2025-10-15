@@ -32,7 +32,7 @@ public class HibernateHelperTest {
     }
 
     @BeforeEach
-    public void setUp() throws IOException {
+    public void setUp()  {
         tempFolders.clear();
 
         // Generate 5 temporary folders inside baseTempDir
@@ -43,7 +43,7 @@ public class HibernateHelperTest {
     }
 
     @AfterEach
-    public void tearDown() throws SQLException {
+    public void tearDown()  {
         for (Path p : tempFolders) {
             String db = getDb(p);
             HibernateHelper.closeSessionFactory(db);

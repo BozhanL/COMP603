@@ -20,12 +20,12 @@ public interface ICourseCode extends Serializable, IPrettyPrint, IToHibernateEnt
     }
 
 //    Static construtor to create ICourseCode
-    public static ICourseCode of(@NonNull String code) throws ParseException, NumberFormatException, IndexOutOfBoundsException {
+    public static ICourseCode of(@NonNull String code) throws ParseException {
         return CourseCode.of(code);
     }
 
 //    Create a new IAddress object with new departmentCode
-    public abstract ICourseCode withDepartmentCode(@NonNull String departmentCode) throws IllegalArgumentException;
+    public abstract ICourseCode withDepartmentCode(@NonNull String departmentCode);
 
 //    Create a new IAddress object with new level
     public abstract ICourseCode withLevel(int level);

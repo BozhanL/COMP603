@@ -40,17 +40,17 @@ public class IPersonBackendTest {
     }
 
     @BeforeEach
-    public void setUp() throws IOException, IllegalArgumentException, DatabaseCorruptedException {
+    public void setUp()  {
         this.pfb = IPersonBackend.of(folder);
     }
 
     @AfterEach
-    public void tearDown() throws SQLException {
+    public void tearDown()  {
         HibernateHelper.closeSessionFactory(this.pfb.getDb());
     }
 
     @Test
-    void testSetAndGetStudent() throws IOException, DatabaseCorruptedException {
+    void testSetAndGetStudent()  {
         IAddress a = IAddress.of("", "561", "Blockhouse Bay Road", "Blockhouse Bay", "Auckland", "Auckland", "NZ", "0600");
         HashMap<String, IStudentCourseInfo> sci = new HashMap<>();
         sci.put("COMP500", IStudentCourseInfo.of("COMP500", Grade.AP, LocalDate.of(2024, 2, 12), "City"));
@@ -64,7 +64,7 @@ public class IPersonBackendTest {
     }
 
     @Test
-    void testGetDefaultManager() throws IOException, DatabaseCorruptedException {
+    void testGetDefaultManager()  {
         IManager DEFAULT_MANAGER = IManager.defaultManager();
         IManager id = this.pfb.getManagerById("admin");
 
@@ -72,7 +72,7 @@ public class IPersonBackendTest {
     }
 
     @Test
-    void testDeletePerson() throws IOException, DatabaseCorruptedException {
+    void testDeletePerson()  {
         IAddress a = IAddress.of("", "561", "Blockhouse Bay Road", "Blockhouse Bay", "Auckland", "Auckland", "NZ", "0600");
         HashMap<String, IStudentCourseInfo> sci = new HashMap<>();
         sci.put("COMP500", IStudentCourseInfo.of("COMP500", Grade.AP, LocalDate.of(2024, 2, 12), "City"));
@@ -85,7 +85,7 @@ public class IPersonBackendTest {
     }
 
     @Test
-    void testSetExistPerson() throws IOException, DatabaseCorruptedException {
+    void testSetExistPerson()  {
         IAddress a = IAddress.of("", "561", "Blockhouse Bay Road", "Blockhouse Bay", "Auckland", "Auckland", "NZ", "0600");
         HashMap<String, IStudentCourseInfo> sci = new HashMap<>();
         sci.put("COMP500", IStudentCourseInfo.of("COMP500", Grade.AP, LocalDate.of(2024, 2, 12), "City"));

@@ -3,7 +3,6 @@ package com.example.assessment.cli;
 import com.example.assessment.backend.generic.ICombinedBackend;
 import com.example.assessment.backend.types.interfaces.IStudent;
 import com.google.errorprone.annotations.CheckReturnValue;
-import java.io.IOException;
 import java.util.Scanner;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
@@ -70,15 +69,10 @@ public class StudentDashboard implements IMainDashboard {
 //        Max retry is 3
         for (int i = 0; i < 3; i++) {
             success = true;
-            try {
 //                modify the student in database
-                this.cb.modifyPerson(this.p);
+            this.cb.modifyPerson(this.p);
 //                exit the loop
-                break;
-            } catch (IOException ex) {
-                System.out.println("Error: " + ex.getMessage());
-                success = false;
-            }
+            break;
         }
 
 //        print error message is failed after three tries

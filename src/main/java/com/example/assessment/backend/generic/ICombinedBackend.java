@@ -2,7 +2,6 @@ package com.example.assessment.backend.generic;
 
 import com.google.errorprone.annotations.CheckReturnValue;
 import java.io.IOException;
-import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import lombok.NonNull;
 
@@ -10,15 +9,15 @@ import lombok.NonNull;
 @CheckReturnValue
 public interface ICombinedBackend extends IPersonBackend, ICourseBackend {
 
-    public static ICombinedBackend of() throws IOException, IllegalArgumentException, DatabaseCorruptedException {
+    public static ICombinedBackend of() throws IOException, DatabaseCorruptedException {
         return CombinedBackend.of();
     }
 
-    public static ICombinedBackend of(@NonNull String p) throws IOException, IllegalArgumentException, InvalidPathException, DatabaseCorruptedException {
+    public static ICombinedBackend of(@NonNull String p) throws IOException, DatabaseCorruptedException {
         return CombinedBackend.of(p);
     }
 
-    public static ICombinedBackend of(@NonNull Path p) throws IOException, IllegalArgumentException, DatabaseCorruptedException {
+    public static ICombinedBackend of(@NonNull Path p) throws IOException, DatabaseCorruptedException {
         return CombinedBackend.of(p);
     }
 

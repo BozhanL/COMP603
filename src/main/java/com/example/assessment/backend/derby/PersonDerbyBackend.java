@@ -7,9 +7,7 @@ import com.example.assessment.backend.types.interfaces.IManager;
 import com.example.assessment.backend.types.interfaces.IPerson;
 import com.google.common.collect.ImmutableList;
 import com.google.errorprone.annotations.CheckReturnValue;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Path;
 import lombok.NonNull;
 import lombok.ToString;
@@ -47,22 +45,22 @@ public final class PersonDerbyBackend extends DerbyBackend implements IPersonBac
     }
 
     @Override
-    public void setPerson(@NonNull IPerson p) throws IOException, FileAlreadyExistsException {
+    public void setPerson(@NonNull IPerson p) {
         this.setObject(p.toEntity());
     }
 
     @Override
-    public boolean deletePersonById(@NonNull String id) throws IOException {
+    public boolean deletePersonById(@NonNull String id) {
         return this.deleteObjectByID(PersonEntity.class, id);
     }
 
     @Override
-    public void modifyPerson(@NonNull IPerson p) throws IOException {
+    public void modifyPerson(@NonNull IPerson p) {
         this.modifyObject(p.toEntity());
     }
 
     @Override
-    public IPerson getPersonById(@NonNull String id) throws IOException, DatabaseCorruptedException, FileNotFoundException {
+    public IPerson getPersonById(@NonNull String id) {
         var e = (PersonEntity<? extends IPerson>) this.getObject(PersonEntity.class, id);
         if (e == null) {
             return null;
@@ -71,7 +69,7 @@ public final class PersonDerbyBackend extends DerbyBackend implements IPersonBac
     }
 
     @Override
-    public ImmutableList<IPerson> listPerson() throws IOException, DatabaseCorruptedException {
+    public ImmutableList<IPerson> listPerson() {
         var e = this.listObject(PersonEntity.class);
         return e.stream().map(PersonEntity<IPerson>::toImmutable).collect(ImmutableList.toImmutableList());
     }
