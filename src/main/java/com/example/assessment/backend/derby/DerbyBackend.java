@@ -11,7 +11,6 @@ import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
-import java.util.Objects;
 import lombok.Cleanup;
 import lombok.Getter;
 import lombok.NonNull;
@@ -48,7 +47,7 @@ public abstract class DerbyBackend implements IBackend {
         }
 
         this.db = String.format("jdbc:derby:%s;create=true", p.toAbsolutePath().normalize());
-        System.out.println(this.db);
+
         this.sf = HibernateHelper.getSessionFactory(this.db);
     }
 

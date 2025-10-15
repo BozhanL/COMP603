@@ -5,7 +5,6 @@ import com.example.assessment.backend.types.interfaces.IAddress;
 import com.google.errorprone.annotations.CheckReturnValue;
 import com.google.errorprone.annotations.Immutable;
 import java.io.Serial;
-import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import lombok.Value;
 import lombok.With;
@@ -13,10 +12,9 @@ import lombok.With;
 // This class implements IAddress,
 // and used to store information about person addrsss
 @With
-@Value
 @Immutable
 @CheckReturnValue
-@AllArgsConstructor(staticName = "of")
+@Value(staticConstructor = "of")
 public class Address implements IAddress {
 
     @Serial

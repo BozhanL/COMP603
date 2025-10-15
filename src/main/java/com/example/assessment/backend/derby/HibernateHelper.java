@@ -66,7 +66,6 @@ public class HibernateHelper {
     }
 
     private static boolean isNormalShutdown(SQLException e) {
-        System.out.println(e.getMessage());
         return "08006".equals(e.getSQLState()) && NORMAL_SHUTDOWN_PATTERN.matcher(e.getMessage()).matches();
     }
 }

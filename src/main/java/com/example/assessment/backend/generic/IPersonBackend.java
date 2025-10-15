@@ -70,14 +70,14 @@ public interface IPersonBackend extends IBackend {
 //    List all Student in the database
     public default ImmutableList<IStudent> listStudent() throws IOException, DatabaseCorruptedException {
         ImmutableList<IPerson> p = this.listPerson();
-        ImmutableList<IStudent> out = p.stream().filter(IStudent.class::isInstance).map(person -> (IStudent) person).collect(ImmutableList.toImmutableList());
+        ImmutableList<IStudent> out = p.stream().filter(IStudent.class::isInstance).map(IStudent.class::cast).collect(ImmutableList.toImmutableList());
         return out;
     }
 
 //    List all Manager in the database
     public default ImmutableList<IManager> listManager() throws IOException, DatabaseCorruptedException {
         ImmutableList<IPerson> p = this.listPerson();
-        ImmutableList<IManager> out = p.stream().filter(IManager.class::isInstance).map(person -> (IManager) person).collect(ImmutableList.toImmutableList());
+        ImmutableList<IManager> out = p.stream().filter(IManager.class::isInstance).map(IManager.class::cast).collect(ImmutableList.toImmutableList());
         return out;
     }
 }
