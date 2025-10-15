@@ -17,33 +17,36 @@ import lombok.ToString;
 @ToString(callSuper = true)
 public final class CourseDerbyBackend extends DerbyBackend implements ICourseBackend {
 
-    private CourseDerbyBackend() {
+    private CourseDerbyBackend() throws IOException {
         this(DEFAULT_DATA_LOCATION);
     }
 
-    private CourseDerbyBackend(@NonNull String p) {
+    private CourseDerbyBackend(@NonNull String p) throws IOException {
         this(Path.of(p));
     }
 
-    private CourseDerbyBackend(@NonNull Path p) {
+    private CourseDerbyBackend(@NonNull Path p) throws IOException {
         super(p);
     }
 
-    public static CourseDerbyBackend of() {
+    public static CourseDerbyBackend of() throws IOException {
         return new CourseDerbyBackend();
     }
 
-    public static CourseDerbyBackend of(@NonNull String p) {
+    public static CourseDerbyBackend of(@NonNull String p) throws IOException {
         return new CourseDerbyBackend(p);
     }
 
-    public static CourseDerbyBackend of(@NonNull Path p) {
+    public static CourseDerbyBackend of(@NonNull Path p) throws IOException {
         return new CourseDerbyBackend(p);
     }
 
     @Override
     public ICourse getCourseByCode(@NonNull String code) throws IOException, DatabaseCorruptedException, FileNotFoundException {
         var e = this.getObject(CourseEntity.class, code);
+        if (e == null) {
+            return null;
+        }
         return e.toImmutable();
     }
 

@@ -70,8 +70,8 @@ public class Welcome {
     }
 
 //    Login to the system
-    public IPerson<?> login(@NonNull IPersonBackend pb) {
-        IPerson<?> p = null;
+    public IPerson login(@NonNull IPersonBackend pb) {
+        IPerson p = null;
 
         while (true) {
 //            Get person from ID

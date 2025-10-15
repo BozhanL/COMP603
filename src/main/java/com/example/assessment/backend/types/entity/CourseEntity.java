@@ -1,5 +1,6 @@
 package com.example.assessment.backend.types.entity;
 
+import com.example.assessment.backend.derby.IEntity;
 import com.example.assessment.backend.derby.IToImmutable;
 import com.example.assessment.backend.types.classes.CourseCode;
 import com.example.assessment.backend.types.interfaces.ICourse;
@@ -17,7 +18,7 @@ import lombok.NonNull;
 @CheckReturnValue
 @AllArgsConstructor(staticName = "of")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class CourseEntity implements IToImmutable<ICourse> {
+public class CourseEntity implements IToImmutable<ICourse>, IEntity<ICourse> {
 
     @NonNull
     @EmbeddedId

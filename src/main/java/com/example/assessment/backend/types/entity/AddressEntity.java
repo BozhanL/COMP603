@@ -1,5 +1,6 @@
 package com.example.assessment.backend.types.entity;
 
+import com.example.assessment.backend.derby.IEntity;
 import com.example.assessment.backend.derby.IToImmutable;
 import com.example.assessment.backend.types.interfaces.IAddress;
 import com.google.errorprone.annotations.CheckReturnValue;
@@ -15,7 +16,7 @@ import lombok.NonNull;
 @CheckReturnValue
 @AllArgsConstructor(staticName = "of")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class AddressEntity implements IToImmutable<IAddress> {
+public class AddressEntity implements IToImmutable<IAddress>, IEntity<IAddress> {
 
     @NonNull
     String unit;

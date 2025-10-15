@@ -1,6 +1,5 @@
 package com.example.assessment.backend.types.classes;
 
-import com.example.assessment.backend.types.entity.PersonEntity;
 import com.example.assessment.backend.types.enums.Gender;
 import com.example.assessment.backend.types.interfaces.IAddress;
 import com.example.assessment.backend.types.interfaces.IPerson;
@@ -25,7 +24,7 @@ import lombok.experimental.NonFinal;
 @NonFinal
 @Immutable
 @CheckReturnValue
-public abstract class Person<T extends PersonEntity<?>> implements IPerson<T> {
+public abstract class Person implements IPerson {
 
     @Serial
     private static final long serialVersionUID = 1L;

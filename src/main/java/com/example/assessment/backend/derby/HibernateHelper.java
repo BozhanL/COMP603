@@ -10,6 +10,7 @@ import com.example.assessment.backend.types.entity.StudentEntity;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.regex.Pattern;
 import lombok.experimental.UtilityClass;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
@@ -20,7 +21,8 @@ import org.hibernate.cfg.Configuration;
 @UtilityClass
 public class HibernateHelper {
 
-    static final HashMap<String, SessionFactory> sfm = new HashMap<>();
+    private static final HashMap<String, SessionFactory> sfm = new HashMap<>();
+    private static final Pattern NORMAL_SHUTDOWN_PATTERN = Pattern.compile("^Database '.*' shutdown\\.$");
 
     public static synchronized SessionFactory getSessionFactory(String db) {
         if (!sfm.containsKey(db)) {
@@ -57,9 +59,14 @@ public class HibernateHelper {
         try {
             DriverManager.getConnection(db + ";shutdown=true");
         } catch (SQLException e) {
-            if (!"08006".equals(e.getSQLState())) { // normal shutdown
+            if (!isNormalShutdown(e)) { // normal shutdown
                 throw e;
             }
         }
+    }
+
+    private static boolean isNormalShutdown(SQLException e) {
+        System.out.println(e.getMessage());
+        return "08006".equals(e.getSQLState()) && NORMAL_SHUTDOWN_PATTERN.matcher(e.getMessage()).matches();
     }
 }

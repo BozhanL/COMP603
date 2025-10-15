@@ -1,5 +1,6 @@
 package com.example.assessment.backend.types.entity;
 
+import com.example.assessment.backend.derby.IEntity;
 import com.example.assessment.backend.derby.IToImmutable;
 import com.example.assessment.backend.types.interfaces.ICourseCode;
 import com.google.errorprone.annotations.CheckReturnValue;
@@ -15,7 +16,7 @@ import lombok.NonNull;
 @CheckReturnValue
 @AllArgsConstructor(staticName = "of")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class CourseCodeEntity implements IToImmutable<ICourseCode> {
+public class CourseCodeEntity implements IToImmutable<ICourseCode>, IEntity<ICourseCode> {
 
 //    For COMP500, store as:
 //    E.g. COMP

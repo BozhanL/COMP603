@@ -1,5 +1,6 @@
 package com.example.assessment.backend.types.entity;
 
+import com.example.assessment.backend.derby.IEntity;
 import com.example.assessment.backend.derby.IToImmutable;
 import com.example.assessment.backend.types.enums.Gender;
 import com.example.assessment.backend.types.interfaces.IPerson;
@@ -24,7 +25,7 @@ import lombok.ToString;
 @DiscriminatorColumn(name = "TYPE")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-public abstract class PersonEntity<T extends IPerson<?>> implements IToImmutable<T> {
+public abstract class PersonEntity<T extends IPerson> implements IToImmutable<T>, IEntity<T> {
 
     @Id
     @NonNull

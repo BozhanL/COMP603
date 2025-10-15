@@ -20,7 +20,7 @@ import lombok.ToString;
 @DiscriminatorValue("MANAGER")
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class ManagerEntity extends PersonEntity<IManager<?>> {
+public class ManagerEntity extends PersonEntity<IManager> {
 
     private ManagerEntity(
             @NonNull String id,
@@ -51,7 +51,7 @@ public class ManagerEntity extends PersonEntity<IManager<?>> {
     }
 
     @Override
-    public IManager<?> toImmutable() {
+    public IManager toImmutable() {
         return IManager.of(id, password, legalFirstName, legalLastName, dateOfBirth, gender, email, phone, address.toImmutable());
     }
 }

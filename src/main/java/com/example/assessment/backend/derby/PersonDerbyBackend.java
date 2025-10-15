@@ -47,7 +47,7 @@ public final class PersonDerbyBackend extends DerbyBackend implements IPersonBac
     }
 
     @Override
-    public void setPerson(@NonNull IPerson<?> p) throws IOException, FileAlreadyExistsException {
+    public void setPerson(@NonNull IPerson p) throws IOException, FileAlreadyExistsException {
         this.setObject(p.toEntity());
     }
 
@@ -57,19 +57,22 @@ public final class PersonDerbyBackend extends DerbyBackend implements IPersonBac
     }
 
     @Override
-    public void modifyPerson(@NonNull IPerson<?> p) throws IOException {
+    public void modifyPerson(@NonNull IPerson p) throws IOException {
         this.modifyObject(p.toEntity());
     }
 
     @Override
-    public IPerson<?> getPersonById(@NonNull String id) throws IOException, DatabaseCorruptedException, FileNotFoundException {
-        PersonEntity<? extends IPerson<?>> e = (PersonEntity<? extends IPerson<?>>) this.getObject(PersonEntity.class, id);
+    public IPerson getPersonById(@NonNull String id) throws IOException, DatabaseCorruptedException, FileNotFoundException {
+        var e = (PersonEntity<? extends IPerson>) this.getObject(PersonEntity.class, id);
+        if (e == null) {
+            return null;
+        }
         return e.toImmutable();
     }
 
     @Override
-    public ImmutableList<IPerson<?>> listPerson() throws IOException, DatabaseCorruptedException {
+    public ImmutableList<IPerson> listPerson() throws IOException, DatabaseCorruptedException {
         var e = this.listObject(PersonEntity.class);
-        return e.stream().map(PersonEntity<IPerson<?>>::toImmutable).collect(ImmutableList.toImmutableList());
+        return e.stream().map(PersonEntity<IPerson>::toImmutable).collect(ImmutableList.toImmutableList());
     }
 }

@@ -25,7 +25,7 @@ import lombok.With;
 @CheckReturnValue
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-public class Manager extends Person<ManagerEntity> implements IManager<ManagerEntity> {
+public class Manager extends Person implements IManager {
 
     @Serial
     private static final long serialVersionUID = 1L;

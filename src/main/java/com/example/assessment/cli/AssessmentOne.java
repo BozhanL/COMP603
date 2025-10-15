@@ -23,7 +23,7 @@ public class AssessmentOne {
 //                Get database
                 ICombinedBackend database = w.askForDatabase();
 //                Login
-                IPerson<?> p = w.login(database);
+                IPerson p = w.login(database);
 
 //                Create dashboard
                 IMainDashboard d = p.getDashboard(scanner, database);

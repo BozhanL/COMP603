@@ -32,52 +32,52 @@ public interface IPersonBackend extends IBackend {
 
 //    Store the Person
 //    If the Person already exist in database, throw FileAlreadyExistsException
-    public abstract void setPerson(@NonNull IPerson<?> p) throws IOException, FileAlreadyExistsException;
+    public abstract void setPerson(@NonNull IPerson p) throws IOException, FileAlreadyExistsException;
 
 //    Delete the Person
     @CanIgnoreReturnValue
     public abstract boolean deletePersonById(@NonNull String id) throws IOException;
 
 //    Change the Person
-    public abstract void modifyPerson(@NonNull IPerson<?> p) throws IOException;
+    public abstract void modifyPerson(@NonNull IPerson p) throws IOException;
 
 //    Return a Person with same ID
-    public abstract IPerson<?> getPersonById(@NonNull String id) throws IOException, DatabaseCorruptedException, FileNotFoundException;
+    public abstract IPerson getPersonById(@NonNull String id) throws IOException, DatabaseCorruptedException, FileNotFoundException;
 
 //    Return a Student with same ID, null if type is not IStudent
-    public default IStudent<?> getStudentById(@NonNull String id) throws IOException, DatabaseCorruptedException, FileNotFoundException {
-        IPerson<?> p = this.getPersonById(id);
+    public default IStudent getStudentById(@NonNull String id) throws IOException, DatabaseCorruptedException, FileNotFoundException {
+        IPerson p = this.getPersonById(id);
 
-        if (p instanceof IStudent<?> s) {
+        if (p instanceof IStudent s) {
             return s;
         }
         return null;
     }
 
 //    Return a Manager with same ID, null if type is not IManager
-    public default IManager<?> getManagerById(@NonNull String id) throws IOException, DatabaseCorruptedException, FileNotFoundException {
-        IPerson<?> p = this.getPersonById(id);
+    public default IManager getManagerById(@NonNull String id) throws IOException, DatabaseCorruptedException, FileNotFoundException {
+        IPerson p = this.getPersonById(id);
 
-        if (p instanceof IManager<?> m) {
+        if (p instanceof IManager m) {
             return m;
         }
         return null;
     }
 
 //    List all Person in the database
-    public abstract ImmutableList<IPerson<?>> listPerson() throws IOException, DatabaseCorruptedException;
+    public abstract ImmutableList<IPerson> listPerson() throws IOException, DatabaseCorruptedException;
 
 //    List all Student in the database
-    public default ImmutableList<IStudent<?>> listStudent() throws IOException, DatabaseCorruptedException {
-        ImmutableList<IPerson<?>> p = this.listPerson();
-        ImmutableList<IStudent<?>> out = p.stream().filter(IStudent.class::isInstance).map(person -> (IStudent<?>) person).collect(ImmutableList.toImmutableList());
+    public default ImmutableList<IStudent> listStudent() throws IOException, DatabaseCorruptedException {
+        ImmutableList<IPerson> p = this.listPerson();
+        ImmutableList<IStudent> out = p.stream().filter(IStudent.class::isInstance).map(person -> (IStudent) person).collect(ImmutableList.toImmutableList());
         return out;
     }
 
 //    List all Manager in the database
-    public default ImmutableList<IManager<?>> listManager() throws IOException, DatabaseCorruptedException {
-        ImmutableList<IPerson<?>> p = this.listPerson();
-        ImmutableList<IManager<?>> out = p.stream().filter(IManager.class::isInstance).map(person -> (IManager<?>) person).collect(ImmutableList.toImmutableList());
+    public default ImmutableList<IManager> listManager() throws IOException, DatabaseCorruptedException {
+        ImmutableList<IPerson> p = this.listPerson();
+        ImmutableList<IManager> out = p.stream().filter(IManager.class::isInstance).map(person -> (IManager) person).collect(ImmutableList.toImmutableList());
         return out;
     }
 }

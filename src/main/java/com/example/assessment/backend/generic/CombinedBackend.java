@@ -50,12 +50,12 @@ public class CombinedBackend implements ICombinedBackend {
     }
 
     @Override
-    public void setPerson(@NonNull IPerson<?> p) throws IOException, FileAlreadyExistsException {
+    public void setPerson(@NonNull IPerson p) throws IOException, FileAlreadyExistsException {
         this.pb.setPerson(p);
     }
 
     @Override
-    public void modifyPerson(@NonNull IPerson<?> p) throws IOException {
+    public void modifyPerson(@NonNull IPerson p) throws IOException {
         this.pb.modifyPerson(p);
     }
 
@@ -66,12 +66,12 @@ public class CombinedBackend implements ICombinedBackend {
     }
 
     @Override
-    public IPerson<?> getPersonById(@NonNull String id) throws IOException, DatabaseCorruptedException, FileNotFoundException {
+    public IPerson getPersonById(@NonNull String id) throws IOException, DatabaseCorruptedException, FileNotFoundException {
         return this.pb.getPersonById(id);
     }
 
     @Override
-    public ImmutableList<IPerson<?>> listPerson() throws IOException, DatabaseCorruptedException {
+    public ImmutableList<IPerson> listPerson() throws IOException, DatabaseCorruptedException {
         return this.pb.listPerson();
     }
 

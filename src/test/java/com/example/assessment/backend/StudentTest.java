@@ -20,7 +20,7 @@ import org.junit.jupiter.api.Test;
 
 public class StudentTest {
 
-    IStudent<?> s;
+    IStudent s;
 
     @BeforeEach
     public void setUp() {
@@ -62,7 +62,7 @@ public class StudentTest {
 
     @Test
     void testWith() {
-        IStudent<?> n;
+        IStudent n;
 
         n = this.s.withAddress(IAddress.of("", "", "", "", "", "", "NZ", "0600"));
         assertEquals(n.getAddress(), IAddress.of("", "", "", "", "", "", "NZ", "0600"));

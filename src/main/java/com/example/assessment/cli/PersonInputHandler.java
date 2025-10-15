@@ -263,8 +263,8 @@ public final class PersonInputHandler {
     }
 
 //    Prompt user to change student
-    public IStudent<?> getModifiedStudent(@NonNull IStudent<?> ori) {
-        IStudent<?> n = ori;
+    public IStudent getModifiedStudent(@NonNull IStudent ori) {
+        IStudent n = ori;
         while (true) {
 //            print options
             System.out.println("1. Change password\t\t6. Change Email");
@@ -323,8 +323,8 @@ public final class PersonInputHandler {
     }
 
 //    Prompt user to change manager
-    public IManager<?> getModifiedManager(@NonNull IManager<?> ori) {
-        IManager<?> n = ori;
+    public IManager getModifiedManager(@NonNull IManager ori) {
+        IManager n = ori;
         while (true) {
 //            Print options
             System.out.println("1. Change password\t\t6. Change Email");

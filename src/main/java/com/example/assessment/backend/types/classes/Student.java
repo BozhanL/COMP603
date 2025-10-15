@@ -30,7 +30,7 @@ import lombok.With;
 @CheckReturnValue
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-public class Student extends Person<StudentEntity> implements IStudent<StudentEntity> {
+public class Student extends Person implements IStudent {
 
     @Serial
     private static final long serialVersionUID = 1L;

@@ -18,11 +18,11 @@ public class StudentDashboard implements IMainDashboard {
     @NonNull
     private final ICombinedBackend cb;
     @NonNull
-    private IStudent<?> p;
+    private IStudent p;
     @NonNull
     private final PersonInputHandler pih;
 
-    public StudentDashboard(@NonNull Scanner scanner, @NonNull ICombinedBackend cb, @NonNull IStudent<?> p) {
+    public StudentDashboard(@NonNull Scanner scanner, @NonNull ICombinedBackend cb, @NonNull IStudent p) {
         this(scanner, cb, p, new PersonInputHandler(scanner));
     }
 

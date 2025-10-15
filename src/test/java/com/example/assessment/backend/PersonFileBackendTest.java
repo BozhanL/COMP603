@@ -47,18 +47,18 @@ public class PersonFileBackendTest {
         HashMap<String, IStudentCourseInfo> sci = new HashMap<>();
         sci.put("COMP500", IStudentCourseInfo.of("COMP500", Grade.AP, LocalDate.of(2024, 2, 12), "City"));
         sci.put("COMP501", IStudentCourseInfo.of("COMP501", Grade.A, LocalDate.of(2021, 2, 12), "North"));
-        IStudent<?> s = IStudent.of("wby5780", "password", "legalFirstName", "legalLastName", LocalDate.now(ZoneId.systemDefault()), Gender.MALE, "email", "phone", a, Residency.INTERNATIONAL, ImmutableMap.copyOf(sci));
+        IStudent s = IStudent.of("wby5780", "password", "legalFirstName", "legalLastName", LocalDate.now(ZoneId.systemDefault()), Gender.MALE, "email", "phone", a, Residency.INTERNATIONAL, ImmutableMap.copyOf(sci));
         this.pfb.setPerson(s);
 
-        IStudent<?> id = this.pfb.getStudentById(s.getId());
+        IStudent id = this.pfb.getStudentById(s.getId());
 
         assertEquals(s, id);
     }
 
     @Test
     void testGetDefaultManager() throws IOException, DatabaseCorruptedException {
-        IManager<?> DEFAULT_MANAGER = IManager.defaultManager();
-        IManager<?> id = this.pfb.getManagerById("admin");
+        IManager DEFAULT_MANAGER = IManager.defaultManager();
+        IManager id = this.pfb.getManagerById("admin");
 
         assertEquals(DEFAULT_MANAGER, id);
     }
@@ -69,7 +69,7 @@ public class PersonFileBackendTest {
         HashMap<String, IStudentCourseInfo> sci = new HashMap<>();
         sci.put("COMP500", IStudentCourseInfo.of("COMP500", Grade.AP, LocalDate.of(2024, 2, 12), "City"));
         sci.put("COMP501", IStudentCourseInfo.of("COMP501", Grade.A, LocalDate.of(2021, 2, 12), "North"));
-        IStudent<?> s = IStudent.of("wby5780", "password", "legalFirstName", "legalLastName", LocalDate.now(ZoneId.systemDefault()), Gender.MALE, "email", "phone", a, Residency.INTERNATIONAL, ImmutableMap.copyOf(sci));
+        IStudent s = IStudent.of("wby5780", "password", "legalFirstName", "legalLastName", LocalDate.now(ZoneId.systemDefault()), Gender.MALE, "email", "phone", a, Residency.INTERNATIONAL, ImmutableMap.copyOf(sci));
         this.pfb.setPerson(s);
 
         assertEquals(s, this.pfb.getStudentById(s.getId()));
@@ -82,7 +82,7 @@ public class PersonFileBackendTest {
         HashMap<String, IStudentCourseInfo> sci = new HashMap<>();
         sci.put("COMP500", IStudentCourseInfo.of("COMP500", Grade.AP, LocalDate.of(2024, 2, 12), "City"));
         sci.put("COMP501", IStudentCourseInfo.of("COMP501", Grade.A, LocalDate.of(2021, 2, 12), "North"));
-        IStudent<?> s = IStudent.of("wby5780", "password", "legalFirstName", "legalLastName", LocalDate.now(ZoneId.systemDefault()), Gender.MALE, "email", "phone", a, Residency.INTERNATIONAL, ImmutableMap.copyOf(sci));
+        IStudent s = IStudent.of("wby5780", "password", "legalFirstName", "legalLastName", LocalDate.now(ZoneId.systemDefault()), Gender.MALE, "email", "phone", a, Residency.INTERNATIONAL, ImmutableMap.copyOf(sci));
         this.pfb.setPerson(s);
 
         assertEquals(s, this.pfb.getStudentById(s.getId()));

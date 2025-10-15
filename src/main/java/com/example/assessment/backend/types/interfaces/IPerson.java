@@ -1,8 +1,8 @@
 package com.example.assessment.backend.types.interfaces;
 
+import com.example.assessment.backend.derby.IEntity;
 import com.example.assessment.backend.derby.IToHibernateEntity;
 import com.example.assessment.backend.generic.ICombinedBackend;
-import com.example.assessment.backend.types.entity.PersonEntity;
 import com.example.assessment.backend.types.enums.Gender;
 import com.example.assessment.backend.types.enums.UserType;
 import com.example.assessment.cli.IMainDashboard;
@@ -17,7 +17,7 @@ import lombok.NonNull;
 // Person in the system.
 @Immutable
 @CheckReturnValue
-public interface IPerson<T extends PersonEntity<?>> extends IAuthentication, Serializable, IPrettyPrint, IToHibernateEntity<T> {
+public interface IPerson extends IAuthentication, Serializable, IPrettyPrint, IToHibernateEntity<IEntity<?>> {
 
 //    Get the type of the person
     public abstract UserType getType();
@@ -26,28 +26,28 @@ public interface IPerson<T extends PersonEntity<?>> extends IAuthentication, Ser
     public abstract int getAge();
 
 //    Create a new person object with new password
-    public abstract IPerson<?> withPassword(@NonNull String password);
+    public abstract IPerson withPassword(@NonNull String password);
 
 //    Create a new person object with new Legal first name
-    public abstract IPerson<?> withLegalFirstName(@NonNull String legalFirstName);
+    public abstract IPerson withLegalFirstName(@NonNull String legalFirstName);
 
 //    Create a new person object with new Legal last name
-    public abstract IPerson<?> withLegalLastName(@NonNull String legalLastName);
+    public abstract IPerson withLegalLastName(@NonNull String legalLastName);
 
 //    Create a new person object with new Date of birth
-    public abstract IPerson<?> withDateOfBirth(@NonNull LocalDate dateOfBirth);
+    public abstract IPerson withDateOfBirth(@NonNull LocalDate dateOfBirth);
 
 //    Create a new person object with new Gender
-    public abstract IPerson<?> withGender(@NonNull Gender gender);
+    public abstract IPerson withGender(@NonNull Gender gender);
 
 //    Create a new person object with new Email address
-    public abstract IPerson<?> withEmail(@NonNull String email);
+    public abstract IPerson withEmail(@NonNull String email);
 
 //    Create a new person object with new Phone number
-    public abstract IPerson<?> withPhone(@NonNull String phone);
+    public abstract IPerson withPhone(@NonNull String phone);
 
 //    Create a new person object with new Address
-    public abstract IPerson<?> withAddress(@NonNull IAddress address);
+    public abstract IPerson withAddress(@NonNull IAddress address);
 
 //    Get the ID of the person
     public abstract String getId();

@@ -26,7 +26,7 @@ import lombok.ToString;
 @DiscriminatorValue("STUDENT")
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class StudentEntity extends PersonEntity<IStudent<?>> {
+public class StudentEntity extends PersonEntity<IStudent> {
 
 //    The residency status for a student
     @NonNull
@@ -72,7 +72,7 @@ public class StudentEntity extends PersonEntity<IStudent<?>> {
     }
 
     @Override
-    public IStudent<?> toImmutable() {
+    public IStudent toImmutable() {
         ImmutableMap<String, IStudentCourseInfo> c = courses
                 .entrySet()
                 .stream()

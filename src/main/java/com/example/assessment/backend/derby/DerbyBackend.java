@@ -6,6 +6,8 @@ import com.google.errorprone.annotations.CheckReturnValue;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import lombok.Cleanup;
@@ -27,12 +29,12 @@ public abstract class DerbyBackend implements IBackend {
     @NonNull
     protected final SessionFactory sf;
 
-    protected DerbyBackend(@NonNull Path p) {
+    protected DerbyBackend(@NonNull Path p) throws IOException {
         if (EMPTY.equals(p)) {
             throw new IllegalArgumentException("Path must not be empty!");
         }
 
-        p = p.resolve("db");
+        Files.deleteIfExists(p);
 
         this.db = String.format("jdbc:derby:%s;create=true", p.toAbsolutePath().normalize());
         System.out.println(this.db);
@@ -48,7 +50,7 @@ public abstract class DerbyBackend implements IBackend {
         return ret;
     }
 
-    protected <T> void setObject(@NonNull T obj) {
+    protected void setObject(@NonNull IEntity<?> obj) {
         Session se = this.sf.getCurrentSession();
         @Cleanup("commit")
         Transaction _transaction = se.beginTransaction();
@@ -57,7 +59,7 @@ public abstract class DerbyBackend implements IBackend {
         se.flush();
     }
 
-    protected <T> boolean deleteObjectByID(@NonNull Class<T> cl, @NonNull String id) {
+    protected <T extends IEntity<?>> boolean deleteObjectByID(@NonNull Class<T> cl, @NonNull String id) {
         Session se = this.sf.getCurrentSession();
         @Cleanup("commit")
         Transaction _transaction = se.beginTransaction();
@@ -68,20 +70,18 @@ public abstract class DerbyBackend implements IBackend {
         }
 
         se.remove(o);
-        se.flush();
         return true;
     }
 
-    protected <T> void modifyObject(@NonNull T obj) {
+    protected void modifyObject(@NonNull IEntity<?> obj) {
         Session se = this.sf.getCurrentSession();
         @Cleanup("commit")
         Transaction _transaction = se.beginTransaction();
 
         se.persist(obj);
-        se.flush();
     }
 
-    protected <T> ImmutableList<T> listObject(@NonNull Class<T> cl) {
+    protected <T extends IEntity<?>> ImmutableList<T> listObject(@NonNull Class<T> cl) {
         Session se = this.sf.getCurrentSession();
         @Cleanup("commit")
         Transaction _transaction = se.beginTransaction();
