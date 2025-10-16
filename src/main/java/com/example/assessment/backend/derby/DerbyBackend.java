@@ -19,6 +19,7 @@ import lombok.ToString;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.service.spi.ServiceException;
 
 @ToString
 @CheckReturnValue
@@ -51,7 +52,7 @@ public abstract class DerbyBackend implements IBackend {
 
         try {
             this.sf = HibernateHelper.getSessionFactory(this.db);
-        } catch (IllegalStateException e) {
+        } catch (ServiceException e) {
             throw new DatabaseCorruptedException(e);
         }
     }

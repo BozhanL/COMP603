@@ -6,11 +6,13 @@ import com.example.assessment.backend.types.enums.Gender;
 import com.example.assessment.backend.types.enums.Residency;
 import com.example.assessment.cli.IMainDashboard;
 import com.example.assessment.cli.StudentDashboard;
+import com.example.assessment.gui.student.StudentMainPanel;
 import com.google.common.collect.ImmutableMap;
 import com.google.errorprone.annotations.CheckReturnValue;
 import com.google.errorprone.annotations.Immutable;
 import java.time.LocalDate;
 import java.util.Scanner;
+import javax.swing.JPanel;
 import lombok.NonNull;
 
 // This is the interface for student of the system
@@ -88,5 +90,10 @@ public interface IStudent extends IPerson {
     @Override
     public default IMainDashboard getDashboard(@NonNull Scanner sc, @NonNull ICombinedBackend cb) {
         return new StudentDashboard(sc, cb, this);
+    }
+
+    @Override
+    public default JPanel getPanel(@NonNull ICombinedBackend cb) {
+        return new StudentMainPanel(cb, this);
     }
 }

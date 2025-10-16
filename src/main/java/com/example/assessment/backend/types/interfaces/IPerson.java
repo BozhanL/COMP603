@@ -12,12 +12,13 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Scanner;
 import lombok.NonNull;
+import com.example.assessment.gui.IGetMainPanel;
 
 // This interface contains all basic methods that needs to implements for a
 // Person in the system.
 @Immutable
 @CheckReturnValue
-public interface IPerson extends IAuthentication, Serializable, IPrettyPrint, IToHibernateEntity<IEntity<?>> {
+public interface IPerson extends IAuthentication, Serializable, IPrettyPrint, IToHibernateEntity<IEntity<?>>, IGetMainPanel {
 
 //    Get the type of the person
     public abstract UserType getType();
