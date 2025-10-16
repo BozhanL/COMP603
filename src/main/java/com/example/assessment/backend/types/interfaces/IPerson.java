@@ -1,5 +1,7 @@
 package com.example.assessment.backend.types.interfaces;
 
+import com.example.assessment.backend.derby.IEntity;
+import com.example.assessment.backend.derby.IToHibernateEntity;
 import com.example.assessment.backend.generic.ICombinedBackend;
 import com.example.assessment.backend.types.enums.Gender;
 import com.example.assessment.backend.types.enums.UserType;
@@ -15,7 +17,7 @@ import lombok.NonNull;
 // Person in the system.
 @Immutable
 @CheckReturnValue
-public interface IPerson extends IAuthentication, Serializable, IPrettyPrint {
+public interface IPerson extends IAuthentication, Serializable, IPrettyPrint, IToHibernateEntity<IEntity<?>> {
 
 //    Get the type of the person
     public abstract UserType getType();

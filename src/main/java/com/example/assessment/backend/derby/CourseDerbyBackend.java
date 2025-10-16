@@ -2,40 +2,72 @@ package com.example.assessment.backend.derby;
 
 import com.example.assessment.backend.generic.DatabaseCorruptedException;
 import com.example.assessment.backend.generic.ICourseBackend;
+import com.example.assessment.backend.types.entity.CourseEntity;
 import com.example.assessment.backend.types.interfaces.ICourse;
+import com.example.assessment.backend.types.interfaces.ICourseCode;
 import com.google.common.collect.ImmutableList;
 import com.google.errorprone.annotations.CheckReturnValue;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.file.FileAlreadyExistsException;
+import java.nio.file.Path;
+import java.text.ParseException;
+import lombok.NonNull;
 import lombok.ToString;
 
 @CheckReturnValue
 @ToString(callSuper = true)
-public class CourseDerbyBackend extends DerbyBackend implements ICourseBackend {
+public final class CourseDerbyBackend extends DerbyBackend implements ICourseBackend {
 
-    @Override
-    public ICourse getCourseByCode(String code) throws IOException, DatabaseCorruptedException, FileNotFoundException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    private CourseDerbyBackend() throws IOException, DatabaseCorruptedException {
+        this(DEFAULT_DATA_LOCATION);
+    }
+
+    private CourseDerbyBackend(@NonNull String p) throws IOException, DatabaseCorruptedException {
+        this(Path.of(p));
+    }
+
+    private CourseDerbyBackend(@NonNull Path p) throws IOException, DatabaseCorruptedException {
+        super(p);
+    }
+
+    public static CourseDerbyBackend of() throws IOException, DatabaseCorruptedException {
+        return new CourseDerbyBackend();
+    }
+
+    public static CourseDerbyBackend of(@NonNull String p) throws IOException, DatabaseCorruptedException {
+        return new CourseDerbyBackend(p);
+    }
+
+    public static CourseDerbyBackend of(@NonNull Path p) throws IOException, DatabaseCorruptedException {
+        return new CourseDerbyBackend(p);
     }
 
     @Override
-    public void setCourse(ICourse c) throws IOException, FileAlreadyExistsException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public ICourse getCourseByCode(@NonNull String code) throws ParseException {
+        var e = this.getObject(CourseEntity.class, ICourseCode.of(code).toEntity());
+        if (e == null) {
+            return null;
+        }
+        return e.toImmutable();
     }
 
     @Override
-    public boolean deleteCourseByCode(String code) throws IOException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void setCourse(@NonNull ICourse c) {
+        this.setObject(c.toEntity());
     }
 
     @Override
-    public void modifyCourse(ICourse c) throws IOException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public boolean deleteCourseByCode(@NonNull String code) throws ParseException {
+        return this.deleteObjectByID(CourseEntity.class, ICourseCode.of(code).toEntity());
     }
 
     @Override
-    public ImmutableList<ICourse> listCourse() throws IOException, DatabaseCorruptedException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void modifyCourse(@NonNull ICourse c) {
+        this.modifyObject(c.toEntity());
+    }
+
+    @Override
+    public ImmutableList<ICourse> listCourse() {
+        var e = this.listObject(CourseEntity.class);
+        return e.stream().map(CourseEntity::toImmutable).collect(ImmutableList.toImmutableList());
     }
 }

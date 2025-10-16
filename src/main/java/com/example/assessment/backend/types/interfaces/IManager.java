@@ -38,7 +38,7 @@ public interface IManager extends IPerson {
                 "admin",
                 "admin",
                 "admin",
-                LocalDate.MIN,
+                LocalDate.EPOCH,
                 Gender.OTHER,
                 "",
                 "",

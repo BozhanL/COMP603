@@ -1,5 +1,8 @@
 package com.example.assessment.backend.types.classes;
 
+import com.example.assessment.backend.types.entity.AddressEntity;
+import com.example.assessment.backend.types.entity.StudentCourseInfoEntity;
+import com.example.assessment.backend.types.entity.StudentEntity;
 import com.example.assessment.backend.types.enums.Gender;
 import com.example.assessment.backend.types.enums.Residency;
 import com.example.assessment.backend.types.enums.UserType;
@@ -11,6 +14,7 @@ import com.google.errorprone.annotations.CheckReturnValue;
 import com.google.errorprone.annotations.Immutable;
 import java.io.Serial;
 import java.time.LocalDate;
+import java.util.Map;
 import java.util.Objects;
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
@@ -57,7 +61,7 @@ public class Student extends Person implements IStudent {
         this.courses = courses;
     }
 
-    public static IStudent of(
+    public static Student of(
             @NonNull String id,
             @NonNull String password,
             @NonNull String legalFirstName,
@@ -163,5 +167,21 @@ public class Student extends Person implements IStudent {
         }
 
         return sb.toString();
+    }
+
+    @Override
+    public StudentEntity toEntity() {
+        AddressEntity ae = address.toEntity();
+        ImmutableMap<String, StudentCourseInfoEntity> c = courses
+                .entrySet()
+                .stream()
+                .collect(
+                        ImmutableMap.toImmutableMap(
+                                Map.Entry::getKey,
+                                (e) -> e.getValue().toEntity()
+                        )
+                );
+
+        return StudentEntity.of(id, password, legalFirstName, legalLastName, dateOfBirth, gender, email, phone, ae, residencyStatus, c);
     }
 }

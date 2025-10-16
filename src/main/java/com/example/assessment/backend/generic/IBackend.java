@@ -16,4 +16,6 @@ public interface IBackend {
     public static Path getDefaultDataLocationStatic() {
         return DEFAULT_DATA_LOCATION;
     }
+
+    public abstract String getDb();
 }

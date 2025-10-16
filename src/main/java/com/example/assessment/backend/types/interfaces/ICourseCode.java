@@ -1,6 +1,8 @@
 package com.example.assessment.backend.types.interfaces;
 
+import com.example.assessment.backend.derby.IToHibernateEntity;
 import com.example.assessment.backend.types.classes.CourseCode;
+import com.example.assessment.backend.types.entity.CourseCodeEntity;
 import com.google.errorprone.annotations.CheckReturnValue;
 import com.google.errorprone.annotations.Immutable;
 import java.io.Serializable;
@@ -10,7 +12,7 @@ import lombok.NonNull;
 // This is the interface for course code of a course
 @Immutable
 @CheckReturnValue
-public interface ICourseCode extends Serializable, IPrettyPrint {
+public interface ICourseCode extends Serializable, IPrettyPrint, IToHibernateEntity<CourseCodeEntity> {
 
 //    Static construtor to create ICourseCode
     public static ICourseCode of(@NonNull String departmentCode, int level, int courseNumber) {
@@ -18,12 +20,12 @@ public interface ICourseCode extends Serializable, IPrettyPrint {
     }
 
 //    Static construtor to create ICourseCode
-    public static ICourseCode of(@NonNull String code) throws ParseException, NumberFormatException, IndexOutOfBoundsException {
+    public static ICourseCode of(@NonNull String code) throws ParseException {
         return CourseCode.of(code);
     }
 
 //    Create a new IAddress object with new departmentCode
-    public abstract ICourseCode withDepartmentCode(@NonNull String departmentCode) throws IllegalArgumentException;
+    public abstract ICourseCode withDepartmentCode(@NonNull String departmentCode);
 
 //    Create a new IAddress object with new level
     public abstract ICourseCode withLevel(int level);

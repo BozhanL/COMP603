@@ -1,5 +1,6 @@
 package com.example.assessment.backend.types.classes;
 
+import com.example.assessment.backend.types.entity.AddressEntity;
 import com.example.assessment.backend.types.interfaces.IAddress;
 import com.google.errorprone.annotations.CheckReturnValue;
 import com.google.errorprone.annotations.Immutable;
@@ -64,5 +65,10 @@ public class Address implements IAddress {
     @Override
     public String prettyToString() {
         return this.toString();
+    }
+
+    @Override
+    public AddressEntity toEntity() {
+        return AddressEntity.of(unit, streetNumber, streetName, suburb, city, state, country, postCode);
     }
 }

@@ -5,11 +5,12 @@ import com.example.assessment.backend.generic.ICombinedBackend;
 import com.example.assessment.backend.generic.IPersonBackend;
 import com.example.assessment.backend.types.interfaces.IPerson;
 import com.google.errorprone.annotations.CheckReturnValue;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.InvalidPathException;
 import java.util.Locale;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 
@@ -55,17 +56,18 @@ public class Welcome {
                     pb = ICombinedBackend.of(path);
                     System.out.printf("Database = %s\n", path);
                 }
-            } catch (IOException e) {
-                System.out.printf("Error: %s\n", e.getMessage());
             } catch (InvalidPathException e) {
                 System.out.println("Error: invalid path");
+            } catch (IOException | DatabaseCorruptedException ex) {
+                Logger.getLogger(Welcome.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
 
+            return pb;
+        }
         return pb;
     }
 
-//    Login to the system
+    //    Login to the system
     public IPerson login(@NonNull IPersonBackend pb) {
         IPerson p = null;
 
@@ -82,15 +84,7 @@ public class Welcome {
                     }
                 }
 
-                try {
-                    p = pb.getPersonById(id);
-                } catch (FileNotFoundException e) {
-                    System.out.println("Error: No user found with that ID, try again.");
-                } catch (IOException e) {
-                    System.out.println("Error: " + e.getMessage());
-                } catch (DatabaseCorruptedException e) {
-                    System.out.println("Error: data corrupted, try another user");
-                }
+                p = pb.getPersonById(id);
 
                 if (p == null) {
                     System.out.printf("Error: unable to load '%s'\n", id);

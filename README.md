@@ -1,5 +1,7 @@
 # COMP603 Program Design and Construction
 
+[![Java CI with Maven](https://github.com/BozhanL/COMP603/actions/workflows/maven.yml/badge.svg)](https://github.com/BozhanL/COMP603/actions/workflows/maven.yml)
+
 Project: Student Information Management System
 
 GitHub Repository: [https://github.com/BozhanL/COMP603](https://github.com/BozhanL/COMP603)
@@ -11,8 +13,9 @@ GitHub Repository: [https://github.com/BozhanL/COMP603](https://github.com/Bozha
 
 ## Default database credentials
 
-- Username: pdc
-- Password: pdc
+- Database: PDC
+- Username: PDC
+- Password: PDC
 
 ## Contribution
 

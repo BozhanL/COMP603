@@ -1,11 +1,13 @@
 package com.example.assessment.backend.types.classes;
 
+import com.example.assessment.backend.types.entity.CourseEntity;
 import com.example.assessment.backend.types.interfaces.ICourse;
 import com.example.assessment.backend.types.interfaces.ICourseCode;
 import com.google.errorprone.annotations.CheckReturnValue;
 import com.google.errorprone.annotations.Immutable;
 import java.io.Serial;
 import java.text.ParseException;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import lombok.Value;
@@ -25,6 +27,7 @@ public class Course implements ICourse {
     private static final long serialVersionUID = 1L;
 
     @NonNull
+    @With(AccessLevel.NONE)
     ICourseCode code;
     @NonNull
     String name;
@@ -32,19 +35,19 @@ public class Course implements ICourse {
     @NonNull
     String description;
 
-    public Course(@NonNull String code, @NonNull String name, int points, @NonNull String description) throws ParseException, NumberFormatException, IndexOutOfBoundsException {
+    public Course(@NonNull String code, @NonNull String name, int points, @NonNull String description) throws ParseException {
         this(ICourseCode.of(code), name, points, description);
     }
 
-    public Course(@NonNull String departmentCode, int level, int courseNumber, @NonNull String name, int points, @NonNull String description) throws IllegalArgumentException {
+    public Course(@NonNull String departmentCode, int level, int courseNumber, @NonNull String name, int points, @NonNull String description) {
         this(ICourseCode.of(departmentCode, level, courseNumber), name, points, description);
     }
 
-    public static ICourse of(@NonNull String code, @NonNull String name, int points, @NonNull String description) throws ParseException, NumberFormatException, IndexOutOfBoundsException {
+    public static Course of(@NonNull String code, @NonNull String name, int points, @NonNull String description) throws ParseException {
         return new Course(code, name, points, description);
     }
 
-    public static ICourse of(@NonNull String departmentCode, int level, int courseNumber, @NonNull String name, int points, @NonNull String description) throws IllegalArgumentException {
+    public static Course of(@NonNull String departmentCode, int level, int courseNumber, @NonNull String name, int points, @NonNull String description) {
         return new Course(departmentCode, level, courseNumber, name, points, description);
     }
 
@@ -66,5 +69,10 @@ public class Course implements ICourse {
         sb.append(description);
 
         return sb.toString();
+    }
+
+    @Override
+    public CourseEntity toEntity() {
+        return CourseEntity.of(code.toEntity(), name, points, description);
     }
 }

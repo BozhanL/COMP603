@@ -5,11 +5,9 @@ import com.example.assessment.backend.types.interfaces.IPerson;
 import com.google.common.collect.ImmutableList;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.errorprone.annotations.CheckReturnValue;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.file.FileAlreadyExistsException;
-import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
+import java.text.ParseException;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import lombok.Value;
@@ -25,79 +23,84 @@ public class CombinedBackend implements ICombinedBackend {
     @NonNull
     ICourseBackend cb;
 
-    private CombinedBackend() throws IOException {
+    private CombinedBackend() throws IOException, DatabaseCorruptedException {
         this(DEFAULT_DATA_LOCATION);
     }
 
-    private CombinedBackend(@NonNull String p) throws IOException, IllegalArgumentException, InvalidPathException {
+    private CombinedBackend(@NonNull String p) throws IOException, DatabaseCorruptedException {
         this(Path.of(p));
     }
 
-    private CombinedBackend(@NonNull Path p) throws IOException, IllegalArgumentException {
+    private CombinedBackend(@NonNull Path p) throws IOException, DatabaseCorruptedException {
         this(IPersonBackend.of(p), ICourseBackend.of(p));
     }
 
-    public static ICombinedBackend of() throws IOException {
+    public static ICombinedBackend of() throws IOException, DatabaseCorruptedException {
         return new CombinedBackend();
     }
 
-    public static ICombinedBackend of(@NonNull String p) throws IOException, IllegalArgumentException {
+    public static ICombinedBackend of(@NonNull String p) throws IOException, DatabaseCorruptedException {
         return new CombinedBackend(p);
     }
 
-    public static ICombinedBackend of(@NonNull Path p) throws IOException, IllegalArgumentException {
+    public static ICombinedBackend of(@NonNull Path p) throws IOException, DatabaseCorruptedException {
         return new CombinedBackend(p);
     }
 
     @Override
-    public void setPerson(@NonNull IPerson p) throws IOException, FileAlreadyExistsException {
+    public void setPerson(@NonNull IPerson p) {
         this.pb.setPerson(p);
     }
 
     @Override
-    public void modifyPerson(@NonNull IPerson p) throws IOException {
+    public void modifyPerson(@NonNull IPerson p) {
         this.pb.modifyPerson(p);
     }
 
     @Override
     @CanIgnoreReturnValue
-    public boolean deletePersonById(@NonNull String id) throws IOException {
+    public boolean deletePersonById(@NonNull String id) {
         return this.pb.deletePersonById(id);
     }
 
     @Override
-    public IPerson getPersonById(@NonNull String id) throws IOException, DatabaseCorruptedException, FileNotFoundException {
+    public IPerson getPersonById(@NonNull String id) {
         return this.pb.getPersonById(id);
     }
 
     @Override
-    public ImmutableList<IPerson> listPerson() throws IOException, DatabaseCorruptedException {
+    public ImmutableList<IPerson> listPerson() {
         return this.pb.listPerson();
     }
 
     @Override
-    public ICourse getCourseByCode(@NonNull String code) throws IOException, DatabaseCorruptedException, FileNotFoundException {
+    public ICourse getCourseByCode(@NonNull String code) throws ParseException {
         return this.cb.getCourseByCode(code);
     }
 
     @Override
-    public void setCourse(@NonNull ICourse c) throws IOException, FileAlreadyExistsException {
+    public void setCourse(@NonNull ICourse c) {
         this.cb.setCourse(c);
     }
 
     @Override
     @CanIgnoreReturnValue
-    public boolean deleteCourseByCode(@NonNull String code) throws IOException {
+    public boolean deleteCourseByCode(@NonNull String code) throws ParseException {
         return this.cb.deleteCourseByCode(code);
     }
 
     @Override
-    public void modifyCourse(@NonNull ICourse c) throws IOException {
+    public void modifyCourse(@NonNull ICourse c) {
         this.cb.modifyCourse(c);
     }
 
     @Override
-    public ImmutableList<ICourse> listCourse() throws IOException, DatabaseCorruptedException {
+    public ImmutableList<ICourse> listCourse() {
         return this.cb.listCourse();
+    }
+
+    @Override
+    public String getDb() {
+        return this.pb.getDb();
     }
 }

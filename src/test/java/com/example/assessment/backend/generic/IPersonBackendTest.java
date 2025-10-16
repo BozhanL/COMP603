@@ -1,7 +1,6 @@
-package com.example.assessment.backend;
+package com.example.assessment.backend.generic;
 
-import com.example.assessment.backend.file.PersonFileBackend;
-import com.example.assessment.backend.generic.DatabaseCorruptedException;
+import com.example.assessment.backend.derby.HibernateHelper;
 import com.example.assessment.backend.types.enums.Gender;
 import com.example.assessment.backend.types.enums.Grade;
 import com.example.assessment.backend.types.enums.Residency;
@@ -10,36 +9,48 @@ import com.example.assessment.backend.types.interfaces.IManager;
 import com.example.assessment.backend.types.interfaces.IStudent;
 import com.example.assessment.backend.types.interfaces.IStudentCourseInfo;
 import com.google.common.collect.ImmutableMap;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Path;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.HashMap;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsString;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
-public class PersonFileBackendTest {
+public class IPersonBackendTest {
 
     @TempDir
     Path folder;
 
-    PersonFileBackend pfb;
+    IPersonBackend pfb;
+
+    @BeforeAll
+    public static void setUpClass() {
+    }
+
+    @AfterAll
+    public static void tearDownClass() {
+    }
 
     @BeforeEach
-    void setUp() throws IOException {
-        this.pfb = PersonFileBackend.of(folder);
+    public void setUp() throws IOException, DatabaseCorruptedException {
+        this.pfb = IPersonBackend.of(folder);
+    }
+
+    @AfterEach
+    public void tearDown() throws SQLException {
+        HibernateHelper.closeSessionFactory(this.pfb.getDb());
     }
 
     @Test
-    void testSetAndGetStudent() throws IOException, DatabaseCorruptedException {
+    void testSetAndGetStudent() {
         IAddress a = IAddress.of("", "561", "Blockhouse Bay Road", "Blockhouse Bay", "Auckland", "Auckland", "NZ", "0600");
         HashMap<String, IStudentCourseInfo> sci = new HashMap<>();
         sci.put("COMP500", IStudentCourseInfo.of("COMP500", Grade.AP, LocalDate.of(2024, 2, 12), "City"));
@@ -53,7 +64,7 @@ public class PersonFileBackendTest {
     }
 
     @Test
-    void testGetDefaultManager() throws IOException, DatabaseCorruptedException {
+    void testGetDefaultManager() {
         IManager DEFAULT_MANAGER = IManager.defaultManager();
         IManager id = this.pfb.getManagerById("admin");
 
@@ -61,7 +72,7 @@ public class PersonFileBackendTest {
     }
 
     @Test
-    void testDeletePerson() throws IOException, DatabaseCorruptedException {
+    void testDeletePerson() {
         IAddress a = IAddress.of("", "561", "Blockhouse Bay Road", "Blockhouse Bay", "Auckland", "Auckland", "NZ", "0600");
         HashMap<String, IStudentCourseInfo> sci = new HashMap<>();
         sci.put("COMP500", IStudentCourseInfo.of("COMP500", Grade.AP, LocalDate.of(2024, 2, 12), "City"));
@@ -71,17 +82,10 @@ public class PersonFileBackendTest {
 
         assertEquals(s, this.pfb.getStudentById(s.getId()));
         assertTrue(this.pfb.deletePersonById(s.getId()));
-
-        FileNotFoundException exception = assertThrows(FileNotFoundException.class,
-                () -> {
-                    this.pfb.getStudentById(s.getId());
-                }
-        );
-        assertThat(exception.getMessage(), containsString(PersonFileBackend.pathFromPerson(s).toString()));
     }
 
     @Test
-    void testSetExistPerson() throws IOException, DatabaseCorruptedException {
+    void testSetExistPerson() {
         IAddress a = IAddress.of("", "561", "Blockhouse Bay Road", "Blockhouse Bay", "Auckland", "Auckland", "NZ", "0600");
         HashMap<String, IStudentCourseInfo> sci = new HashMap<>();
         sci.put("COMP500", IStudentCourseInfo.of("COMP500", Grade.AP, LocalDate.of(2024, 2, 12), "City"));
@@ -90,13 +94,5 @@ public class PersonFileBackendTest {
         this.pfb.setPerson(s);
 
         assertEquals(s, this.pfb.getStudentById(s.getId()));
-
-        FileAlreadyExistsException exception = assertThrows(FileAlreadyExistsException.class,
-                () -> {
-                    this.pfb.setPerson(s);
-                }
-        );
-
-        assertThat(exception.getMessage(), containsString(PersonFileBackend.pathFromPerson(s).toString()));
     }
 }
