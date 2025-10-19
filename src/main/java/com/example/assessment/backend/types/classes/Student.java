@@ -160,13 +160,13 @@ public class Student extends Person implements IStudent {
         sb.append("\nresidencyStatus: ");
         sb.append(residencyStatus);
 
-        sb.append("\ncourses: ");
+        sb.append("\ncourses:\n");
         for (IStudentCourseInfo c : courses.values()) {
             sb.append(c.prettyToString());
-            sb.append("\n");
+            sb.append("\n\n");
         }
 
-        return sb.toString();
+        return sb.toString().trim();
     }
 
     @Override

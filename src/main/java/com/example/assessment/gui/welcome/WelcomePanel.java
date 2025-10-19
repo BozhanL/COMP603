@@ -74,7 +74,7 @@ public final class WelcomePanel extends JPanel {
 
         this.person = this.combinedBackend.getPersonById(username);
 
-        if (this.person != null && !this.person.safeCheckPassword(password)) {
+        if (this.person == null || !this.person.safeCheckPassword(password)) {
             Helpers.showErrorMessage("Username or Password incorrect");
             return;
         }

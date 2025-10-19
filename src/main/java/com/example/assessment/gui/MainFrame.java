@@ -1,8 +1,8 @@
 package com.example.assessment.gui;
 
-import com.example.assessment.gui.welcome.WelcomePanel;
 import com.example.assessment.backend.generic.ICombinedBackend;
 import com.example.assessment.backend.types.interfaces.IPerson;
+import com.example.assessment.gui.welcome.WelcomePanel;
 import java.awt.CardLayout;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -26,6 +26,7 @@ public final class MainFrame {
 
     private transient ICombinedBackend cb;
     private transient IPerson p;
+    private JPanel personPanel;
 
     public MainFrame() {
         this.welcomePanel = new WelcomePanel(() -> this.onLoginSuccess());
@@ -40,7 +41,7 @@ public final class MainFrame {
         this.frame.setVisible(true);
     }
 
-    public void addPanel(Component comp) {
+    public void addPanel(@NonNull Component comp) {
         Helpers.addPanel(this.cardPanel, comp);
     }
 
@@ -49,5 +50,8 @@ public final class MainFrame {
         this.cb = this.welcomePanel.getCombinedBackend();
         this.p = this.welcomePanel.getPerson();
 
+        this.personPanel = this.p.getPanel(cb);
+        this.addPanel(personPanel);
+        this.cardLayout.show(this.cardPanel, Helpers.getObjectName(personPanel));
     }
 }

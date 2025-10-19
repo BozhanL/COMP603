@@ -11,7 +11,6 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.time.ZoneId;
 import lombok.AccessLevel;
-import lombok.Getter;
 import lombok.NonNull;
 import lombok.ToString;
 import lombok.Value;
@@ -35,7 +34,6 @@ public abstract class Person implements IPerson {
 
     @NonNull
     @ToString.Exclude
-    @Getter(AccessLevel.PROTECTED)
     protected String password;
 
     @NonNull
@@ -110,7 +108,10 @@ public abstract class Person implements IPerson {
     public String prettyToString() {
         StringBuilder sb = new StringBuilder();
 
-        sb.append("id: ");
+        sb.append("type: ");
+        sb.append(this.getType());
+
+        sb.append("\nid: ");
         sb.append(id);
 
         sb.append("\nlegalFirstName: ");

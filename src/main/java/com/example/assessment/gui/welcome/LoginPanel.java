@@ -19,20 +19,20 @@ public final class LoginPanel extends JPanel {
     private static final long serialVersionUID = 1L;
 
     @NonNull
-    GridBagLayout gridBagLayout = new GridBagLayout();
+    private final GridBagLayout gridBagLayout = new GridBagLayout();
 
     @NonNull
-    JLabel usernameLabel = new JLabel("Username:");
+    private final JLabel usernameLabel = new JLabel("Username:");
     @NonNull
-    JTextField usernameField = new JTextField(30);
+    private final JTextField usernameField = new JTextField(30);
 
     @NonNull
-    JLabel passwordLabel = new JLabel("Password:");
+    private final JLabel passwordLabel = new JLabel("Password:");
     @NonNull
-    JPasswordField passwordField = new JPasswordField(30);
+    private final JPasswordField passwordField = new JPasswordField(30);
 
     @NonNull
-    JButton login = new JButton("Login");
+    private final JButton login = new JButton("Login");
 
     public LoginPanel(@NonNull ActionListener loginAction) {
         this.login.addActionListener(loginAction);
@@ -42,18 +42,18 @@ public final class LoginPanel extends JPanel {
 
         c.gridx = 0;
         c.gridy = 0;
-        this.add(this.usernameLabel, c.clone());
+        this.add(this.usernameLabel, c);
         c.gridx = 1;
         c.gridy = 0;
-        this.add(this.usernameField, c.clone());
+        this.add(this.usernameField, c);
 
         c.gridx = 0;
         c.gridy = 1;
-        this.add(this.passwordLabel, c.clone());
+        this.add(this.passwordLabel, c);
 
         c.gridx = 1;
         c.gridy = 1;
-        this.add(this.passwordField, c.clone());
+        this.add(this.passwordField, c);
 
         c.gridx = 1;
         c.gridy = 3;

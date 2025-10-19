@@ -10,15 +10,21 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class Helpers {
 
-    public void showErrorMessage(Exception e) {
+    public void showErrorMessage(@NonNull Exception e) {
         SwingUtilities.invokeLater(() -> {
             JOptionPane.showMessageDialog(null, e, "Error", JOptionPane.ERROR_MESSAGE);
         });
     }
 
-    public void showErrorMessage(String e) {
+    public void showErrorMessage(@NonNull String e) {
         SwingUtilities.invokeLater(() -> {
             JOptionPane.showMessageDialog(null, e, "Error", JOptionPane.ERROR_MESSAGE);
+        });
+    }
+
+    public void showMessage(@NonNull String title, @NonNull String message) {
+        SwingUtilities.invokeLater(() -> {
+            JOptionPane.showMessageDialog(null, message, title, JOptionPane.INFORMATION_MESSAGE);
         });
     }
 
@@ -26,7 +32,11 @@ public class Helpers {
         cardPanel.add(comp, getObjectName(comp));
     }
 
-    public String getObjectName(Object o) {
+    public String getObjectName(@NonNull Object o) {
         return o.getClass().getSimpleName();
+    }
+
+    public String getObjectName(@NonNull Class<?> o) {
+        return o.getSimpleName();
     }
 }

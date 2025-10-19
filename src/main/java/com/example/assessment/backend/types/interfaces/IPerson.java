@@ -6,13 +6,13 @@ import com.example.assessment.backend.generic.ICombinedBackend;
 import com.example.assessment.backend.types.enums.Gender;
 import com.example.assessment.backend.types.enums.UserType;
 import com.example.assessment.cli.IMainDashboard;
+import com.example.assessment.gui.IGetMainPanel;
 import com.google.errorprone.annotations.CheckReturnValue;
 import com.google.errorprone.annotations.Immutable;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Scanner;
 import lombok.NonNull;
-import com.example.assessment.gui.IGetMainPanel;
 
 // This interface contains all basic methods that needs to implements for a
 // Person in the system.
@@ -52,6 +52,9 @@ public interface IPerson extends IAuthentication, Serializable, IPrettyPrint, IT
 
 //    Get the ID of the person
     public abstract String getId();
+
+//    Get the Password of the person
+    public abstract String getPassword();
 
 //    Fix spell by Copilot
 //    Get the Legal first name

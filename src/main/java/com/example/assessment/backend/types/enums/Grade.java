@@ -11,7 +11,7 @@ public enum Grade {
     D("D"), DS("DS"), W("W"),
     S("S"), CO("CO"), YP("YP"),
     YX("YX"), STC("STC"), DNC("DNC"),
-    DSN("DSN"), UX("UX");
+    DSN("DSN"), UX("UX"), NA("N/A");
 
     private final String name;
 

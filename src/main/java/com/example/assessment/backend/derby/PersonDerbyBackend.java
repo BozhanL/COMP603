@@ -27,7 +27,7 @@ public final class PersonDerbyBackend extends DerbyBackend implements IPersonBac
     private PersonDerbyBackend(@NonNull Path p) throws IOException, DatabaseCorruptedException {
         super(p);
 
-        if (this.listPerson().isEmpty()) {
+        if (this.listManager().isEmpty()) {
             this.setPerson(IManager.defaultManager());
         }
     }

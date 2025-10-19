@@ -18,7 +18,7 @@ public class AssessmentTwo {
         SwingUtilities.invokeLater(MainFrame::new);
     }
 
-    public static void restart() {
+    public void restart() {
         SwingUtilities.invokeLater(() -> {
             for (Frame frame : Frame.getFrames()) {
                 frame.dispose();
