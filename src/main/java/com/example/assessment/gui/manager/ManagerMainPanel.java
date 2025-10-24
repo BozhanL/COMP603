@@ -1,7 +1,7 @@
 package com.example.assessment.gui.manager;
 
 import com.example.assessment.backend.generic.ICombinedBackend;
-import com.example.assessment.backend.types.interfaces.IPerson;
+import com.example.assessment.backend.types.interfaces.IManager;
 import com.example.assessment.gui.Helpers;
 import com.example.assessment.gui.manager.course.ManageCoursePanel;
 import com.example.assessment.gui.manager.person.ManagePersonPanel;
@@ -27,7 +27,7 @@ public final class ManagerMainPanel extends JPanel {
     @NonNull
     private final ManagePersonPanel mpp;
 
-    public ManagerMainPanel(@NonNull ICombinedBackend cb, @NonNull IPerson p) {
+    public ManagerMainPanel(@NonNull ICombinedBackend cb, @NonNull IManager p) {
         this.msp = new ManagerMainSelectPanel((e) -> this.manageCourseAction(), (e) -> this.managePersonAction());
         this.mcp = new ManageCoursePanel(cb, (e) -> this.switchBack());
         this.mpp = new ManagePersonPanel(cb, (e) -> this.switchBack());

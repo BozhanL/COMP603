@@ -289,8 +289,8 @@ public final class EditManagerPanel extends JPanel {
         );
 
         IManager p = IManager.of(
-                this.idField.getText().trim(),
-                String.copyValueOf(this.passwordField.getPassword()),
+                id,
+                password,
                 this.legalFirstNameField.getText().trim(),
                 this.legalLastNameField.getText().trim(),
                 dob,

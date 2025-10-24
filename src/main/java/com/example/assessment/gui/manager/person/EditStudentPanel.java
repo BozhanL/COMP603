@@ -379,8 +379,8 @@ public final class EditStudentPanel extends JPanel {
         }
 
         IStudent p = IStudent.of(
-                this.idField.getText().trim(),
-                String.copyValueOf(this.passwordField.getPassword()),
+                id,
+                password,
                 this.legalFirstNameField.getText().trim(),
                 this.legalLastNameField.getText().trim(),
                 dob,
