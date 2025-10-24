@@ -15,7 +15,6 @@ import java.io.Serial;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.NoSuchElementException;
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -37,7 +36,7 @@ public final class ManageCoursePanel extends JPanel {
     @NonNull
     private final ArrayList<CourseRow> courseRow = new ArrayList<>();
     @NonNull
-    private final JPanel couserPanel = new JPanel();
+    private final JPanel coursePanel = new JPanel();
 
     public ManageCoursePanel(@NonNull ICourseBackend courseBackend, @NonNull ActionListener goBackAction) {
         this.courseBackend = courseBackend;
@@ -50,8 +49,8 @@ public final class ManageCoursePanel extends JPanel {
         c.gridy = 0;
         c.gridx = 0;
         c.weighty = 1;
-        this.couserPanel.setLayout(new GridBagLayout());
-        JScrollPane scipScrollPane = new JScrollPane(this.couserPanel);
+        this.coursePanel.setLayout(new GridBagLayout());
+        JScrollPane scipScrollPane = new JScrollPane(this.coursePanel);
         scipScrollPane.getVerticalScrollBar().setUnitIncrement(16); // smoother scroll
         this.add(scipScrollPane, c);
         c.weighty = 0;
@@ -79,7 +78,7 @@ public final class ManageCoursePanel extends JPanel {
     }
 
     public void refreshCourse() {
-        this.couserPanel.removeAll();
+        this.coursePanel.removeAll();
 
         GridBagConstraints c = new GridBagConstraints();
         c.gridx = 0;
@@ -88,15 +87,15 @@ public final class ManageCoursePanel extends JPanel {
         c.weightx = 1.0;
         c.insets = new Insets(5, 5, 5, 5);
         for (CourseRow r : this.courseRow) {
-            this.couserPanel.add(r, c);
+            this.coursePanel.add(r, c);
             c.gridy++;
         }
 
         c.weighty = 1;
-        this.couserPanel.add(Box.createVerticalGlue(), c);
+        this.coursePanel.add(Box.createVerticalGlue(), c);
 
-        this.couserPanel.revalidate();
-        this.couserPanel.repaint();
+        this.coursePanel.revalidate();
+        this.coursePanel.repaint();
     }
 
     public void addCourse() {
@@ -134,7 +133,7 @@ public final class ManageCoursePanel extends JPanel {
             CourseRow cr = this.courseRow.remove(index);
             ICourse c = cr.getCourse();
             this.deletedCourse.add(c.getCode());
-        } catch (NoSuchElementException e) {
+        } catch (IndexOutOfBoundsException e) {
             return;
         }
 

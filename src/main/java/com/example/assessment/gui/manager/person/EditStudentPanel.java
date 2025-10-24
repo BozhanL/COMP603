@@ -20,7 +20,6 @@ import java.time.ZoneId;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.NoSuchElementException;
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -273,7 +272,7 @@ public final class EditStudentPanel extends JPanel {
     public void deleteCourse(int index) {
         try {
             this.studentCourseInfoRow.remove(index);
-        } catch (NoSuchElementException e) {
+        } catch (IndexOutOfBoundsException e) {
             return;
         }
 

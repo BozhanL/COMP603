@@ -7,7 +7,7 @@ import java.nio.file.Path;
 @CheckReturnValue
 public interface IBackend {
 
-    public static final Path DEFAULT_DATA_LOCATION = Path.of(System.getProperty("user.dir"), "database").toAbsolutePath().normalize();
+    public static final Path DEFAULT_DATA_LOCATION = Path.of(System.getProperty("user.dir"), "database");
 
     public default Path getDefaultDataLocation() {
         return DEFAULT_DATA_LOCATION;
