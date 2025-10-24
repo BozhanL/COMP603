@@ -2,16 +2,13 @@ package com.example.assessment.backend.types.interfaces;
 
 import com.example.assessment.backend.derby.IEntity;
 import com.example.assessment.backend.derby.IToHibernateEntity;
-import com.example.assessment.backend.generic.ICombinedBackend;
 import com.example.assessment.backend.types.enums.Gender;
 import com.example.assessment.backend.types.enums.UserType;
-import com.example.assessment.cli.IMainDashboard;
 import com.example.assessment.gui.IGetMainPanel;
 import com.google.errorprone.annotations.CheckReturnValue;
 import com.google.errorprone.annotations.Immutable;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Scanner;
 import lombok.NonNull;
 
 // This interface contains all basic methods that needs to implements for a
@@ -83,7 +80,4 @@ public interface IPerson extends IAuthentication, Serializable, IPrettyPrint, IT
 //    Fix spell by Copilot
 //    Get the Address
     public abstract IAddress getAddress();
-
-//    Get the dashboard for the person
-    public abstract IMainDashboard getDashboard(@NonNull Scanner sc, @NonNull ICombinedBackend cb);
 }
