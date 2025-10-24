@@ -19,8 +19,8 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.NoSuchElementException;
-import java.util.Objects;
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -368,16 +368,15 @@ public final class EditStudentPanel extends JPanel {
                 this.postCodeField.getText().trim()
         );
 
-        ImmutableMap<String, IStudentCourseInfo> courses
-                = this.studentCourseInfoRow
-                        .stream()
-                        .map((r) -> r.getStudentCourseInfo())
-                        .filter(Objects::nonNull)
-                        .collect(ImmutableMap.toImmutableMap(
-                                (e) -> e.getCourseCode(),
-                                (e) -> e,
-                                (a, b) -> a
-                        ));
+        HashMap<String, IStudentCourseInfo> courses = new HashMap<>();
+        for (StudentCourseInfoRow row : this.studentCourseInfoRow) {
+            IStudentCourseInfo info = row.getStudentCourseInfo();
+            if (info == null) {
+                return;
+            }
+
+            courses.put(info.getCourseCode(), info);
+        }
 
         IStudent p = IStudent.of(
                 this.idField.getText().trim(),
@@ -390,7 +389,7 @@ public final class EditStudentPanel extends JPanel {
                 this.phoneField.getText().trim(),
                 address,
                 this.residencyField.getItemAt(this.residencyField.getSelectedIndex()),
-                courses
+                ImmutableMap.copyOf(courses)
         );
 
         this.personBackend.modifyPerson(p);

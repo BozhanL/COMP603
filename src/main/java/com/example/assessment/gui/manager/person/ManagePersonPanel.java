@@ -39,7 +39,6 @@ public final class ManagePersonPanel extends JPanel {
 
     public ManagePersonPanel(
             @NonNull IPersonBackend personBackend,
-            @NonNull IPerson person,
             @NonNull ActionListener goBackAction
     ) {
         this.personBackend = personBackend;

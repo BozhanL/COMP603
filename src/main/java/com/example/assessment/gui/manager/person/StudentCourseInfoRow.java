@@ -82,7 +82,7 @@ public final class StudentCourseInfoRow extends JPanel {
     public IStudentCourseInfo getStudentCourseInfo() {
         String code = this.courseCode.getText().trim();
         if (code.isBlank()) {
-            Helpers.showErrorMessage(String.format("Error: Course Code must not be blank! (index: %d)", this.index));
+            Helpers.showErrorMessage("Error: Course Code must not be blank! (index: %d)", this.index);
             return null;
         }
 
@@ -90,7 +90,7 @@ public final class StudentCourseInfoRow extends JPanel {
         try {
             date = LocalDate.parse(this.starts.getText().trim());
         } catch (DateTimeParseException e) {
-            Helpers.showErrorMessage(String.format("Error: Invalid starts at format! (index: %d)", this.index));
+            Helpers.showErrorMessage("Error: Invalid starts at format! (index: %d)", this.index);
             return null;
         }
 

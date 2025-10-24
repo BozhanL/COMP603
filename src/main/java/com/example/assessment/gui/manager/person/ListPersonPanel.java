@@ -25,6 +25,9 @@ public final class ListPersonPanel extends JPanel {
     private static final long serialVersionUID = 1L;
 
     @NonNull
+    private final transient IPersonBackend personBackend;
+
+    @NonNull
     private final DefaultListModel<IPerson> listModel = new DefaultListModel<>();
     @NonNull
     private final JList<IPerson> list = new JList<>(listModel);
@@ -32,9 +35,6 @@ public final class ListPersonPanel extends JPanel {
     private final JScrollPane scrollPane;
     @NonNull
     private final JButton returnButton = new JButton("Return");
-
-    @NonNull
-    private final transient IPersonBackend personBackend;
 
     public ListPersonPanel(@NonNull IPersonBackend personBackend, @NonNull ActionListener selectButtonAction, @NonNull ActionListener goBackAction) {
         this.personBackend = personBackend;

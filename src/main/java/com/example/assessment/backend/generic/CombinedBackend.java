@@ -1,6 +1,7 @@
 package com.example.assessment.backend.generic;
 
 import com.example.assessment.backend.types.interfaces.ICourse;
+import com.example.assessment.backend.types.interfaces.ICourseCode;
 import com.example.assessment.backend.types.interfaces.IPerson;
 import com.google.common.collect.ImmutableList;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
@@ -85,7 +86,7 @@ public class CombinedBackend implements ICombinedBackend {
 
     @Override
     @CanIgnoreReturnValue
-    public boolean deleteCourseByCode(@NonNull String code) throws ParseException {
+    public boolean deleteCourseByCode(@NonNull ICourseCode code) {
         return this.cb.deleteCourseByCode(code);
     }
 

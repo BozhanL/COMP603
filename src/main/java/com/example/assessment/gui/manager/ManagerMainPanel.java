@@ -29,8 +29,8 @@ public final class ManagerMainPanel extends JPanel {
 
     public ManagerMainPanel(@NonNull ICombinedBackend cb, @NonNull IPerson p) {
         this.msp = new ManagerMainSelectPanel((e) -> this.manageCourseAction(), (e) -> this.managePersonAction());
-        this.mcp = new ManageCoursePanel();
-        this.mpp = new ManagePersonPanel(cb, p, (e) -> this.switchBack());
+        this.mcp = new ManageCoursePanel(cb, (e) -> this.switchBack());
+        this.mpp = new ManagePersonPanel(cb, (e) -> this.switchBack());
 
         this.setLayout(this.cardLayout);
         this.addPanel(msp);
@@ -43,6 +43,7 @@ public final class ManagerMainPanel extends JPanel {
     }
 
     public void manageCourseAction() {
+        this.mcp.setup();
         this.cardLayout.show(this, Helpers.getObjectName(this.mcp));
     }
 

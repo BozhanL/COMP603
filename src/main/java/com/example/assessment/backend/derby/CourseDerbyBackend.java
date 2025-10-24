@@ -56,8 +56,8 @@ public final class CourseDerbyBackend extends DerbyBackend implements ICourseBac
     }
 
     @Override
-    public boolean deleteCourseByCode(@NonNull String code) throws ParseException {
-        return this.deleteObjectByID(CourseEntity.class, ICourseCode.of(code).toEntity());
+    public boolean deleteCourseByCode(@NonNull ICourseCode code) {
+        return this.deleteObjectByID(CourseEntity.class, code.toEntity());
     }
 
     @Override

@@ -1,5 +1,7 @@
 package com.example.assessment.gui;
 
+import com.google.errorprone.annotations.FormatMethod;
+import com.google.errorprone.annotations.FormatString;
 import java.awt.Component;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -19,6 +21,14 @@ public class Helpers {
     public void showErrorMessage(@NonNull String e) {
         SwingUtilities.invokeLater(() -> {
             JOptionPane.showMessageDialog(null, e, "Error", JOptionPane.ERROR_MESSAGE);
+        });
+    }
+
+    @FormatMethod
+    public void showErrorMessage(@NonNull @FormatString String e, @NonNull Object... args) {
+        SwingUtilities.invokeLater(() -> {
+            String s = String.format(e, args);
+            JOptionPane.showMessageDialog(null, s, "Error", JOptionPane.ERROR_MESSAGE);
         });
     }
 
