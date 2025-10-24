@@ -8,7 +8,6 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.errorprone.annotations.CheckReturnValue;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.text.ParseException;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import lombok.Value;
@@ -75,7 +74,7 @@ public class CombinedBackend implements ICombinedBackend {
     }
 
     @Override
-    public ICourse getCourseByCode(@NonNull String code) throws ParseException {
+    public ICourse getCourseByCode(@NonNull ICourseCode code) {
         return this.cb.getCourseByCode(code);
     }
 

@@ -72,7 +72,6 @@ public abstract class DerbyBackend implements IBackend {
         Transaction _transaction = se.beginTransaction();
 
         se.persist(obj);
-        se.flush();
     }
 
     protected <T extends IEntity<?>> boolean deleteObjectByID(@NonNull Class<T> cl, @NonNull Object id) {
