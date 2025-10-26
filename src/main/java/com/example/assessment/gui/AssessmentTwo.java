@@ -23,7 +23,7 @@ public class AssessmentTwo {
         SwingUtilities.invokeLater(MainFrame::new);
     }
 
-//    Restart the programe
+//    Restart the program
     public void restart() {
         SwingUtilities.invokeLater(() -> {
 //            Close all frame

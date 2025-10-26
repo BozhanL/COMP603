@@ -99,7 +99,7 @@ public final class ManageCoursePanel extends JPanel {
             index++;
         }
 
-//        Add placeholde
+//        Add placeholder
         c.weighty = 1;
         this.coursePanel.add(Box.createVerticalGlue(), c);
 

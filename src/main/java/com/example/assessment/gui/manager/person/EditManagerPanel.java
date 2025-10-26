@@ -302,7 +302,7 @@ public final class EditManagerPanel extends JPanel {
                 this.postCodeField.getText().trim()
         );
 
-//        Constuct manager
+//        Construct manager
         IManager p = IManager.of(
                 id,
                 password,

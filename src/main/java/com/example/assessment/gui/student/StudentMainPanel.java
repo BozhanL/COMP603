@@ -366,7 +366,7 @@ public final class StudentMainPanel extends JPanel {
             courses.put(info.getCourseCode(), info);
         }
 
-//        Constuct student
+//        Construct student
         IStudent p = IStudent.of(
                 id,
                 password,
