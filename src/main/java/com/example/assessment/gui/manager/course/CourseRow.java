@@ -102,11 +102,11 @@ public final class CourseRow extends JPanel {
         try {
             point = Integer.parseInt(this.coursePoints.getText());
         } catch (NumberFormatException e) {
-            Helpers.showErrorMessage("Error: Points must be positive integer! (index: %d)", this.index);
+            Helpers.showErrorMessage("Error: Points must be non-negative integer! (index: %d)", this.index);
             return null;
         }
         if (point < 0) {
-            Helpers.showErrorMessage("Error: Points must be positive integer! (index: %d)", this.index);
+            Helpers.showErrorMessage("Error: Points must be non-negative integer! (index: %d)", this.index);
             return null;
         }
 
