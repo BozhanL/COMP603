@@ -28,11 +28,6 @@ Details can be found on [GitHub](https://github.com/BozhanL/COMP603/graphs/contr
 | Bozhan Liang([@BozhanL](https://github.com/BozhanL)) 23209715              | 100%       |
 | **Total**                                                                  | 100%       |
 
-### Implementation Details
-
-- **Ben**: None
-- **Bozhan**: All
-
 ## Credit
 
 Copilot fixes some of the spelling errors.
