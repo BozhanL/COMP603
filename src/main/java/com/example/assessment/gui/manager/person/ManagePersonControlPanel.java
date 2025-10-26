@@ -16,7 +16,7 @@ import lombok.NonNull;
 
 //  Main panel for manage person feature
 @CheckReturnValue
-public final class ManagePersonPanel extends JPanel {
+public final class ManagePersonControlPanel extends JPanel {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -34,7 +34,7 @@ public final class ManagePersonPanel extends JPanel {
     @NonNull
     private final transient IPersonBackend personBackend;
 
-    public ManagePersonPanel(
+    public ManagePersonControlPanel(
             @NonNull IPersonBackend personBackend,
             @NonNull ActionListener goBackAction
     ) {

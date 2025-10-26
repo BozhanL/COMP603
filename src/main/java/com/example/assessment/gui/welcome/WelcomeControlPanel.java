@@ -16,7 +16,7 @@ import lombok.NonNull;
 
 // Main panel to control select database and login flow
 @CheckReturnValue
-public final class WelcomePanel extends JPanel {
+public final class WelcomeControlPanel extends JPanel {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -31,12 +31,12 @@ public final class WelcomePanel extends JPanel {
     @Getter
     private transient ICombinedBackend combinedBackend;
     @Getter
-    private transient IPerson person;
+    private IPerson person;
 
     @NonNull
     private final transient Runnable onLoginSuccess;
 
-    public WelcomePanel(@NonNull Runnable onLoginSuccess) {
+    public WelcomeControlPanel(@NonNull Runnable onLoginSuccess) {
         this.onLoginSuccess = onLoginSuccess;
         this.dsp = new DatabaseSelectionPanel((e) -> this.openDatabase());
         this.lp = new LoginPanel((e) -> this.login());

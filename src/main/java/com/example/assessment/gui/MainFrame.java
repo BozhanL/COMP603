@@ -2,7 +2,7 @@ package com.example.assessment.gui;
 
 import com.example.assessment.backend.generic.ICombinedBackend;
 import com.example.assessment.backend.types.interfaces.IPerson;
-import com.example.assessment.gui.welcome.WelcomePanel;
+import com.example.assessment.gui.welcome.WelcomeControlPanel;
 import java.awt.CardLayout;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -26,7 +26,7 @@ public final class MainFrame extends JFrame {
     private final JPanel cardPanel = new JPanel(this.cardLayout);
 
     @NonNull
-    private final WelcomePanel welcomePanel;
+    private final WelcomeControlPanel welcomePanel;
 
     private transient ICombinedBackend cb;
     private IPerson p;
@@ -34,7 +34,7 @@ public final class MainFrame extends JFrame {
 
     public MainFrame() {
 //        Create WelcomePanel
-        this.welcomePanel = new WelcomePanel(this::onLoginSuccess);
+        this.welcomePanel = new WelcomeControlPanel(this::onLoginSuccess);
 
 //        Init default settings
         this.setTitle("Student Information Management System");
