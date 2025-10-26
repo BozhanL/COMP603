@@ -9,7 +9,6 @@ import com.google.common.collect.ImmutableList;
 import com.google.errorprone.annotations.CheckReturnValue;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.text.ParseException;
 import lombok.NonNull;
 import lombok.ToString;
 
@@ -42,8 +41,8 @@ public final class CourseDerbyBackend extends DerbyBackend implements ICourseBac
     }
 
     @Override
-    public ICourse getCourseByCode(@NonNull String code) throws ParseException {
-        var e = this.getObject(CourseEntity.class, ICourseCode.of(code).toEntity());
+    public ICourse getCourseByCode(@NonNull ICourseCode code) {
+        var e = this.getObject(CourseEntity.class, code.toEntity());
         if (e == null) {
             return null;
         }
@@ -56,8 +55,8 @@ public final class CourseDerbyBackend extends DerbyBackend implements ICourseBac
     }
 
     @Override
-    public boolean deleteCourseByCode(@NonNull String code) throws ParseException {
-        return this.deleteObjectByID(CourseEntity.class, ICourseCode.of(code).toEntity());
+    public boolean deleteCourseByCode(@NonNull ICourseCode code) {
+        return this.deleteObjectByID(CourseEntity.class, code.toEntity());
     }
 
     @Override

@@ -9,8 +9,11 @@ import com.google.common.collect.ImmutableList;
 import com.google.errorprone.annotations.CheckReturnValue;
 import java.io.IOException;
 import java.nio.file.Path;
+import lombok.Cleanup;
 import lombok.NonNull;
 import lombok.ToString;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 @CheckReturnValue
 @ToString(callSuper = true)
@@ -27,8 +30,12 @@ public final class PersonDerbyBackend extends DerbyBackend implements IPersonBac
     private PersonDerbyBackend(@NonNull Path p) throws IOException, DatabaseCorruptedException {
         super(p);
 
-        if (this.listPerson().isEmpty()) {
-            this.setPerson(IManager.defaultManager());
+        if (this.listManager().isEmpty()) {
+            Session se = this.sf.getCurrentSession();
+            @Cleanup("commit")
+            Transaction _transaction = se.beginTransaction();
+
+            se.persist(IManager.defaultManager().toEntity());
         }
     }
 

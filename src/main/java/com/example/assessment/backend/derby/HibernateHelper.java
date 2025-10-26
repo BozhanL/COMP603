@@ -21,10 +21,10 @@ import org.hibernate.cfg.Configuration;
 @UtilityClass
 public class HibernateHelper {
 
-    private static final HashMap<String, SessionFactory> sfm = new HashMap<>();
-    private static final Pattern NORMAL_SHUTDOWN_PATTERN = Pattern.compile("^Database '.*' shutdown\\.$");
+    private final HashMap<String, SessionFactory> sfm = new HashMap<>();
+    private final Pattern NORMAL_SHUTDOWN_PATTERN = Pattern.compile("^Database '.*' shutdown\\.$");
 
-    public static synchronized SessionFactory getSessionFactory(String db) throws IllegalStateException {
+    public synchronized SessionFactory getSessionFactory(String db) throws IllegalStateException {
         if (!sfm.containsKey(db)) {
             Configuration configuration = new Configuration();
 
@@ -52,7 +52,7 @@ public class HibernateHelper {
         return sfm.get(db);
     }
 
-    public static synchronized void closeSessionFactory(String db) throws SQLException {
+    public synchronized void closeSessionFactory(String db) throws SQLException {
         SessionFactory sf = sfm.remove(db);
 
         sf.close();
@@ -65,7 +65,7 @@ public class HibernateHelper {
         }
     }
 
-    private static boolean isNormalShutdown(SQLException e) {
+    private boolean isNormalShutdown(SQLException e) {
         return "08006".equals(e.getSQLState()) && NORMAL_SHUTDOWN_PATTERN.matcher(e.getMessage()).matches();
     }
 }

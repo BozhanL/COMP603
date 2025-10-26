@@ -2,6 +2,7 @@ package com.example.assessment.backend.generic;
 
 import com.example.assessment.backend.derby.CourseDerbyBackend;
 import com.example.assessment.backend.types.interfaces.ICourse;
+import com.example.assessment.backend.types.interfaces.ICourseCode;
 import com.google.common.collect.ImmutableList;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.errorprone.annotations.CheckReturnValue;
@@ -27,7 +28,12 @@ public interface ICourseBackend extends IBackend {
     }
 
 //    Return a Course with same course code as argument
-    public abstract ICourse getCourseByCode(@NonNull String code) throws ParseException;
+    public abstract ICourse getCourseByCode(@NonNull ICourseCode code);
+
+//    Return a Course with same course code as argument
+    public default ICourse getCourseByCode(@NonNull String code) throws ParseException {
+        return this.getCourseByCode(ICourseCode.of(code));
+    }
 
 //    Store the Course
 //    If the Course already exist in database, throw FileAlreadyExistsException
@@ -35,7 +41,13 @@ public interface ICourseBackend extends IBackend {
 
 //    Delete the Course with same course code
     @CanIgnoreReturnValue
-    public abstract boolean deleteCourseByCode(@NonNull String code) throws ParseException;
+    public abstract boolean deleteCourseByCode(@NonNull ICourseCode code);
+
+//    Delete the Course with same course code
+    @CanIgnoreReturnValue
+    public default boolean deleteCourseByCode(@NonNull String code) throws ParseException {
+        return this.deleteCourseByCode(ICourseCode.of(code));
+    }
 
 //    Change the Course
     public abstract void modifyCourse(@NonNull ICourse c);

@@ -3,12 +3,11 @@ package com.example.assessment.backend.types.interfaces;
 import com.example.assessment.backend.generic.ICombinedBackend;
 import com.example.assessment.backend.types.classes.Manager;
 import com.example.assessment.backend.types.enums.Gender;
-import com.example.assessment.cli.IMainDashboard;
-import com.example.assessment.cli.ManagerDashboard;
+import com.example.assessment.gui.manager.ManagerMainPanel;
 import com.google.errorprone.annotations.CheckReturnValue;
 import com.google.errorprone.annotations.Immutable;
 import java.time.LocalDate;
-import java.util.Scanner;
+import javax.swing.JPanel;
 import lombok.NonNull;
 
 // This is the interface for manager of the system
@@ -78,9 +77,8 @@ public interface IManager extends IPerson {
     @Override
     public abstract IManager withAddress(@NonNull IAddress address);
 
-//    Return a dashboard to display IManager
     @Override
-    public default IMainDashboard getDashboard(@NonNull Scanner sc, @NonNull ICombinedBackend cb) {
-        return new ManagerDashboard(sc, cb);
+    public default JPanel getPanel(@NonNull ICombinedBackend cb) {
+        return new ManagerMainPanel(cb, this);
     }
 }
