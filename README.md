@@ -13,7 +13,8 @@ GitHub Repository: [https://github.com/BozhanL/COMP603](https://github.com/Bozha
 
 ## Default database credentials
 
-- Database: PDC
+- Default location: [database](database)
+- Database schema: PDC
 - Username: PDC
 - Password: PDC
 
@@ -21,18 +22,16 @@ GitHub Repository: [https://github.com/BozhanL/COMP603](https://github.com/Bozha
 
 Details can be found on [GitHub](https://github.com/BozhanL/COMP603/graphs/contributors).
 
-| Name                                                                       | Lines | Percentage |
-| -------------------------------------------------------------------------- | ----- | ---------- |
-| Ben Samountry([@TheSalmonTree](https://github.com/TheSalmonTree)) 23219911 | 0     | 0%         |
-| Bozhan Liang([@BozhanL](https://github.com/BozhanL)) 23209715              | 0     | 0%         |
-| **Total**                                                                  | 0     | 0%         |
-
-\* Result based on [cloc](https://github.com/AlDanial/cloc) calculation
+| Name                                                                       | Percentage |
+| -------------------------------------------------------------------------- | ---------- |
+| Ben Samountry([@TheSalmonTree](https://github.com/TheSalmonTree)) 23219911 | 0%         |
+| Bozhan Liang([@BozhanL](https://github.com/BozhanL)) 23209715              | 100%       |
+| **Total**                                                                  | 100%       |
 
 ### Implementation Details
 
-- **Ben**:
-- **Bozhan**:
+- **Ben**: None
+- **Bozhan**: All
 
 ## Credit
 
