@@ -18,6 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import lombok.NonNull;
 
+// Panel to list all person in the database
 @CheckReturnValue
 public final class ListPersonPanel extends JPanel {
 
@@ -37,10 +38,12 @@ public final class ListPersonPanel extends JPanel {
     private final JButton returnButton = new JButton("Return");
 
     public ListPersonPanel(@NonNull IPersonBackend personBackend, @NonNull ActionListener selectButtonAction, @NonNull ActionListener goBackAction) {
+//       Init variables
         this.personBackend = personBackend;
         this.returnButton.addActionListener(goBackAction);
         this.returnButton.addActionListener((e) -> this.cleanup());
 
+//        Add fields
         JPanel dummyPanel = new JPanel(new BorderLayout());
         dummyPanel.add(this.list, BorderLayout.CENTER);
         this.scrollPane = new JScrollPane(dummyPanel);
@@ -63,23 +66,28 @@ public final class ListPersonPanel extends JPanel {
     }
 
     public void setup() {
+//        Clean up previous data
         this.cleanup();
 
+//        Add all person from database to list
         ImmutableList<IPerson> persons = this.personBackend.listPerson();
         for (IPerson p : persons) {
             this.listModel.addElement(p);
         }
     }
 
+//    Clean up previous data
     public void cleanup() {
         this.listModel.clear();
     }
 
+//    Get the person that has been selected
     public IPerson getSelectedPerson() {
         return this.list.getSelectedValue();
     }
 }
 
+// Helper class to display list content
 @CheckReturnValue
 class MyCellRenderer extends DefaultListCellRenderer {
 

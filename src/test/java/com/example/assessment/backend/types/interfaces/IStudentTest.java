@@ -18,6 +18,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+// Test IStudent
 public class IStudentTest {
 
     IStudent s;
@@ -59,6 +60,8 @@ public class IStudentTest {
         assertEquals(this.s.getGender(), Gender.MALE);
 
         assertEquals(this.s.getId(), "wby5780");
+
+        assertEquals(this.s.getPassword(), "password");
 
         assertEquals(this.s.getLegalFirstName(), "legalFirstName");
 

@@ -21,6 +21,7 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.ToString;
 
+// Entity for IStudent
 @Data
 @Entity
 @CheckReturnValue

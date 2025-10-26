@@ -2,26 +2,25 @@ package com.example.assessment.gui.student;
 
 import com.example.assessment.backend.types.enums.Grade;
 import com.example.assessment.backend.types.interfaces.IStudentCourseInfo;
-import com.example.assessment.gui.Helpers;
 import com.google.errorprone.annotations.CheckReturnValue;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.io.Serial;
-import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import lombok.NonNull;
 
+// This class represent a StudentCourseInfo in immutable row format
 @CheckReturnValue
-public final class StudentCourseInfoRow extends JPanel {
+public final class StudentCourseInfoImmutableRow extends JPanel {
 
     @Serial
     private static final long serialVersionUID = 1L;
 
-    private final int index;
+    @NonNull
+    private final IStudentCourseInfo course;
 
     @NonNull
     private final JTextField courseCode = new JTextField(7);
@@ -32,8 +31,9 @@ public final class StudentCourseInfoRow extends JPanel {
     @NonNull
     private final JTextField location = new JTextField(5);
 
-    public StudentCourseInfoRow(int index, @NonNull IStudentCourseInfo course) {
-        this.index = index;
+    public StudentCourseInfoImmutableRow(@NonNull IStudentCourseInfo course) {
+        this.course = course;
+
         this.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.BOTH;
@@ -69,26 +69,8 @@ public final class StudentCourseInfoRow extends JPanel {
         this.add(this.location, c);
     }
 
+//    Get the IStudentCourseInfo
     public IStudentCourseInfo getStudentCourseInfo() {
-        String code = this.courseCode.getText().trim();
-        if (code.isBlank()) {
-            Helpers.showErrorMessage("Error: Course Code must not be blank! (index: %d)", this.index);
-            return null;
-        }
-
-        LocalDate date;
-        try {
-            date = LocalDate.parse(this.starts.getText().trim());
-        } catch (DateTimeParseException e) {
-            Helpers.showErrorMessage("Error: Invalid starts at format! (index: %d)", this.index);
-            return null;
-        }
-
-        return IStudentCourseInfo.of(
-                code,
-                this.grade.getItemAt(this.grade.getSelectedIndex()),
-                date,
-                this.location.getText().trim()
-        );
+        return this.course;
     }
 }

@@ -28,6 +28,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import lombok.NonNull;
 
+// This is the main panel for student
 @CheckReturnValue
 public final class StudentMainPanel extends JPanel {
 
@@ -37,12 +38,14 @@ public final class StudentMainPanel extends JPanel {
     @NonNull
     private final transient ICombinedBackend cb;
 
+//    Course row
 //    --------------------------------------------------------------------
     @NonNull
-    private final ArrayList<StudentCourseInfoRow> studentCourseInfoRow = new ArrayList<>();
+    private final ArrayList<StudentCourseInfoImmutableRow> studentCourseInfoRow = new ArrayList<>();
     @NonNull
     private final JPanel scip = new JPanel();
 
+//    Basic information
 //    --------------------------------------------------------------------
     @NonNull
     private final JLabel idLabel = new JLabel("ID:");
@@ -89,6 +92,7 @@ public final class StudentMainPanel extends JPanel {
     @NonNull
     private final JComboBox<Residency> residencyField = new JComboBox<>(Residency.values());
 
+//    Address information
 //    --------------------------------------------------------------------
     @NonNull
     private final JLabel unitLabel = new JLabel("Unit:");
@@ -130,7 +134,6 @@ public final class StudentMainPanel extends JPanel {
     @NonNull
     private final JTextField postCodeField = new JTextField(5);
 
-//    --------------------------------------------------------------------
     public StudentMainPanel(
             @NonNull ICombinedBackend cb,
             @NonNull IStudent p
@@ -242,7 +245,7 @@ public final class StudentMainPanel extends JPanel {
         JPanel buttonPanel = new JPanel(new GridLayout(1, 1));
 
         JButton saveButton = new JButton("Save");
-        saveButton.addActionListener((e) -> this.savePerson());
+        saveButton.addActionListener((e) -> this.saveStudent());
         buttonPanel.add(saveButton, c);
 
         c.gridy++;
@@ -253,28 +256,34 @@ public final class StudentMainPanel extends JPanel {
         this.setup(p);
     }
 
+//    Refresh course list
     public void refreshCourse() {
+//        Remove all row
         this.scip.removeAll();
 
+//        Add course back
         GridBagConstraints c = new GridBagConstraints();
         c.gridx = 0;
         c.gridy = 0;
         c.fill = GridBagConstraints.BOTH;
         c.weightx = 1.0;
         c.insets = new Insets(5, 5, 5, 5);
-        for (StudentCourseInfoRow r : this.studentCourseInfoRow) {
+        for (StudentCourseInfoImmutableRow r : this.studentCourseInfoRow) {
             this.scip.add(r, c);
             c.gridy++;
         }
 
+//        Add placeholder
         c.weighty = 1;
         this.scip.add(Box.createVerticalGlue(), c);
 
+//        Refresh
         this.scip.revalidate();
         this.scip.repaint();
     }
 
-    public void setup(IStudent p) {
+//    Update display data based on IStudent p
+    public void setup(@NonNull IStudent p) {
         this.idField.setText(p.getId());
         this.idField.setEditable(false);
 
@@ -306,22 +315,26 @@ public final class StudentMainPanel extends JPanel {
 
         ImmutableMap<String, IStudentCourseInfo> courses = p.getCourses();
         for (IStudentCourseInfo c : courses.values()) {
-            int index = this.studentCourseInfoRow.size();
-            StudentCourseInfoRow row = new StudentCourseInfoRow(index, c);
+            StudentCourseInfoImmutableRow row = new StudentCourseInfoImmutableRow(c);
             this.studentCourseInfoRow.add(row);
         }
         this.refreshCourse();
     }
 
-    private void savePerson() {
+//    Save the student to database
+    private void saveStudent() {
+//        Get ID and password
         String id = this.idField.getText().trim();
         String password = String.copyValueOf(this.passwordField.getPassword());
 
+//        Check password
+//        Password must not be blank
         if (password.isBlank()) {
             Helpers.showErrorMessage("Error: Password must not be blank!");
             return;
         }
 
+//        Parse date of birth
         LocalDate dob;
         try {
             dob = LocalDate.parse(this.dateOfBirthField.getText().trim());
@@ -330,6 +343,7 @@ public final class StudentMainPanel extends JPanel {
             return;
         }
 
+//        Construct address
         IAddress address = IAddress.of(
                 this.unitField.getText().trim(),
                 this.streetNumberField.getText().trim(),
@@ -341,8 +355,9 @@ public final class StudentMainPanel extends JPanel {
                 this.postCodeField.getText().trim()
         );
 
+//        Construct student course info
         HashMap<String, IStudentCourseInfo> courses = new HashMap<>();
-        for (StudentCourseInfoRow row : this.studentCourseInfoRow) {
+        for (StudentCourseInfoImmutableRow row : this.studentCourseInfoRow) {
             IStudentCourseInfo info = row.getStudentCourseInfo();
             if (info == null) {
                 return;
@@ -351,6 +366,7 @@ public final class StudentMainPanel extends JPanel {
             courses.put(info.getCourseCode(), info);
         }
 
+//        Constuct student
         IStudent p = IStudent.of(
                 id,
                 password,
@@ -365,8 +381,10 @@ public final class StudentMainPanel extends JPanel {
                 ImmutableMap.copyOf(courses)
         );
 
+//        Save to database
         this.cb.modifyPerson(p);
 
+//        Show success message
         Helpers.showMessage("Save", "Save success");
     }
 }

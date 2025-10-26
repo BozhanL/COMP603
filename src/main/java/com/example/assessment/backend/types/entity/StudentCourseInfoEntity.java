@@ -15,6 +15,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
+// Entity for IStudentCourseInfo
 @Data
 @Embeddable
 @CheckReturnValue

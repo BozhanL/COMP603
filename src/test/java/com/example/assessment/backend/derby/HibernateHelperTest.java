@@ -15,6 +15,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
+// Test for HibernateHelper class
 public class HibernateHelperTest {
 
     @TempDir
@@ -43,11 +44,13 @@ public class HibernateHelperTest {
 
     @AfterEach
     public void tearDown() throws SQLException {
+//        Close database connection
         for (Path p : tempFolders) {
             String db = getDb(p);
             HibernateHelper.closeSessionFactory(db);
         }
 
+//        Empty folder list
         tempFolders.clear();
     }
 
@@ -59,6 +62,7 @@ public class HibernateHelperTest {
         System.out.println("getSessionFactory");
         HashMap<String, SessionFactory> sfs = new HashMap<>();
 
+//        Create SessionFactory, ensure not null
         for (Path p : tempFolders) {
             String db = getDb(p);
             SessionFactory sf = HibernateHelper.getSessionFactory(db);
@@ -66,6 +70,7 @@ public class HibernateHelperTest {
             sfs.put(db, sf);
         }
 
+//        Create again, ensure the new one == old one
         for (Path p : tempFolders) {
             String db = getDb(p);
             SessionFactory sf1 = HibernateHelper.getSessionFactory(db);
@@ -76,6 +81,7 @@ public class HibernateHelperTest {
             assertEquals(sf2, sf1);
         }
 
+//        Create again, ensure the new one == old one
         for (Path p : tempFolders) {
             String db = getDb(p);
             SessionFactory sf1 = HibernateHelper.getSessionFactory(db);

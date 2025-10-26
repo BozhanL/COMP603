@@ -15,13 +15,13 @@ import java.awt.event.ActionListener;
 import java.io.Serial;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import lombok.NonNull;
 
+// This is the panel for manage course
 @CheckReturnValue
 public final class ManageCoursePanel extends JPanel {
 
@@ -32,21 +32,21 @@ public final class ManageCoursePanel extends JPanel {
     private final transient ICourseBackend courseBackend;
 
     @NonNull
-    private final HashSet<ICourseCode> deletedCourse = new HashSet<>();
-
-    @NonNull
     private final ArrayList<CourseRow> courseRow = new ArrayList<>();
     @NonNull
     private final JPanel coursePanel = new JPanel();
 
     public ManageCoursePanel(@NonNull ICourseBackend courseBackend, @NonNull ActionListener goBackAction) {
+//        Init courseBackend
         this.courseBackend = courseBackend;
 
+//        Set layout
         this.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.BOTH;
         c.weightx = 1;
 
+//        Add fields
         c.gridy = 0;
         c.gridx = 0;
         c.weighty = 1;
@@ -78,9 +78,12 @@ public final class ManageCoursePanel extends JPanel {
         this.add(buttonPanel, c);
     }
 
+//    Refresh course list
     public void refreshCourse() {
+//        Empty course panel
         this.coursePanel.removeAll();
 
+//        Add courses back
         GridBagConstraints c = new GridBagConstraints();
         c.gridx = 0;
         c.gridy = 0;
@@ -89,73 +92,105 @@ public final class ManageCoursePanel extends JPanel {
         c.insets = new Insets(5, 5, 5, 5);
         int index = 0;
         for (CourseRow r : this.courseRow) {
+//            Update index
             r.setIndex(index);
             this.coursePanel.add(r, c);
             c.gridy++;
             index++;
         }
 
+//        Add placeholde
         c.weighty = 1;
         this.coursePanel.add(Box.createVerticalGlue(), c);
 
+//        Refresh
         this.coursePanel.revalidate();
         this.coursePanel.repaint();
     }
 
+//    Add an empty course
     public void addCourse() {
+//        Get index
         int index = this.courseRow.size();
+
+//        Create new row
         CourseRow cr = new CourseRow(index, this::deleteCourse);
+
+//        Add to list
         this.courseRow.add(cr);
+
+//        Refresh
         this.refreshCourse();
     }
 
+//    Save the courses to backend
     public void saveCourses() {
         HashMap<ICourseCode, ICourse> courses = new HashMap<>();
 
+//        Add course to Map
         for (CourseRow cr : this.courseRow) {
+//            Get course
             ICourse c = cr.getCourse();
+//            Stop if encounter any error
             if (c == null) {
                 return;
             }
 
+//            Add to Map
             ICourse prev = courses.put(c.getCode(), c);
+//            Show error message and cancel if duplicate course code found
             if (prev != null) {
                 Helpers.showErrorMessage("Error: Duplicate Course Code found! (index: %d)", cr.getIndex());
                 return;
             }
         }
 
-        this.deletedCourse.stream().forEach((c) -> {
-            this.courseBackend.deleteCourseByCode(c);
-        });
+//        Add courses to backend
         courses.values().stream().forEach(this.courseBackend::modifyCourse);
+
+//        Remove courses that is not in the Map
+//        Ensure backend only contains what user can see
+        this.courseBackend.listCourse().stream()
+                .map(ICourse::getCode)
+                .filter((c) -> !courses.containsKey(c))
+                .forEach(this.courseBackend::deleteCourseByCode);
+
+//        Show success message
         Helpers.showMessage("Save", "Save success");
     }
 
-    public void deleteCourse(ActionEvent e) {
+//    Delete a course action
+    public void deleteCourse(@NonNull ActionEvent e) {
         try {
+//            Get the index
             int index = Integer.parseInt(e.getActionCommand());
-            CourseRow cr = this.courseRow.remove(index);
-            ICourse c = cr.getCourse();
-            this.deletedCourse.add(c.getCode());
+//            Remove it from list
+            this.courseRow.remove(index);
         } catch (IndexOutOfBoundsException | NumberFormatException ex) {
             return;
         }
 
+//        Refresh
         this.refreshCourse();
     }
 
+//    Set up content(course), update course
     public void setup() {
-
+//        List all course
         ImmutableList<ICourse> courses = this.courseBackend.listCourse();
+
+//        Add to course row
         for (ICourse c : courses) {
             int index = this.courseRow.size();
             CourseRow cr = new CourseRow(index, c, this::deleteCourse);
             this.courseRow.add(cr);
         }
+
+//        Refresh
         this.refreshCourse();
     }
 
+//    Empty course list
     public void cleanup() {
         this.courseRow.clear();
         this.refreshCourse();

@@ -12,6 +12,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import lombok.NonNull;
 
+// Panel for login
 @CheckReturnValue
 public final class LoginPanel extends JPanel {
 
@@ -61,7 +62,7 @@ public final class LoginPanel extends JPanel {
     }
 
     public String getUsername() {
-        return this.usernameField.getText();
+        return this.usernameField.getText().trim();
     }
 
     public String getPassword() {

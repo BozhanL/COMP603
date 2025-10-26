@@ -12,6 +12,7 @@ import java.io.Serial;
 import javax.swing.JPanel;
 import lombok.NonNull;
 
+// Main panel for manager
 @CheckReturnValue
 public final class ManagerMainPanel extends JPanel {
 
@@ -28,10 +29,12 @@ public final class ManagerMainPanel extends JPanel {
     private final ManagePersonPanel mpp;
 
     public ManagerMainPanel(@NonNull ICombinedBackend cb, @NonNull IManager p) {
+//        Create sub panels
         this.msp = new ManagerMainSelectPanel((e) -> this.manageCourseAction(), (e) -> this.managePersonAction());
         this.mcp = new ManageCoursePanel(cb, (e) -> this.switchBack());
         this.mpp = new ManagePersonPanel(cb, (e) -> this.switchBack());
 
+//        Add them to card layout
         this.setLayout(this.cardLayout);
         this.addPanel(msp);
         this.addPanel(mcp);
@@ -42,16 +45,19 @@ public final class ManagerMainPanel extends JPanel {
         Helpers.addPanel(this, comp);
     }
 
+//    Switch to manage course panel
     public void manageCourseAction() {
         this.mcp.setup();
         this.cardLayout.show(this, Helpers.getObjectName(this.mcp));
     }
 
+//    Switch to manage person panel
     public void managePersonAction() {
         this.mpp.setup();
         this.cardLayout.show(this, Helpers.getObjectName(this.mpp));
     }
 
+//    Switch to select panel
     public void switchBack() {
         this.cardLayout.show(this, Helpers.getObjectName(this.msp));
     }

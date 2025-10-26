@@ -16,15 +16,18 @@ import javax.swing.JTextField;
 import lombok.Getter;
 import lombok.NonNull;
 
+// This class represent a course in row format
 @CheckReturnValue
 public final class CourseRow extends JPanel {
 
     @Serial
     private static final long serialVersionUID = 1L;
 
+//    position index
     @Getter
     private int index;
 
+//    Fields
     @NonNull
     private final JTextField courseCode = new JTextField(7);
     @NonNull
@@ -41,12 +44,16 @@ public final class CourseRow extends JPanel {
     }
 
     public CourseRow(int index, @NonNull ICourse course, @NonNull ActionListener deleteThis) {
+//        Init index
         this.index = index;
+
+//        Set layout
         this.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.BOTH;
         c.weightx = 1;
 
+//        Add fields
         c.gridy = 0;
         c.gridx = 0;
         this.add(new JLabel("Course Code*:"), c);
@@ -78,16 +85,21 @@ public final class CourseRow extends JPanel {
         c.gridy = 0;
         c.gridx = 8;
         c.gridheight = 2;
+//        Set action listener for delete course button
         this.deleteCourseButton.addActionListener(deleteThis);
+//        Set command to current index
         this.deleteCourseButton.setActionCommand(Integer.toString(this.index));
         this.add(this.deleteCourseButton, c);
     }
 
     public void setIndex(int index) {
         this.index = index;
+//        Set command to current index
         this.deleteCourseButton.setActionCommand(Integer.toString(this.index));
     }
 
+//    Get the course
+//    Return null if invalid
     public ICourse getCourse() {
         String strCode = this.courseCode.getText().trim();
         ICourseCode code;

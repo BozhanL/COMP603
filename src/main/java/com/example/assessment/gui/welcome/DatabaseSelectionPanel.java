@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import lombok.Getter;
 import lombok.NonNull;
 
+// Panel for select database location
 @CheckReturnValue
 public final class DatabaseSelectionPanel extends JPanel {
 
@@ -39,10 +40,12 @@ public final class DatabaseSelectionPanel extends JPanel {
     private final JButton openDatabase = new JButton("Open Database");
 
     public DatabaseSelectionPanel(@NonNull ActionListener openDatabase) {
+//        Init JFileChooser
         this.chooser.setDialogTitle("Select database folder");
         this.chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         this.chooser.setAcceptAllFileFilterUsed(false);
 
+//        Show select dialog when press selectLocation button
         this.selectLocation.addActionListener((e) -> {
             int returnVal = this.chooser.showOpenDialog(this);
             if (returnVal == JFileChooser.APPROVE_OPTION) {
@@ -50,6 +53,7 @@ public final class DatabaseSelectionPanel extends JPanel {
             }
         });
 
+//        Call openDatabase when press openDatabase button
         this.openDatabase.addActionListener(openDatabase);
 
         this.bottomButtonPanel.add(this.selectLocation);
@@ -60,12 +64,14 @@ public final class DatabaseSelectionPanel extends JPanel {
         this.add(this.bottomButtonPanel, BorderLayout.SOUTH);
     }
 
+//    Format File to location label string
     public static String formatLocationLabel(@NonNull File p) {
         p = p.getAbsoluteFile();
 
         return String.format("Database Location: %s", p);
     }
 
+//    Update location
     public void updateLocation(@NonNull File newLocation) {
         this.file = newLocation;
         this.locationLabel.setText(formatLocationLabel(this.file));

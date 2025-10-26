@@ -2,7 +2,6 @@ package com.example.assessment.backend.types.entity;
 
 import com.example.assessment.backend.derby.IEntity;
 import com.example.assessment.backend.derby.IToImmutable;
-import com.example.assessment.backend.types.classes.CourseCode;
 import com.example.assessment.backend.types.interfaces.ICourse;
 import com.google.errorprone.annotations.CheckReturnValue;
 import jakarta.persistence.EmbeddedId;
@@ -13,6 +12,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
+// Entity for ICourse
 @Data
 @Entity
 @CheckReturnValue

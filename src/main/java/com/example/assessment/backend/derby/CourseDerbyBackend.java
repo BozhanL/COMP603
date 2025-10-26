@@ -12,10 +12,12 @@ import java.nio.file.Path;
 import lombok.NonNull;
 import lombok.ToString;
 
+// Managing Course using Derby based backend
 @CheckReturnValue
 @ToString(callSuper = true)
 public final class CourseDerbyBackend extends DerbyBackend implements ICourseBackend {
 
+//    Create the database with default path
     private CourseDerbyBackend() throws IOException, DatabaseCorruptedException {
         this(DEFAULT_DATA_LOCATION);
     }
@@ -28,6 +30,7 @@ public final class CourseDerbyBackend extends DerbyBackend implements ICourseBac
         super(p);
     }
 
+//    These are static method to construct a Object
     public static CourseDerbyBackend of() throws IOException, DatabaseCorruptedException {
         return new CourseDerbyBackend();
     }
@@ -40,33 +43,48 @@ public final class CourseDerbyBackend extends DerbyBackend implements ICourseBac
         return new CourseDerbyBackend(p);
     }
 
+//    Get a Course object by course code
     @Override
     public ICourse getCourseByCode(@NonNull ICourseCode code) {
-        var e = this.getObject(CourseEntity.class, code.toEntity());
+//        Get the entity
+        CourseEntity e = this.getObject(CourseEntity.class, code.toEntity());
+
+//        Return null if it is null
         if (e == null) {
             return null;
         }
+
+//        Convert it to immutable
         return e.toImmutable();
     }
 
+//    Save a course to database
+//    Throw ConstraintViolationException if already exist
+//    Use modifyCourse to change content of an existing course
     @Override
     public void setCourse(@NonNull ICourse c) {
         this.setObject(c.toEntity());
     }
 
+//    Delete a course based on the Course Code
+//    Return true if exist and deleted, false otherwise
     @Override
     public boolean deleteCourseByCode(@NonNull ICourseCode code) {
         return this.deleteObjectByID(CourseEntity.class, code.toEntity());
     }
 
+//    Modify an course in database, create if not exist
     @Override
     public void modifyCourse(@NonNull ICourse c) {
         this.modifyObject(c.toEntity());
     }
 
+//    Get a list of course in database
     @Override
     public ImmutableList<ICourse> listCourse() {
-        var e = this.listObject(CourseEntity.class);
+//        Get the list of entity
+        ImmutableList<CourseEntity> e = this.listObject(CourseEntity.class);
+//        Convert the entity to immutable
         return e.stream().map(CourseEntity::toImmutable).collect(ImmutableList.toImmutableList());
     }
 }

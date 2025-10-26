@@ -13,7 +13,7 @@ GitHub Repository: [https://github.com/BozhanL/COMP603](https://github.com/Bozha
 
 ## Default database credentials
 
-- Default location: [database](database)
+- Default location: database
 - Database name: PDC
 - Username: PDC
 - Password: PDC
@@ -36,6 +36,8 @@ Details can be found on [GitHub](https://github.com/BozhanL/COMP603/graphs/contr
 ## Credit
 
 Copilot fixes some of the spelling errors.
+
+`isDirEmpty` method is from [StackOverflow](https://stackoverflow.com/a/5937917).
 
 ## Libraries
 

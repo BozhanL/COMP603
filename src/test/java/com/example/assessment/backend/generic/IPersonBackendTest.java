@@ -56,6 +56,7 @@ public class IPersonBackendTest {
         HibernateHelper.closeSessionFactory(this.pfb.getDb());
     }
 
+//    Ensure backend can save and load student
     @Test
     void testSetAndGetStudent() {
         IAddress a = IAddress.of("", "561", "Blockhouse Bay Road", "Blockhouse Bay", "Auckland", "Auckland", "NZ", "0600");
@@ -70,6 +71,7 @@ public class IPersonBackendTest {
         assertEquals(s, id);
     }
 
+//    Ensure backend will automatically create manager when there is no manager
     @Test
     void testGetDefaultManager() {
         IManager DEFAULT_MANAGER = IManager.defaultManager();
@@ -78,6 +80,7 @@ public class IPersonBackendTest {
         assertEquals(DEFAULT_MANAGER, id);
     }
 
+//    Ensure backend can delete person
     @Test
     void testDeletePerson() {
         IAddress a = IAddress.of("", "561", "Blockhouse Bay Road", "Blockhouse Bay", "Auckland", "Auckland", "NZ", "0600");
@@ -91,6 +94,7 @@ public class IPersonBackendTest {
         assertTrue(this.pfb.deletePersonById(s.getId()));
     }
 
+//    Ensure backend can modify person
     @Test
     void testModifyPerson() {
         IAddress a = IAddress.of("", "561", "Blockhouse Bay Road", "Blockhouse Bay", "Auckland", "Auckland", "NZ", "0600");
@@ -118,9 +122,7 @@ public class IPersonBackendTest {
         assertEquals(newS, this.pfb.getStudentById(s.getId()));
     }
 
-    /**
-     * Test of listPerson method, of class IPersonBackend.
-     */
+//    Ensure backend can list person
     @Test
     public void testListPerson() {
         System.out.println("listPerson");
@@ -130,9 +132,7 @@ public class IPersonBackendTest {
         assertEquals(expResult, result);
     }
 
-    /**
-     * Test of listStudent method, of class IPersonBackend.
-     */
+//    Ensure backend can list student
     @Test
     public void testListStudent() {
         System.out.println("listStudent");
@@ -156,9 +156,7 @@ public class IPersonBackendTest {
         assertEquals(expResult, result);
     }
 
-    /**
-     * Test of listManager method, of class IPersonBackend.
-     */
+//    Ensure backend can list manager
     @Test
     public void testListManager() {
         System.out.println("listManager");

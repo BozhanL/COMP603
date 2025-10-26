@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import lombok.Getter;
 import lombok.NonNull;
 
+// Main panel to control select database and login flow
 @CheckReturnValue
 public final class WelcomePanel extends JPanel {
 
@@ -45,9 +46,12 @@ public final class WelcomePanel extends JPanel {
         this.addPanel(lp);
     }
 
+//    Open database action
     public void openDatabase() {
+//        Get the location
         File f = this.dsp.getFile();
 
+//        Try to open the database, show error message when error
         try {
             this.combinedBackend = ICombinedBackend.of(f.toPath());
         } catch (IOException ex) {
@@ -65,20 +69,26 @@ public final class WelcomePanel extends JPanel {
             return;
         }
 
+//        If no error, show login page
         this.cardLayout.show(this, Helpers.getObjectName(this.lp));
     }
 
+//    login action
     public void login() {
+//        Get the entered username and password
         String username = this.lp.getUsername();
         String password = this.lp.getPassword();
 
+//        Get the person based on username
         this.person = this.combinedBackend.getPersonById(username);
 
+//        If it is null or password is wrong, show error message and return
         if (this.person == null || !this.person.safeCheckPassword(password)) {
             Helpers.showErrorMessage("Username or Password incorrect");
             return;
         }
 
+//        Run the login success callback
         this.onLoginSuccess.run();
     }
 
