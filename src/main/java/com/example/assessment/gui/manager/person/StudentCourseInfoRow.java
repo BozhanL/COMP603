@@ -16,6 +16,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import lombok.Getter;
 import lombok.NonNull;
 
 @CheckReturnValue
@@ -24,7 +25,8 @@ public final class StudentCourseInfoRow extends JPanel {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    private final int index;
+    @Getter
+    private int index;
 
     @NonNull
     private final JTextField courseCode = new JTextField(7);
@@ -76,7 +78,13 @@ public final class StudentCourseInfoRow extends JPanel {
         c.gridx = 4;
         c.gridheight = 2;
         this.deleteCourseButton.addActionListener(deleteThis);
+        this.deleteCourseButton.setActionCommand(Integer.toString(this.index));
         this.add(this.deleteCourseButton, c);
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
+        this.deleteCourseButton.setActionCommand(Integer.toString(this.index));
     }
 
     public IStudentCourseInfo getStudentCourseInfo() {

@@ -10,6 +10,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.Serial;
 import java.util.ArrayList;
@@ -86,9 +87,12 @@ public final class ManageCoursePanel extends JPanel {
         c.fill = GridBagConstraints.BOTH;
         c.weightx = 1.0;
         c.insets = new Insets(5, 5, 5, 5);
+        int index = 0;
         for (CourseRow r : this.courseRow) {
+            r.setIndex(index);
             this.coursePanel.add(r, c);
             c.gridy++;
+            index++;
         }
 
         c.weighty = 1;
@@ -100,7 +104,7 @@ public final class ManageCoursePanel extends JPanel {
 
     public void addCourse() {
         int index = this.courseRow.size();
-        CourseRow cr = new CourseRow(index, (e) -> this.deleteCourse(index));
+        CourseRow cr = new CourseRow(index, this::deleteCourse);
         this.courseRow.add(cr);
         this.refreshCourse();
     }
@@ -128,12 +132,13 @@ public final class ManageCoursePanel extends JPanel {
         Helpers.showMessage("Save", "Save success");
     }
 
-    public void deleteCourse(int index) {
+    public void deleteCourse(ActionEvent e) {
         try {
+            int index = Integer.parseInt(e.getActionCommand());
             CourseRow cr = this.courseRow.remove(index);
             ICourse c = cr.getCourse();
             this.deletedCourse.add(c.getCode());
-        } catch (IndexOutOfBoundsException e) {
+        } catch (IndexOutOfBoundsException | NumberFormatException ex) {
             return;
         }
 
@@ -145,7 +150,7 @@ public final class ManageCoursePanel extends JPanel {
         ImmutableList<ICourse> courses = this.courseBackend.listCourse();
         for (ICourse c : courses) {
             int index = this.courseRow.size();
-            CourseRow cr = new CourseRow(index, c, (e) -> this.deleteCourse(index));
+            CourseRow cr = new CourseRow(index, c, this::deleteCourse);
             this.courseRow.add(cr);
         }
         this.refreshCourse();

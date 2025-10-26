@@ -13,6 +13,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.Serial;
 import java.time.LocalDate;
@@ -264,15 +265,16 @@ public final class EditStudentPanel extends JPanel {
 
     public void addCourse() {
         int index = this.studentCourseInfoRow.size();
-        StudentCourseInfoRow row = new StudentCourseInfoRow(index, (e) -> this.deleteCourse(index));
+        StudentCourseInfoRow row = new StudentCourseInfoRow(index, this::deleteCourse);
         this.studentCourseInfoRow.add(row);
         this.refreshCourse();
     }
 
-    public void deleteCourse(int index) {
+    public void deleteCourse(ActionEvent e) {
         try {
+            int index = Integer.parseInt(e.getActionCommand());
             this.studentCourseInfoRow.remove(index);
-        } catch (IndexOutOfBoundsException e) {
+        } catch (IndexOutOfBoundsException | NumberFormatException ex) {
             return;
         }
 
@@ -288,9 +290,12 @@ public final class EditStudentPanel extends JPanel {
         c.fill = GridBagConstraints.BOTH;
         c.weightx = 1.0;
         c.insets = new Insets(5, 5, 5, 5);
+        int index = 0;
         for (StudentCourseInfoRow r : this.studentCourseInfoRow) {
+            r.setIndex(index);
             this.scip.add(r, c);
             c.gridy++;
+            index++;
         }
 
         c.weighty = 1;
@@ -329,7 +334,7 @@ public final class EditStudentPanel extends JPanel {
             ImmutableMap<String, IStudentCourseInfo> courses = p.getCourses();
             for (IStudentCourseInfo c : courses.values()) {
                 int index = this.studentCourseInfoRow.size();
-                StudentCourseInfoRow row = new StudentCourseInfoRow(index, c, (e) -> this.deleteCourse(index));
+                StudentCourseInfoRow row = new StudentCourseInfoRow(index, c, this::deleteCourse);
                 this.studentCourseInfoRow.add(row);
             }
             this.refreshCourse();

@@ -23,7 +23,7 @@ public final class CourseRow extends JPanel {
     private static final long serialVersionUID = 1L;
 
     @Getter
-    private final int index;
+    private int index;
 
     @NonNull
     private final JTextField courseCode = new JTextField(7);
@@ -79,7 +79,13 @@ public final class CourseRow extends JPanel {
         c.gridx = 8;
         c.gridheight = 2;
         this.deleteCourseButton.addActionListener(deleteThis);
+        this.deleteCourseButton.setActionCommand(Integer.toString(this.index));
         this.add(this.deleteCourseButton, c);
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
+        this.deleteCourseButton.setActionCommand(Integer.toString(this.index));
     }
 
     public ICourse getCourse() {
