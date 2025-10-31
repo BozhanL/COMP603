@@ -35,7 +35,7 @@ public abstract class DerbyBackend implements IBackend {
 
 //    Copied from: https://stackoverflow.com/a/5937917
 //    Check whether the folder is empty
-    private static boolean isDirEmpty(@NonNull Path directory) throws IOException {
+    public static boolean isDirEmpty(@NonNull Path directory) throws IOException {
         try (DirectoryStream<Path> dirStream = Files.newDirectoryStream(directory)) {
             return !dirStream.iterator().hasNext();
         }

@@ -13,7 +13,7 @@ GitHub Repository: [https://github.com/BozhanL/COMP603](https://github.com/Bozha
 
 ## Default database credentials
 
-- Default location: database
+- Default location: ./database
 - Database name: PDC
 - Username: PDC
 - Password: PDC

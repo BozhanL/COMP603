@@ -4,6 +4,7 @@ import java.nio.file.Path;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import lombok.NonNull;
 import org.hibernate.SessionFactory;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -93,7 +94,7 @@ public class HibernateHelperTest {
         }
     }
 
-    private static String getDb(Path p) {
+    private static String getDb(@NonNull Path p) {
         return String.format("jdbc:derby:%s;create=true", p.toAbsolutePath().normalize());
     }
 }

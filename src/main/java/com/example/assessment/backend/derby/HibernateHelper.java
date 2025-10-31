@@ -7,10 +7,12 @@ import com.example.assessment.backend.types.entity.ManagerEntity;
 import com.example.assessment.backend.types.entity.PersonEntity;
 import com.example.assessment.backend.types.entity.StudentCourseInfoEntity;
 import com.example.assessment.backend.types.entity.StudentEntity;
+import com.google.errorprone.annotations.CheckReturnValue;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.regex.Pattern;
+import lombok.NonNull;
 import lombok.experimental.UtilityClass;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
@@ -20,6 +22,7 @@ import org.hibernate.cfg.Configuration;
 
 // thread safe singleton class for construct Hibernate SessionFactory
 @UtilityClass
+@CheckReturnValue
 public class HibernateHelper {
 
     private final HashMap<String, SessionFactory> sfm = new HashMap<>();
@@ -27,7 +30,7 @@ public class HibernateHelper {
 
 //    Get a SessionFactory based on connection string
 //    Return same object if already initialized with same string
-    public synchronized SessionFactory getSessionFactory(String url) throws IllegalStateException {
+    public synchronized SessionFactory getSessionFactory(@NonNull String url) throws IllegalStateException {
 //        Check whether already exist
         if (!sfm.containsKey(url)) {
 //            Create new configuration
@@ -64,7 +67,7 @@ public class HibernateHelper {
 
 //    Close a connection based on connection string
 //    Throw null pointer exception if not exist
-    public synchronized void closeSessionFactory(String url) throws SQLException {
+    public synchronized void closeSessionFactory(@NonNull String url) throws SQLException {
 //        Remove from Map
         SessionFactory sf = sfm.remove(url);
 
@@ -81,7 +84,7 @@ public class HibernateHelper {
     }
 
 //    Check SQLException, return true if is normal shutdown message
-    private boolean isNormalShutdown(SQLException e) {
+    private boolean isNormalShutdown(@NonNull SQLException e) {
         return "08006".equals(e.getSQLState()) && NORMAL_SHUTDOWN_PATTERN.matcher(e.getMessage()).matches();
     }
 }

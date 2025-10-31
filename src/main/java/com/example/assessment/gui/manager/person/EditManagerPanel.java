@@ -236,6 +236,7 @@ public final class EditManagerPanel extends JPanel {
         this.add(buttonPanel, c);
     }
 
+//    Nullable, null means creating a manager
     public void setup(IManager p) {
 //        Clean up previous data
         this.cleanup();

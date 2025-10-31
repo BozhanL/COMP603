@@ -3,6 +3,8 @@ package com.example.assessment.gui;
 import com.example.assessment.backend.generic.ICombinedBackend;
 import com.example.assessment.backend.types.interfaces.IPerson;
 import com.example.assessment.gui.welcome.WelcomeControlPanel;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
+import com.google.errorprone.annotations.CheckReturnValue;
 import java.awt.CardLayout;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -12,6 +14,7 @@ import javax.swing.JPanel;
 import lombok.NonNull;
 
 // The main and only frame for GUI
+@CheckReturnValue
 public final class MainFrame extends JFrame {
 
     @Serial
@@ -32,6 +35,7 @@ public final class MainFrame extends JFrame {
     private IPerson p;
     private JPanel personPanel;
 
+    @CanIgnoreReturnValue
     public MainFrame() {
 //        Create WelcomePanel
         this.welcomePanel = new WelcomeControlPanel(this::onLoginSuccess);

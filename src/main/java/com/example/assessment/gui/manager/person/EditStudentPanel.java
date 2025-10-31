@@ -325,6 +325,7 @@ public final class EditStudentPanel extends JPanel {
         this.scip.repaint();
     }
 
+//    Nullable, null means creating a student
     public void setup(IStudent p) {
 //        Clean up previous data
         this.cleanup();
