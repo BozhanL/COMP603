@@ -4,7 +4,7 @@
 
 Project: Student Information Management System
 
-GitHub Repository: [https://github.com/BozhanL/COMP603](https://github.com/BozhanL/COMP603)
+GitHub Repository: <https://github.com/BozhanL/COMP603>
 
 ## Default user credentials
 
@@ -39,5 +39,7 @@ Copilot fixes some of the spelling errors.
 - [Error Prone](https://github.com/google/error-prone)
 - [Guava](https://github.com/google/guava)
 - [Hamcrest](https://github.com/hamcrest/JavaHamcrest)
+- [Hibernate ORM](https://hibernate.org/orm/)
 - [JUnit](https://github.com/junit-team/junit-framework)
 - [Project Lombok](https://github.com/projectlombok/lombok)
+- [Derby](https://db.apache.org/derby/)
