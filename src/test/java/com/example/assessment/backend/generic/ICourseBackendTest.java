@@ -41,6 +41,7 @@ public class ICourseBackendTest {
         HibernateHelper.closeSessionFactory(this.cb.getDb());
     }
 
+//    Ensure backend can save and load course
     @Test
     public void testSetAndGetCourseByCode() throws Exception {
         ICourse c1 = ICourse.of("COMP", 5, 9, "name", 15, "description");
@@ -52,6 +53,7 @@ public class ICourseBackendTest {
         assertEquals(c2, this.cb.getCourseByCode(c2.getCode()));
     }
 
+//    Ensure backend can delete with ICourseCode
     @Test
     public void testDeleteCourseByCode_ICourseCode() throws ParseException {
         System.out.println("deleteCourseByCode");
@@ -67,6 +69,7 @@ public class ICourseBackendTest {
         assertEquals(c2, this.cb.getCourseByCode(c2.getCode()));
     }
 
+//    Ensure backend can delete with String
     @Test
     public void testDeleteCourseByCode_String() throws ParseException {
         System.out.println("deleteCourseByCode");
@@ -82,6 +85,7 @@ public class ICourseBackendTest {
         assertEquals(c2, this.cb.getCourseByCode(c2.getCode()));
     }
 
+//    Ensure backend can update course
     @Test
     public void testModifyCourse() {
         System.out.println("modifyCourse");
@@ -97,6 +101,7 @@ public class ICourseBackendTest {
         assertEquals(newC, this.cb.getCourseByCode(old.getCode()));
     }
 
+//    Ensure backend can list all course in database
     @Test
     public void testListCourse() {
         System.out.println("listCourse");

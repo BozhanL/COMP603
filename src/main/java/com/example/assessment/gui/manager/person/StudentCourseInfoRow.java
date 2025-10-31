@@ -19,6 +19,7 @@ import javax.swing.JTextField;
 import lombok.Getter;
 import lombok.NonNull;
 
+// This class represent a StudentCourseInfo in row format
 @CheckReturnValue
 public final class StudentCourseInfoRow extends JPanel {
 
@@ -78,22 +79,28 @@ public final class StudentCourseInfoRow extends JPanel {
         c.gridx = 4;
         c.gridheight = 2;
         this.deleteCourseButton.addActionListener(deleteThis);
+//        Set action command to index
         this.deleteCourseButton.setActionCommand(Integer.toString(this.index));
         this.add(this.deleteCourseButton, c);
     }
 
+//    Update the index
     public void setIndex(int index) {
         this.index = index;
         this.deleteCourseButton.setActionCommand(Integer.toString(this.index));
     }
 
+//    Convert the data into IStudentCourseInfo
     public IStudentCourseInfo getStudentCourseInfo() {
+//        Get the course code
         String code = this.courseCode.getText().trim();
+//        Code must not be blank
         if (code.isBlank()) {
             Helpers.showErrorMessage("Error: Course Code must not be blank! (index: %d)", this.index);
             return null;
         }
 
+//        Parse the date
         LocalDate date;
         try {
             date = LocalDate.parse(this.starts.getText().trim());
@@ -102,6 +109,7 @@ public final class StudentCourseInfoRow extends JPanel {
             return null;
         }
 
+//        Construct the object
         return IStudentCourseInfo.of(
                 code,
                 this.grade.getItemAt(this.grade.getSelectedIndex()),

@@ -138,13 +138,16 @@ public final class EditStudentPanel extends JPanel {
             @NonNull IPersonBackend personBackend,
             @NonNull ActionListener goBackAction
     ) {
+//        Init personBackend
         this.personBackend = personBackend;
 
+//        Set layout
         this.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.BOTH;
         c.weightx = 1;
 
+//        Add field
         c.gridy = 0;
         c.gridx = 0;
         this.add(this.idLabel, c);
@@ -249,7 +252,7 @@ public final class EditStudentPanel extends JPanel {
         buttonPanel.add(addCourseButton, c);
 
         JButton saveButton = new JButton("Save");
-        saveButton.addActionListener((e) -> this.savePerson());
+        saveButton.addActionListener((e) -> this.saveStudent());
         buttonPanel.add(saveButton, c);
 
         JButton returnButton = new JButton("Return");
@@ -264,26 +267,40 @@ public final class EditStudentPanel extends JPanel {
     }
 
     public void addCourse() {
+//        Get index for the new course
         int index = this.studentCourseInfoRow.size();
+
+//        Construct the row
         StudentCourseInfoRow row = new StudentCourseInfoRow(index, this::deleteCourse);
+
+//        Add to list
         this.studentCourseInfoRow.add(row);
+
+//        Refresh
         this.refreshCourse();
     }
 
-    public void deleteCourse(ActionEvent e) {
+//    Delete a course from list
+    public void deleteCourse(@NonNull ActionEvent e) {
         try {
+//            Get index
             int index = Integer.parseInt(e.getActionCommand());
+//            Remove from list
             this.studentCourseInfoRow.remove(index);
         } catch (IndexOutOfBoundsException | NumberFormatException ex) {
             return;
         }
 
+//        Refresh
         this.refreshCourse();
     }
 
+//    Refresh course list
     public void refreshCourse() {
+//        Remove all row
         this.scip.removeAll();
 
+//        Add course back
         GridBagConstraints c = new GridBagConstraints();
         c.gridx = 0;
         c.gridy = 0;
@@ -292,22 +309,28 @@ public final class EditStudentPanel extends JPanel {
         c.insets = new Insets(5, 5, 5, 5);
         int index = 0;
         for (StudentCourseInfoRow r : this.studentCourseInfoRow) {
+//            Set new index
             r.setIndex(index);
             this.scip.add(r, c);
             c.gridy++;
             index++;
         }
 
+//        Add placeholder
         c.weighty = 1;
         this.scip.add(Box.createVerticalGlue(), c);
 
+//        Refresh
         this.scip.revalidate();
         this.scip.repaint();
     }
 
+//    Nullable, null means creating a student
     public void setup(IStudent p) {
+//        Clean up previous data
         this.cleanup();
 
+//        Set value from student if not null
         if (p != null) {
             this.idField.setText(p.getId());
             this.idField.setEditable(false);
@@ -341,10 +364,14 @@ public final class EditStudentPanel extends JPanel {
         }
     }
 
-    private void savePerson() {
+//    Save Student to database
+    private void saveStudent() {
+//        Get ID and password
         String id = this.idField.getText().trim();
         String password = String.copyValueOf(this.passwordField.getPassword());
 
+//        Check ID and password
+//        ID and password must not be blank
         if (id.isBlank()) {
             Helpers.showErrorMessage("Error: ID must not be blank!");
             return;
@@ -353,6 +380,7 @@ public final class EditStudentPanel extends JPanel {
             return;
         }
 
+//        Parse date of birth
         LocalDate dob;
         try {
             dob = LocalDate.parse(this.dateOfBirthField.getText().trim());
@@ -361,6 +389,7 @@ public final class EditStudentPanel extends JPanel {
             return;
         }
 
+//        Construct address
         IAddress address = IAddress.of(
                 this.unitField.getText().trim(),
                 this.streetNumberField.getText().trim(),
@@ -372,6 +401,7 @@ public final class EditStudentPanel extends JPanel {
                 this.postCodeField.getText().trim()
         );
 
+//        Construct student course info
         HashMap<String, IStudentCourseInfo> courses = new HashMap<>();
         for (StudentCourseInfoRow row : this.studentCourseInfoRow) {
             IStudentCourseInfo info = row.getStudentCourseInfo();
@@ -382,6 +412,7 @@ public final class EditStudentPanel extends JPanel {
             courses.put(info.getCourseCode(), info);
         }
 
+//        Construct student
         IStudent p = IStudent.of(
                 id,
                 password,
@@ -396,11 +427,14 @@ public final class EditStudentPanel extends JPanel {
                 ImmutableMap.copyOf(courses)
         );
 
+//        Save to database
         this.personBackend.modifyPerson(p);
 
+//        Show success message
         Helpers.showMessage("Save", "Save success");
     }
 
+//    Clean up previous data, set everything to default
     public void cleanup() {
         this.idField.setText("");
         this.idField.setEditable(true);

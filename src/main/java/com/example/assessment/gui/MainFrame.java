@@ -2,55 +2,77 @@ package com.example.assessment.gui;
 
 import com.example.assessment.backend.generic.ICombinedBackend;
 import com.example.assessment.backend.types.interfaces.IPerson;
-import com.example.assessment.gui.welcome.WelcomePanel;
+import com.example.assessment.gui.welcome.WelcomeControlPanel;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
+import com.google.errorprone.annotations.CheckReturnValue;
 import java.awt.CardLayout;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.io.Serial;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import lombok.NonNull;
 
-public final class MainFrame {
+// The main and only frame for GUI
+@CheckReturnValue
+public final class MainFrame extends JFrame {
 
-    static final Dimension FRAME_SIZE = new Dimension(800, 600);
+    @Serial
+    private static final long serialVersionUID = 1L;
 
-    @NonNull
-    private final JFrame frame = new JFrame("Student Information Management System");
+//    Default size
+    private static final Dimension FRAME_SIZE = new Dimension(800, 600);
+
     @NonNull
     private final CardLayout cardLayout = new CardLayout();
     @NonNull
     private final JPanel cardPanel = new JPanel(this.cardLayout);
 
     @NonNull
-    private final WelcomePanel welcomePanel;
+    private final WelcomeControlPanel welcomePanel;
 
     private transient ICombinedBackend cb;
-    private transient IPerson p;
+    private IPerson p;
     private JPanel personPanel;
 
+    @CanIgnoreReturnValue
     public MainFrame() {
-        this.welcomePanel = new WelcomePanel(() -> this.onLoginSuccess());
+//        Create WelcomePanel
+        this.welcomePanel = new WelcomeControlPanel(this::onLoginSuccess);
 
-        this.frame.setSize(FRAME_SIZE);
-        this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.frame.setLocationRelativeTo(null);
+//        Init default settings
+        this.setTitle("Student Information Management System");
+        this.setSize(FRAME_SIZE);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setLocationRelativeTo(null);
 
+//        Add WelcomePanel to card panel
         this.addPanel(this.welcomePanel);
 
-        this.frame.add(cardPanel);
-        this.frame.setVisible(true);
+//        Add card panel to frame
+        this.add(cardPanel);
+
+//        Show frame
+        this.setVisible(true);
     }
 
+//    Add a Component to card panel
     public void addPanel(@NonNull Component comp) {
         Helpers.addPanel(this.cardPanel, comp);
     }
 
+//    Action when login success
     public void onLoginSuccess() {
         System.out.println("Login success");
+
+//        Get backend and logged in person
         this.cb = this.welcomePanel.getCombinedBackend();
         this.p = this.welcomePanel.getPerson();
 
+//        Get the person panel
         this.personPanel = this.p.getPanel(cb);
+
+//        Add to card panel, and show it
         this.addPanel(personPanel);
         this.cardLayout.show(this.cardPanel, Helpers.getObjectName(personPanel));
     }

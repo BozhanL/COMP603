@@ -29,8 +29,9 @@ replay_pid*
 # Compiled source
 /target/
 
-# Database folder
+# Database content
 /database/
+derby.properties
 
 # Assignment description
 /Project\ 1.pdf

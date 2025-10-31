@@ -1,9 +1,17 @@
 package com.example.assessment.backend.types.enums;
 
+import com.google.errorprone.annotations.CheckReturnValue;
+import java.util.Arrays;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import lombok.AllArgsConstructor;
+import lombok.NonNull;
 
 // This contains grade for student
+@CheckReturnValue
+@AllArgsConstructor
 public enum Grade {
     AP("A+"), A("A"), AM("A-"),
     BP("B+"), B("B"), BM("B-"),
@@ -15,24 +23,20 @@ public enum Grade {
 
     private final String name;
 
-    private Grade(String name) {
-        this.name = name;
-    }
-
 //    Return the Grade that have same name compare to input
-    public static Grade getEnum(String value) {
-        for (Grade v : values()) {
-            if (v.toString().equalsIgnoreCase(value)) {
-                return v;
-            }
-        }
+    public static Grade getEnum(@NonNull String value) {
+        Optional<Grade> g = Arrays.stream(values())
+                .filter((v) -> v.toString().equalsIgnoreCase(value))
+                .findAny();
 
-        throw new IllegalArgumentException();
+        return g.orElseThrow(IllegalArgumentException::new);
     }
 
 //    Return a string contain all values
     public static String allValues() {
-        return Stream.of(values()).map((v) -> v.toString()).collect(Collectors.joining(", "));
+        return Stream.of(values())
+                .map(Objects::toString)
+                .collect(Collectors.joining(", "));
     }
 
     @Override

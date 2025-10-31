@@ -11,6 +11,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
+// Entity for IAddress
 @Data
 @Embeddable
 @CheckReturnValue

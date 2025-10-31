@@ -23,6 +23,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import lombok.NonNull;
 
+// Panel for edit or create manager
 @CheckReturnValue
 public final class EditManagerPanel extends JPanel {
 
@@ -32,6 +33,7 @@ public final class EditManagerPanel extends JPanel {
     @NonNull
     private final transient IPersonBackend personBackend;
 
+//    Basic information
 //    --------------------------------------------------------------------
     @NonNull
     private final JLabel idLabel = new JLabel("ID*:");
@@ -73,6 +75,7 @@ public final class EditManagerPanel extends JPanel {
     @NonNull
     private final JTextField phoneField = new JTextField(10);
 
+//    Address information
 //    --------------------------------------------------------------------
     @NonNull
     private final JLabel unitLabel = new JLabel("Unit:");
@@ -119,13 +122,16 @@ public final class EditManagerPanel extends JPanel {
             @NonNull IPersonBackend personBackend,
             @NonNull ActionListener goBackAction
     ) {
+//        Init personBackend
         this.personBackend = personBackend;
 
+//        Set layout
         this.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.BOTH;
         c.weightx = 1;
 
+//        Add fields
         c.gridy = 0;
         c.gridx = 0;
         this.add(this.idLabel, c);
@@ -216,7 +222,7 @@ public final class EditManagerPanel extends JPanel {
         JPanel buttonPanel = new JPanel(new GridLayout(1, 2));
 
         JButton saveButton = new JButton("Save");
-        saveButton.addActionListener((e) -> this.savePerson());
+        saveButton.addActionListener((e) -> this.saveManager());
         buttonPanel.add(saveButton, c);
 
         JButton returnButton = new JButton("Return");
@@ -230,9 +236,12 @@ public final class EditManagerPanel extends JPanel {
         this.add(buttonPanel, c);
     }
 
+//    Nullable, null means creating a manager
     public void setup(IManager p) {
+//        Clean up previous data
         this.cleanup();
 
+//        Set value from manager if not null
         if (p != null) {
             this.idField.setText(p.getId());
             this.idField.setEditable(false);
@@ -257,10 +266,14 @@ public final class EditManagerPanel extends JPanel {
         }
     }
 
-    private void savePerson() {
+//    Save Manager to database
+    private void saveManager() {
+//        Get ID and password
         String id = this.idField.getText().trim();
         String password = String.copyValueOf(this.passwordField.getPassword());
 
+//        Check ID and password
+//        ID and password must not be blank
         if (id.isBlank()) {
             Helpers.showErrorMessage("Error: ID must not be blank!");
             return;
@@ -269,6 +282,7 @@ public final class EditManagerPanel extends JPanel {
             return;
         }
 
+//        Parse date of birth
         LocalDate dob;
         try {
             dob = LocalDate.parse(this.dateOfBirthField.getText().trim());
@@ -277,6 +291,7 @@ public final class EditManagerPanel extends JPanel {
             return;
         }
 
+//        Construct address
         IAddress address = IAddress.of(
                 this.unitField.getText().trim(),
                 this.streetNumberField.getText().trim(),
@@ -288,6 +303,7 @@ public final class EditManagerPanel extends JPanel {
                 this.postCodeField.getText().trim()
         );
 
+//        Construct manager
         IManager p = IManager.of(
                 id,
                 password,
@@ -300,11 +316,14 @@ public final class EditManagerPanel extends JPanel {
                 address
         );
 
+//        Save to database
         this.personBackend.modifyPerson(p);
 
+//        Show success message
         Helpers.showMessage("Save", "Save success");
     }
 
+//    Clean up previous data, set everything to default
     public void cleanup() {
         this.idField.setText("");
         this.idField.setEditable(true);

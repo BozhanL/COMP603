@@ -3,7 +3,7 @@ package com.example.assessment.backend.types.interfaces;
 import com.example.assessment.backend.generic.ICombinedBackend;
 import com.example.assessment.backend.types.classes.Manager;
 import com.example.assessment.backend.types.enums.Gender;
-import com.example.assessment.gui.manager.ManagerMainPanel;
+import com.example.assessment.gui.manager.ManagerMainControlPanel;
 import com.google.errorprone.annotations.CheckReturnValue;
 import com.google.errorprone.annotations.Immutable;
 import java.time.LocalDate;
@@ -79,6 +79,6 @@ public interface IManager extends IPerson {
 
     @Override
     public default JPanel getPanel(@NonNull ICombinedBackend cb) {
-        return new ManagerMainPanel(cb, this);
+        return new ManagerMainControlPanel(cb, this);
     }
 }

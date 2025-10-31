@@ -4,7 +4,7 @@
 
 Project: Student Information Management System
 
-GitHub Repository: [https://github.com/BozhanL/COMP603](https://github.com/BozhanL/COMP603)
+GitHub Repository: <https://github.com/BozhanL/COMP603>
 
 ## Default user credentials
 
@@ -13,7 +13,8 @@ GitHub Repository: [https://github.com/BozhanL/COMP603](https://github.com/Bozha
 
 ## Default database credentials
 
-- Database: PDC
+- Default location: ./database
+- Database name: PDC
 - Username: PDC
 - Password: PDC
 
@@ -21,27 +22,24 @@ GitHub Repository: [https://github.com/BozhanL/COMP603](https://github.com/Bozha
 
 Details can be found on [GitHub](https://github.com/BozhanL/COMP603/graphs/contributors).
 
-| Name                                                                       | Lines | Percentage |
-| -------------------------------------------------------------------------- | ----- | ---------- |
-| Ben Samountry([@TheSalmonTree](https://github.com/TheSalmonTree)) 23219911 | 0     | 0%         |
-| Bozhan Liang([@BozhanL](https://github.com/BozhanL)) 23209715              | 0     | 0%         |
-| **Total**                                                                  | 0     | 0%         |
-
-\* Result based on [cloc](https://github.com/AlDanial/cloc) calculation
-
-### Implementation Details
-
-- **Ben**:
-- **Bozhan**:
+| Name                                                                       | Percentage |
+| -------------------------------------------------------------------------- | ---------- |
+| Ben Samountry([@TheSalmonTree](https://github.com/TheSalmonTree)) 23219911 | 0%         |
+| Bozhan Liang([@BozhanL](https://github.com/BozhanL)) 23209715              | 100%       |
+| **Total**                                                                  | 100%       |
 
 ## Credit
 
 Copilot fixes some of the spelling errors.
+
+`isDirEmpty` method is from [StackOverflow](https://stackoverflow.com/a/5937917).
 
 ## Libraries
 
 - [Error Prone](https://github.com/google/error-prone)
 - [Guava](https://github.com/google/guava)
 - [Hamcrest](https://github.com/hamcrest/JavaHamcrest)
+- [Hibernate ORM](https://hibernate.org/orm/)
 - [JUnit](https://github.com/junit-team/junit-framework)
 - [Project Lombok](https://github.com/projectlombok/lombok)
+- [Derby](https://db.apache.org/derby/)
